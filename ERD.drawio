@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-09-22T16:22:58.459Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36 Edg/93.0.961.52" etag="IAepSOrW9S2FrgowQzpf" version="15.2.9" type="github">
+<mxfile host="app.diagrams.net" modified="2021-09-22T16:24:09.777Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36 Edg/93.0.961.52" etag="9MLpPv0kMdi3wRZ1K4_N" version="15.2.9" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
     <mxGraphModel dx="868" dy="482" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="1" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
@@ -403,7 +403,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SBgtF4KE6FhKTmxoc9bB-87" value="service" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#21C0A5;strokeColor=#006658;fontColor=#5C5C5C;rounded=1;" parent="1" vertex="1">
-          <mxGeometry x="330" y="580" width="180" height="190" as="geometry" />
+          <mxGeometry x="295" y="570" width="180" height="190" as="geometry" />
         </mxCell>
         <mxCell id="SBgtF4KE6FhKTmxoc9bB-88" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=1;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;strokeColor=#006658;fontColor=#5C5C5C;rounded=1;" parent="SBgtF4KE6FhKTmxoc9bB-87" vertex="1">
           <mxGeometry y="30" width="180" height="30" as="geometry" />
@@ -452,7 +452,7 @@
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="SBgtF4KE6FhKTmxoc9bB-130" value="user_id" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;strokeColor=#006658;fontColor=#5C5C5C;rounded=1;" parent="SBgtF4KE6FhKTmxoc9bB-128" vertex="1">
+        <mxCell id="SBgtF4KE6FhKTmxoc9bB-130" value="pelanggan_id" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;strokeColor=#006658;fontColor=#5C5C5C;rounded=1;" parent="SBgtF4KE6FhKTmxoc9bB-128" vertex="1">
           <mxGeometry x="30" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -749,9 +749,6 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="SBgtF4KE6FhKTmxoc9bB-235" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontColor=#5C5C5C;strokeColor=#006658;fillColor=#21C0A5;" parent="1" source="SBgtF4KE6FhKTmxoc9bB-2" target="SBgtF4KE6FhKTmxoc9bB-128" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="SBgtF4KE6FhKTmxoc9bB-236" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontColor=#5C5C5C;strokeColor=#006658;fillColor=#21C0A5;" parent="1" source="SBgtF4KE6FhKTmxoc9bB-2" target="SBgtF4KE6FhKTmxoc9bB-203" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -904,6 +901,9 @@
               <mxPoint x="30" y="405" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="QTfMaG6kAWsPvdadfsnU-40" style="edgeStyle=orthogonalEdgeStyle;curved=0;rounded=1;sketch=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontColor=#5C5C5C;strokeColor=#006658;fillColor=#21C0A5;" edge="1" parent="1" source="QTfMaG6kAWsPvdadfsnU-6" target="SBgtF4KE6FhKTmxoc9bB-128">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
