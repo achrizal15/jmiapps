@@ -20,10 +20,19 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
-
+    
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = auth()->user()->role_id;
+                if ($user == 1) {
+                    return redirect('/pemilik');
+                } elseif ($user == 2) {
+                    return redirect('/admin');
+                } elseif ($user == 3) {
+                    return redirect('/teknisi');
+                } else {
+                    return redirect('/pelanggan');
+                }
             }
         }
 

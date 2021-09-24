@@ -1,0 +1,4 @@
+Registrasi 
+Kekurangan: Tidak menggunakan fitur email activasi
+Alasan: Untuk mempermudah user ketika mendaftar
+
