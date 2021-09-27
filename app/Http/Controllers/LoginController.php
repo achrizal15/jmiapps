@@ -15,7 +15,7 @@ class LoginController extends Controller
     public function authenticate()
     {
         $validate = request()->validate([
-            "email" => ["required", "email:dns"],
+            "phone" => ["required"],
             "password" => "required"
         ]);
         if (Auth::attempt($validate)) {

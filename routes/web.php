@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -35,5 +36,9 @@ Route::middleware(['auth', 'is_role:1'])->group(function () {
 });
 Route::middleware(['auth', 'is_role:2'])->group(function () {
     Route::get('/admin', [AdminController::class, "index"]);
-    Route::get('/admin/supplier', [InventoryController::class, "index"]);
+    Route::get('/admin/expenditure', [ExpenditureController::class, "index"]);
+    Route::post('/admin/expenditure', [ExpenditureController::class, "store"]);
+    Route::delete('/admin/expenditure/{expenditure}', [ExpenditureController::class, "destroy"]);
+    Route::put('/admin/expenditure/{expenditure}', [ExpenditureController::class, "update"]);
+    Route::post('/admin/expenditure/{expenditure}/edit', [ExpenditureController::class, "edit"]);
 });

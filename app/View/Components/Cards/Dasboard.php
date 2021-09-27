@@ -11,9 +11,15 @@ class Dasboard extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $title, $subtitle, $percentase, $icon, $footer, $upper;
+    public function __construct($title = "Cart", $subtitle = "2313", $icon = "fas fa-diagram", $percentase = "12,3%", $upper = false, $footer = "Since last month")
     {
-        //
+        $this->title = $title;
+        $this->subtitle = $subtitle;
+        $this->percentase = $percentase;
+        $this->icon = $icon;
+        $this->footer = $footer;
+        $this->upper = $upper;
     }
 
     /**

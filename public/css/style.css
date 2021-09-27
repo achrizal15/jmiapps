@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap');
+body{
+    font-family: 'Poppins';
+}
+.dropdown-items {
+    min-width: 80px;
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    display: none;
+}
+
+.dropdown-btn {
+    padding: 5px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+}
+
+.dropdown-items::before {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    top: -8px;
+    border-bottom: solid 10px white;
+    border-left: solid 10px transparent;
+    border-right: solid 10px transparent;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown:hover .dropdown-items {
+    display: block;
+}
+
+.dropdown-items ul li:hover {
+    background-color: rgb(201, 200, 200);
+    border-radius: 5px;
+}
+
+.dropdown-items ul li {
+    box-sizing: border-box;
+    padding: 8px 10px 8px 10px;
+}

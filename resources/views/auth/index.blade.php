@@ -34,10 +34,10 @@
                 <form class="flex flex-col" method="POST" action="/login">
                     @csrf
                     <div class="flex flex-col pt-4">
-                        <label for="email" class="text-lg">Email</label>
-                        <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="your@email.com"
+                        <label for="phone" class="text-lg">Phone</label>
+                        <input type="phone" name="phone" id="phone" value="{{ old('phone') }}" placeholder="085244XXX"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
-                        @error('email')
+                        @error('phone')
                         <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>

@@ -5,10 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
+    
     <title>{{ $title }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
 </head>
 
@@ -47,15 +51,15 @@
                     <hr class="my-4 md:min-w-full" />
                     <x-Sidebar.heading title="Inventory" />
                     <x-Sidebar.navigasi>
-                        <x-Sidebar.menu href="/admin/supplier"
-                            active="{{ (request()->is('admin/supplier')) ? true:false }}">
-                            <i class="fas fa-truck-moving mr-2 text-sm opacity-75"></i>
-                            supplier
+                        <x-Sidebar.menu href="/admin/expenditure"
+                            active="{{ (request()->is('admin/expenditure')) ? true:false }}">
+                            <i class="fas fa-truck mr-2 text-sm opacity-75"></i>
+                        Pembelanjaan
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/inventory"
-                            active="{{ (request()->is('admin/inventory')) ? true:false }}">
+                        <x-Sidebar.menu href="/admin/barang"
+                            active="{{ (request()->is('admin/barang')) ? true:false }}">
                             <i class="fas fa-boxes mr-2 text-sm opacity-75"></i>
-                            tambah stok
+                        Barang
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/barangkeluar"
                             active="{{ (request()->is('admin/barangkeluar')) ? true:false }}"> <i
@@ -70,7 +74,7 @@
                         <x-Sidebar.menu href="/admin/pelanggan"
                             active="{{ (request()->is('admin/pelanggan')) ? true:false }}">
                             <i class="fas fa-truck-moving mr-2 text-sm opacity-75"></i>
-                          detail pelanggan
+                            detail pelanggan
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/pembayaran"
                             active="{{ (request()->is('admin/pembayaran')) ? true:false }}">
@@ -80,14 +84,14 @@
                         <x-Sidebar.menu href="/admin/pasangbaru"
                             active="{{ (request()->is('admin/pasangbaru')) ? true:false }}"> <i
                                 class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
-                          pasang baru
+                            pasang baru
                         </x-Sidebar.menu>
 
                     </x-Sidebar.navigasi>
                 </div>
             </div>
         </nav>
-        <div class="relative md:ml-64 bg-blueGray-50">
+        <div class="relative md:ml-64 bg-gray-50">
             {{-- Navbar --}}
             <nav
                 class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
@@ -104,32 +108,33 @@
                                 class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 relative  bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10" />
                         </div>
                     </form>
-                    <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
-                        <a class="text-blueGray-500 block" href="#" onclick="openDropdown(event,'user-dropdown')">
-                            <div class="items-center flex">
-                                <div class="relative w-12 h-12">
-                                    <img class="rounded-full border-2 border-gray-100 shadow-sm"
-                                        src="https://randomuser.me/api/portraits/women/81.jpg" alt="user image" />
-                                </div>
-                            </div>
-                        </a>
-                        <div class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                            id="user-dropdown">
-                            <a href="/admin/profile"
-                                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Profile</a>
-                            <a href="/logout"
-                                class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Logout</a>
-                        </div>
-                    </ul>
+                <div class="dropdown hidden md:block">
+                    <button class="relative w-10 h-10">
+                     <div class="rounded-full bg-white h-full w-full"></div>
+                    </button>
+                    <div class="dropdown-items">
+                        <ul>
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">logout</a></li>
+                        </ul>
+                    </div>
+                </div>
                 </div>
             </nav>
             <div class="relative bg-pink-600 md:pt-32 pb-32 pt-12">
                 <div class="px-4 md:px-10 mx-auto w-full">
-                    @yield('content')
+                    <div class="flex flex-wrap">
+                        <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244,444" />
+                        <x-cards.dasboard />
+                        <x-cards.dasboard />
+                        <x-cards.dasboard />
+                    </div>
                 </div>
             </div>
+            @yield('content')
         </div>
     </div>
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="/js/notus.js"></script>

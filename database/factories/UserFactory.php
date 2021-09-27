@@ -25,15 +25,13 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            'email' => "admin@gmail.com",
             'images' => $this->faker->image(),
-            'phone' => $this->faker->phoneNumber(),
+            'phone' => "085234104446",
             'alamat' => $this->faker->address(),
-            "role_id" => random_int(1, 3),
+            "role_id" => 2,
             "is_active" => "1",
-            'email' => $this->faker->email(),
-            'password' => Hash::make('password'),
+            'password' => Hash::make('123'),
         ];
     }
 
@@ -42,12 +40,4 @@ class UserFactory extends Factory
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
-    }
 }

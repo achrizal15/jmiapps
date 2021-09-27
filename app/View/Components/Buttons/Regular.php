@@ -4,16 +4,19 @@ namespace App\View\Components\Buttons;
 
 use Illuminate\View\Component;
 
-class Dropdown extends Component
+class Regular extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public $color, $name, $type;
+    public function __construct($color = "green", $type = "button", $name = "Buttons")
     {
-        //
+        $this->name = $name;
+        $this->color = $color;
+        $this->type = $type;
     }
 
     /**
@@ -23,6 +26,6 @@ class Dropdown extends Component
      */
     public function render()
     {
-        return view('components.buttons.dropdown');
+        return view('components.buttons.regular');
     }
 }

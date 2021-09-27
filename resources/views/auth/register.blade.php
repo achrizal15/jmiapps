@@ -32,7 +32,7 @@
                     </div>
     
                     <div class="flex flex-col pt-4">
-                        <label for="email" class="text-lg">Email</label>
+                        <label for="email" class="text-lg">Email <span class="text-sm">(Opsional)</span></label>
                         <input type="email" value="{{ old('email') }}" name="email" id="email" placeholder="your@email.com"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
                         @error('email')

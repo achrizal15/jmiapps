@@ -1,4 +1,5 @@
 Registrasi 
 Kekurangan: Tidak menggunakan fitur email activasi
 Alasan: Untuk mempermudah user ketika mendaftar
-
+Pembelanjaan membeli barang oleh admin acc ke pemilik untuk mendapat uang keluar
+Alat yang rusak akan masuk ke barang dengan status rusak
