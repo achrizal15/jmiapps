@@ -26,7 +26,7 @@
                 <div class="flex flex-wrap items-center justify-between">
                     <div class="relative w-full  max-w-full flex-grow flex-1 flex">
                         <h3 class="font-semibold text-lg text-gray-700 inline">
-                            Dafta Pengajuan Pembelanjaan<div class="has-tooltip inline-block">
+                            Daftar Pengajuan Pembelanjaan<div class="has-tooltip inline-block">
                                 <span
                                     class="tooltip rounded-sm shadow-lg p-0.5 bg-gray-100 text-red-500 -mt-8 text-xs">Hanya
                                     pengajuan dengan status pending yang dapat dirubah!</span>
@@ -133,7 +133,7 @@
     @include('templates.footer')
 </section>
 {{-- Modlas --}}
-<x-Modals.Regular title="Tambah product" id="add-data">
+<x-Modals.Regular title="Pengajuan Pembelanjaan" id="add-data">
     <form action="/admin/expenditure" method="post">
         @csrf
         <div class="space-x-0 p-4 bg-gray-200 mb-2 md:space-y-2 space-y-0">

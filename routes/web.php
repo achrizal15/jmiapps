@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ExpenditureController;
-use App\Http\Controllers\InventoryController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Models\User;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\ExpenditureController;
+use App\Http\Controllers\Pemilik\FinancingController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Pemilik\DashboardController as PemilikDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,15 +31,28 @@ Route::middleware(['guest'])->group(function () {
 });
 Route::get('/logout', [LoginController::class, "logout"]);
 Route::middleware(['auth', 'is_role:1'])->group(function () {
-    Route::get('/pemilik', function () {
-        return view('pemilik.index', ['title' => "Super User"]);
+    Route::get('/pemilik',[PemilikDashboardController::class,'index']);
+    Route::prefix('/pemilik/agreement')->group(function () {
+        Route::get('/', [FinancingController::class, "index"]);
+    });
+    Route::prefix('/pemilik/agreement')->group(function () {
+        Route::put('/financing/{expenditure}', [FinancingController::class, "update"]);
     });
 });
 Route::middleware(['auth', 'is_role:2'])->group(function () {
-    Route::get('/admin', [AdminController::class, "index"]);
-    Route::get('/admin/expenditure', [ExpenditureController::class, "index"]);
-    Route::post('/admin/expenditure', [ExpenditureController::class, "store"]);
-    Route::delete('/admin/expenditure/{expenditure}', [ExpenditureController::class, "destroy"]);
-    Route::put('/admin/expenditure/{expenditure}', [ExpenditureController::class, "update"]);
-    Route::post('/admin/expenditure/{expenditure}/edit', [ExpenditureController::class, "edit"]);
+    Route::get('/admin', [AdminDashboardController::class, "index"]);
+    Route::prefix('/admin/expenditure')->group(function () {
+        Route::get('/', [ExpenditureController::class, "index"]);
+        Route::post('/', [ExpenditureController::class, "store"]);
+        Route::delete('/{expenditure}', [ExpenditureController::class, "destroy"]);
+        Route::put('/{expenditure}', [ExpenditureController::class, "update"]);
+        Route::post('/{expenditure}/edit', [ExpenditureController::class, "edit"]);
+    });
+    Route::prefix('/admin/product')->group(function () {
+        Route::get('/', [InventoryController::class, 'index']);
+        Route::post('/', [InventoryController::class, 'store']);
+        Route::delete('/{inventory}', [InventoryController::class, 'destroy']);
+        Route::put('/{inventory}',[InventoryController::class,'update']);
+        Route::post('/{inventory}/edit', [InventoryController::class, 'edit']);
+    });
 });

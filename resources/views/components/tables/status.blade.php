@@ -1,4 +1,4 @@
-@if ($sts=="error"||$sts=="reject")
+@if ($sts=="error"||$sts=="reject"||$sts=="broken")
 <div>
     <i class="fas fa-circle text-red-500 mr-2"></i>
     {{ $sts}}
