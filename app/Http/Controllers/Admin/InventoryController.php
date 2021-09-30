@@ -25,7 +25,7 @@ class InventoryController extends Controller
     }
     public function edit(Inventory $inventory)
     {
-     
+
         return  $inventory->find(request('id'));
     }
     public function update(Request $request, Inventory $inventory)
@@ -42,9 +42,8 @@ class InventoryController extends Controller
     public function destroy(Inventory $product)
     {
         Inventory::find($product->id)->delete();
-        // // or
-        // // Inventory::destroy($inventory->id);
+        // or
+        // Inventory::destroy($inventory->id);
         return redirect('/admin/product')->with('success', "Barang berhasil dihapus!");
-
     }
 }

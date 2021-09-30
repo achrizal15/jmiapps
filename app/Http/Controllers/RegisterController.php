@@ -14,10 +14,11 @@ class RegisterController extends Controller
     }
     public function store(Request $request)
     {
+
         $validate = $request->validate([
             "name" => 'required',
             "email" => 'nullable',
-            "phone" => 'required|unique:users,phone',
+            "phone" => 'required|unique:users,phone|min:8',
             "alamat" => 'required',
             'password' => "required|min:3|max:8|same:re-password",
         ]);
@@ -25,6 +26,9 @@ class RegisterController extends Controller
         $validate['name'] = ucwords($validate['name']);
         $validate['password'] = Hash::make($validate['password']);
         User::create($validate);
+        // if (isset(request()->fromadmin) ? request()->fromadmin : false) {
+        //     return redirect('/admin/member')->with('success', 'Member baru berhasil ditambahkan!');
+        // }
         return redirect('/login')->with('success', 'Berhasil melakukan registrasi!');
     }
 }

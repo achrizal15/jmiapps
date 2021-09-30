@@ -78,8 +78,8 @@
                     <hr class="my-4 md:min-w-full" />
                     <x-Sidebar.heading title="pelanggan" />
                     <x-Sidebar.navigasi>
-                        <x-Sidebar.menu href="/admin/pelanggan"
-                            active="{{ (request()->is('admin/pelanggan')) ? true:false }}">
+                        <x-Sidebar.menu href="/admin/member"
+                            active="{{ (request()->is('admin/member')) ? true:false }}">
                             <i class="fas fa-truck-moving mr-2 text-sm opacity-75"></i>
                             detail pelanggan
                         </x-Sidebar.menu>

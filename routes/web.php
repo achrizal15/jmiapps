@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\ExpenditureController;
 use App\Http\Controllers\Pemilik\FinancingController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Pemilik\DashboardController as PemilikDashboardController;
 use App\Http\Controllers\Pemilik\FinanceController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Pemilik\FinanceController;
 |
 */
 
+Route::get('/logout', [LoginController::class, "logout"]);
 Route::middleware(['guest'])->group(function () {
     Route::get('/', function () {
         return view("welcome", ['title' => "Landing Page"]);
@@ -31,7 +33,6 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/register', [RegisterController::class, "index"]);
     Route::post('/register', [RegisterController::class, "store"]);
 });
-Route::get('/logout', [LoginController::class, "logout"]);
 Route::middleware(['auth', 'is_role:1'])->group(function () {
     Route::get('/pemilik', [PemilikDashboardController::class, 'index']);
     Route::prefix('/pemilik/agreement')->group(function () {
@@ -45,8 +46,9 @@ Route::middleware(['auth', 'is_role:1'])->group(function () {
 Route::middleware(['auth', 'is_role:2'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, "index"]);
     Route::prefix('/admin')->group(function () {
-        Route::resource('/product', InventoryController::class)->except("show");
+        Route::resource('/product', InventoryController::class);
         Route::resource('/expenditure', ExpenditureController::class)->except("show");
         Route::resource('/package', PackageController::class)->except("show");
+        Route::resource('/member', MemberController::class);
     });
 });

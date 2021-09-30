@@ -28,12 +28,9 @@
                     </div> <button class="font-semibold rounded-sm px-3 py-0.5 shadow-lg bg-blue-600 text-sm text-white"
                         onclick="toggleModal('add-product')">ADD</button>
                 </div>
-                <div class="flex mt-2 w-full justify-center">
-                    <form action="/admin/product">
+                <div class="flex mt-2 w-full justify-start">
+                    <form action="/admin/member">
                         <div class="flex lg:space-x-2 flex-col lg:flex-row">
-                            <div class="flex md:space-x-2 flex-col md:flex-row">
-                                <input type="month" min="2021-01" value="{{ request('date') }}" name="date" id="">
-                            </div>
                             <div class="shadow flex">
                                 <input name="search"
                                     class="w-full rounded p-2 focus:outline-none border-none focus:ring-0" type="search"
@@ -44,7 +41,7 @@
                                 </button>
                             </div>
                             @if(count(request()->all()))
-                            <a href="/admin/product"
+                            <a href="/admin/member"
                                 class="bg-red-500 text-center px-3 text-white flex items-center rounded-sm">Reset</a>@endif
                         </div>
                     </form>
@@ -53,36 +50,43 @@
             <div class="block w-full overflow-x-auto">
                 <!-- Projects table -->
                 <x-tables.table>
-                    <x-tables.thead thItem="Nomor,Name,Qty,Harga,status" />
+                    <x-tables.thead thItem="Nomor,name,email,phone,alamat,map,action" />
                     <tbody>
 
-                        @foreach ($collection as $item)
+                        @foreach ($member as $item)
                         <tr>
                             <th
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left flex items-center font-bold text-gray-600">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left font-bold text-gray-600 w-16">
                                 {{ $loop->iteration }}
                             </th>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
-                                {{$item->name}}
+                                <div class="w-20">{{$item->name}}</div>
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
-                                {{$item->stock}}
+                                {{$item->email}}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
-                                @rupiah($item->price)
+                                {{$item->phone}}
                             </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 flex justify-between">
-                                <x-tables.status sts="{{ $item->status }}" />
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
+                                <div class="w-28 h-20 overflow-y-auto">
+                                    {{$item->alamat}}
+                                </div>
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
+                                <div class="w-28 h-20 overflow-y-auto">
+                                    {{$item->location}}
+                                </div>
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm w-20">
                                 <div class="flex space-x-2">
-
                                     <button type="button" id="edit-data" data-id="{{ $item->id }}"
                                         onclick="toggleModal('edit-product')">
                                         <i class="fas fa-edit text-yellow-500"></i>
                                     </button>
 
-                                    <form method="POST" action="/admin/product/{{ $item->id }}">
-                                        @method("delete")
+                                    <form method="POST" action="/admin/member/{{ $item->id }}">
+                                        @method('delete')
                                         @csrf
                                         <button type="submit">
                                             <i class="fas fa-trash text-red-500"></i>
@@ -101,25 +105,29 @@
     @include('templates.footer')
 </section>
 {{-- Modlas --}}
-<x-Modals.Regular title="Tambah product" id="add-product">
-    <form action="/admin/product" method="post">
+<x-Modals.Regular title="Tambah Pelanggan" id="add-product">
+    <form action="/admin/member" method="post">
         @csrf
-        <div class="space-x-0 p-4 bg-gray-300 mb-2 md:space-y-2 space-y-0">
-            <input type="text" placeholder="Nama barang" name="name" value="{{ old('name') }}"
+        <div class="space-x-0 p-4 bg-gray-100 mb-2 md:space-y-2 space-y-0">
+            <input type="text" placeholder="Nama lengkap" name="name" value="{{ old('name') }}"
                 class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             <div class="md:flex-row flex md:space-x-2 flex-col">
-                <input type="number" placeholder="Stock" name="stock" value="{{ old('stock') }}"
+                <input type="number" placeholder="Phone number" name="phone" value="{{ old('phone') }}"
                     class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
-                <input type="number" placeholder="Harga per item" name="price" value="{{ old('price') }}"
+                <input type="email" placeholder="email" name="email" value="{{ old('email') }}"
                     class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>
-            <div class="flex items-center space-x-2">
-                <input value="ready" type="radio" name="status" id="ready" class=" focus:bg-green-500" checked>
-                <label for="ready">Ready</label>
+            <div class="md:flex-row flex md:space-x-2 flex-col">
+                <input type="text" placeholder="Alamat" name="alamat" value="{{ old('alamat') }}"
+                    class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
+                <input type="text" placeholder="Map location" name="location" value="{{ old('location') }}"
+                    class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>
-            <div class="flex items-center space-x-2">
-                <input value="broken" type="radio" name="status" id="broken" class="active:bg-red-500 focus:bg-red-500">
-                <label for="broken">Broken</label>
+            <div class="md:flex-row flex md:space-x-2 flex-col">
+                <input type="password" placeholder="Password" name="password"
+                    class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
+                <input type="password" placeholder="Re-password" name="re-password"
+                    class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>
         </div>
         <div class="flex items-center justify-end mx-4 ">
@@ -129,26 +137,29 @@
     </form>
 </x-Modals.Regular>
 {{-- Edit --}}
-<x-Modals.Regular title="Edit Product" id="edit-product">
-    <form class="edit-form" method="POST">
-        @method("put")
+<x-Modals.Regular title="Edit Pelanggan" id="edit-product">
+    <form action="/admin/member" method="post" class="edit-form">
         @csrf
-        <div class="space-x-0 p-4 bg-gray-300 mb-2 md:space-y-2 space-y-0">
-            <input type="text" placeholder="Nama barang" name="name" id="product-name"
+        @method('put')
+        <div class="space-x-0 p-4 bg-gray-100 mb-2 md:space-y-2 space-y-0">
+            <input type="text" placeholder="Nama lengkap" name="name" id="name"
                 class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             <div class="md:flex-row flex md:space-x-2 flex-col">
-                <input type="number" placeholder="Stock" name="stock" id="stock"
+                <input type="number" placeholder="Phone number" name="phone" id="phone"
                     class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
-                <input type="number" placeholder="Harga per item" name="price" id="price"
+                <input type="email" placeholder="email" name="email" id="email"
                     class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>
-            <div class="flex items-center space-x-2">
-                <input value="ready" type="radio" name="status" class=" focus:bg-green-500">
-                <label for="ready">Ready</label>
+            <div class="md:flex-row flex md:space-x-2 flex-col">
+                <input type="text" placeholder="Alamat" name="alamat" id="alamat"
+                    class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
+                <input type="text" placeholder="Map location" name="location" id="location"
+                    class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>
-            <div class="flex items-center space-x-2">
-                <input value="broken" type="radio" name="status" class="active:bg-red-500 focus:bg-red-500">
-                <label for="broken">Broken</label>
+            <div class="md:flex-row flex md:space-x-2 flex-col">
+                <label id="show-pwd">RESET PASSWORD</label>
+                <input type="text" placeholder="Password baru" name="password" id="password"
+                    class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>
         </div>
         <div class="flex items-center justify-end mx-4 ">
@@ -159,26 +170,27 @@
 </x-Modals.Regular>
 <script>
     $(document).ready(function(){
+        $("#password").hide();
+    $(document).on('click',"#show-pwd",function(){
+        $("#password").toggle('slow');
+    })
     $(document).on('click','#edit-data',function(){
         let id=$(this).data('id');
         let token= $('meta[name="csrf-token"]').attr('content');
-        let radios=$('input:radio[name=status]');
         $.ajax({
-                url:'/admin/product/'+id+'/edit',
+                url:'/admin/member/'+id+'/edit',
                 type:'get',
                 data:{'id':id},
                 dataType:"json",
                 success:function(data){
-                    console.log(data)
-                    $(".edit-form").attr('action','/admin/product/'+data['id'])
-                    $("#product-name").val(data['name'])
-                    $("#stock").val(data['stock'])
-                    $("#price").val(data['price'])
-                    if(data['status']=="ready"){
-                        radios.filter('[value=ready]').prop('checked',true)
-                    }else{
-                        radios.filter('[value=broken]').prop('checked',true)
-                    }
+                    console.log
+                    $(".edit-form").attr('action','/admin/member/'+data['id'])
+                    $("#name").val(data['name'])
+                    $("#phone").val(data['phone'])
+                    $("#email").val(data['email'])
+                    $("#alamat").val(data['alamat'])
+                    $("#location").val(data['location'])
+                    $("#password").val(data['password'])
                 }
             })
     })

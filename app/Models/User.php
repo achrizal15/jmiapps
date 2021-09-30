@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Date;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -17,7 +18,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $guarded=["id"];
+    protected $guarded = ["id"];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -37,7 +38,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class);
+    }
+    public function scopeFilter($query, $filters)
+    {
+        $query->when($filters['date'] ?? false, function ($query, $date) {
+            return $query
+                ->whereYears("created_at", Date('Y', strtotime($date)))
+                ->whereMonth("created_at", Date("m", strtotime($date)));
+        });
+        if (isset($filters['search'])) {
+            return $query->where('name', "like", "%" . $filters['search'] . "%")
+                ->orWhere('email', "like", "%" . $filters['search'] . "%")
+                ->orWhere('phone', "like", "%" . $filters['search'] . "%");
+        }
     }
 }
