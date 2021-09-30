@@ -25,7 +25,8 @@ class InventoryController extends Controller
     }
     public function edit(Inventory $inventory)
     {
-        return json_encode($inventory);
+     
+        return  $inventory->find(request('id'));
     }
     public function update(Request $request, Inventory $inventory)
     {
@@ -38,11 +39,12 @@ class InventoryController extends Controller
         $inventory->update($validate);
         return redirect("/admin/product")->with('success', "Data berhasil diupdate, lakukan pembelanjaan jika stock habis!");
     }
-    public function destroy(Inventory $inventory)
+    public function destroy(Inventory $product)
     {
-        Inventory::find($inventory->id)->delete();
-        // or
-        // Inventory::destroy($inventory->id);
+        Inventory::find($product->id)->delete();
+        // // or
+        // // Inventory::destroy($inventory->id);
         return redirect('/admin/product')->with('success', "Barang berhasil dihapus!");
+
     }
 }

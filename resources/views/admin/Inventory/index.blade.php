@@ -75,14 +75,13 @@
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 flex justify-between">
                                 <x-tables.status sts="{{ $item->status }}" />
                                 <div class="flex space-x-2">
-                                    <form method="POST" action="/admin/product/{{ $item->id }}/edit">
-                                        @csrf
+                                 
                                         <button type="button" id="edit-data" data-id="{{ $item->id }}"
                                             onclick="toggleModal('edit-product')">
                                             <i class="fas fa-edit text-yellow-500"></i>
                                         </button>
-                                    </form>
-                                    <form method="POST" action="/admin/product/{{ $item->id }}">
+                               
+                                    <form method="POST" action="/admin/product/{{ $item }}">
                                         @method('delete')
                                         @csrf
                                         <x-buttons.delete />
@@ -164,10 +163,11 @@
         let radios=$('input:radio[name=status]');  
         $.ajax({
                 url:'/admin/product/'+id+'/edit',
-                type:'post',
-                data:{'_token':token,"id":id},
+                type:'get',
+                data:{'id':id},     
                 dataType:"json",
                 success:function(data){
+                    console.log(data)
                     $(".edit-form").attr('action','/admin/product/'+data['id'])
                     $("#product-name").val(data['name'])
                     $("#stock").val(data['stock'])

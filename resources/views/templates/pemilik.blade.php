@@ -49,16 +49,19 @@
                             <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                             Home
                         </x-Sidebar.menu>
-                    </x-Sidebar.navigasi>
-                    <hr class="my-4 md:min-w-full" />
-                    <x-Sidebar.heading title="Agreement" />
-                    <x-Sidebar.navigasi>
                         <x-Sidebar.menu href="/pemilik/agreement"
-                            active="{{ (request()->is('admin/expenditure')) ? true:false }}">
+                            active="{{ (request()->is('pemilik/agreement')) ? true:false }}">
                             <i class="fas fa-truck mr-2 text-sm opacity-75"></i>
                             Pembelanjaan
                         </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/pemilik/finance"
+                            active="{{ (request()->is('pemilik/finance')) ? true:false }}">
+                            <i class="fas fa-money-bill-alt mr-2 text-sm opacity-75"></i>
+                                                      Keuangan
+                        </x-Sidebar.menu>
                     </x-Sidebar.navigasi>
+                    <hr class="my-4 md:min-w-full" />
+
                 </div>
             </div>
         </nav>

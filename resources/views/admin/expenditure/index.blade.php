@@ -26,7 +26,8 @@
                 <div class="flex flex-wrap items-center justify-between">
                     <div class="relative w-full  max-w-full flex-grow flex-1 flex">
                         <h3 class="font-semibold text-lg text-gray-700 inline">
-                            Daftar Pengajuan Pembelanjaan<div class="has-tooltip inline-block">
+                            Daftar Pengajuan Pembelanjaan
+                            <div class="has-tooltip inline-block">
                                 <span
                                     class="tooltip rounded-sm shadow-lg p-0.5 bg-gray-100 text-red-500 -mt-8 text-xs">Hanya
                                     pengajuan dengan status pending yang dapat dirubah!</span>
@@ -226,7 +227,7 @@
         let radios=$('input:radio[name=type]');    
     $.ajax({
         url:"/admin/expenditure/"+id+"/edit",
-         type:"post",
+         type:"get",
         data:{"_token": $('meta[name="csrf-token"]').attr('content'),
         "id": id},
         dataType:"json",

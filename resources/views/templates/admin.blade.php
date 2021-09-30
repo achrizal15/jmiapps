@@ -8,9 +8,11 @@
     <link href="/css/style.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
-    
+
     <title>{{ $title }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
@@ -47,6 +49,11 @@
                             <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                             Home
                         </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/admin/package"
+                            active="{{ (request()->is('admin/package')) ? true:false }}">
+                            <i class="fas fa-box-open mr-2 text-sm opacity-75"></i>
+                            Paket
+                        </x-Sidebar.menu>
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />
                     <x-Sidebar.heading title="Inventory" />
@@ -54,12 +61,12 @@
                         <x-Sidebar.menu href="/admin/expenditure"
                             active="{{ (request()->is('admin/expenditure')) ? true:false }}">
                             <i class="fas fa-truck mr-2 text-sm opacity-75"></i>
-                        Pembelanjaan
+                            Pembelanjaan
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/product"
                             active="{{ (request()->is('admin/product')) ? true:false }}">
                             <i class="fas fa-boxes mr-2 text-sm opacity-75"></i>
-                        Barang
+                            Barang
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/barangkeluar"
                             active="{{ (request()->is('admin/barangkeluar')) ? true:false }}"> <i
@@ -86,8 +93,8 @@
                                 class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
                             pasang baru
                         </x-Sidebar.menu>
-
                     </x-Sidebar.navigasi>
+                    <hr class="my-4 md:min-w-full" />
                 </div>
             </div>
         </nav>
@@ -108,17 +115,17 @@
                                 class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 relative  bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10" />
                         </div>
                     </form>
-                <div class="dropdown hidden md:block">
-                    <button class="relative w-10 h-10">
-                     <div class="rounded-full bg-white h-full w-full"></div>
-                    </button>
-                    <div class="dropdown-items">
-                        <ul>
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="/logout">logout</a></li>
-                        </ul>
+                    <div class="dropdown hidden md:block">
+                        <button class="relative w-10 h-10">
+                            <div class="rounded-full bg-white h-full w-full"></div>
+                        </button>
+                        <div class="dropdown-items">
+                            <ul>
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="/logout">logout</a></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
                 </div>
             </nav>
             <div class="relative bg-pink-600 md:pt-32 pb-32 pt-12">
@@ -134,7 +141,7 @@
             @yield('content')
         </div>
     </div>
-  
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="/js/notus.js"></script>

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Package;
 use App\Models\User;
-use App\Models\pelanggan;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PelangganPolicy
+class PackagePolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class PelangganPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\pelanggan  $pelanggan
+     * @param  \App\Models\Package  $package
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, pelanggan $pelanggan)
+    public function view(User $user, Package $package)
     {
         //
     }
@@ -48,10 +48,10 @@ class PelangganPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\pelanggan  $pelanggan
+     * @param  \App\Models\Package  $package
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, pelanggan $pelanggan)
+    public function update(User $user, Package $package)
     {
         //
     }
@@ -60,10 +60,10 @@ class PelangganPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\pelanggan  $pelanggan
+     * @param  \App\Models\Package  $package
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, pelanggan $pelanggan)
+    public function delete(User $user, Package $package)
     {
         //
     }
@@ -72,10 +72,10 @@ class PelangganPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\pelanggan  $pelanggan
+     * @param  \App\Models\Package  $package
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, pelanggan $pelanggan)
+    public function restore(User $user, Package $package)
     {
         //
     }
@@ -84,10 +84,10 @@ class PelangganPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\pelanggan  $pelanggan
+     * @param  \App\Models\Package  $package
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, pelanggan $pelanggan)
+    public function forceDelete(User $user, Package $package)
     {
         //
     }

@@ -25,11 +25,11 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'email' => "admin@gmail.com",
+            'email' => $this->faker->email(),
             'images' => $this->faker->image(),
-            'phone' => "085234104446",
+            'phone' => $this->faker->phoneNumber(),
             'alamat' => $this->faker->address(),
-            "role_id" => 2,
+            "role_id" => rand(1,4),
             "is_active" => "1",
             'password' => Hash::make('123'),
         ];
