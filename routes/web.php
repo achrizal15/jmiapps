@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\ExpenditureController;
 use App\Http\Controllers\Pemilik\FinancingController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\InstallationController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Pemilik\DashboardController as PemilikDashboardController;
@@ -50,5 +51,7 @@ Route::middleware(['auth', 'is_role:2'])->group(function () {
         Route::resource('/expenditure', ExpenditureController::class)->except("show");
         Route::resource('/package', PackageController::class)->except("show");
         Route::resource('/member', MemberController::class);
+        Route::get('/installation/selectJquery', [InstallationController::class,"selectJquery"]);
+        Route::resource('/installation', InstallationController::class);
     });
 });

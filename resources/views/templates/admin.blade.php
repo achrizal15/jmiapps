@@ -11,8 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>{{ $title }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
@@ -88,8 +89,8 @@
                             <i class="fas fa-boxes mr-2 text-sm opacity-75"></i>
                             pembayaran
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/pasangbaru"
-                            active="{{ (request()->is('admin/pasangbaru')) ? true:false }}"> <i
+                        <x-Sidebar.menu href="/admin/installation"
+                            active="{{ (request()->is('admin/installation')) ? true:false }}"> <i
                                 class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
                             pasang baru
                         </x-Sidebar.menu>
