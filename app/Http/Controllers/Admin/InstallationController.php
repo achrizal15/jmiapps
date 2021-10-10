@@ -16,15 +16,16 @@ class InstallationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $insModel;
-    public function __construct()
-    {
-        $this->insModel =  Installation::latest();
-    }
+
     public function index()
     {
-        $psb = $this->insModel->paginate(10)->withQueryString();
-        return view('admin.installation.index', ['title' => "Pasang Baru", "collection" => $psb]);
+        $psb = Installation::latest();
+        return view('admin.installation.index', [
+            'title' => "Pasang Baru",
+            "collection" => $psb->with(['user', 'package', 'technician'])
+                ->paginate(10)
+                ->withQueryString()
+        ]);
     }
 
     /**
@@ -46,7 +47,7 @@ class InstallationController extends Controller
      */
     public function store(Request $request)
     {
-        $valid = $request->validate([
+        $request->validate([
             'user_id' => "required",
             "package_id" => "required",
             "detail" => "nullable",
@@ -55,23 +56,27 @@ class InstallationController extends Controller
         $idInven = [];
         $nameInven = [];
         $stockInven = [];
+        $memberName = preg_replace('/[^0-9]/', '', $request->user_id);
         foreach ($request->inventory as $i) {
             $idInven[] = preg_replace('/[^0-9]/', '', $i['name']);
             $nameInven[] = preg_replace(['/[0-9]+/', '/[^A-Za-z0-9]/'], "", $i['name']);
-        }
-        foreach ($request->inventory as $i) {
-            $stockInven[] = $i['stock'];
+            $stockInven[] =  preg_replace('/[^0-9]/', '', $i['stock']);
         }
         $checkAvaible = Inventory::whereIn("name", $nameInven)->whereIn('id', $idInven);
         if (!count($checkAvaible->get()) || count($idInven) != count($checkAvaible->get())) {
             return redirect('/admin/installation/create')->with("error", "Product tidak ditemukan, cek inventory anda!");
         }
-        for ($i = 0; $i < count($idInven); $i++) {
-            $stok =   Inventory::find($idInven[$i]);
-            $pengurangan = $stok->stock - $stockInven[$i];
 
-            $stok->update(['stock'=>$pengurangan]);
-        }
+        $stok =  Installation::create([
+            "package_id" => $request->package_id,
+            "user_id" => $memberName,
+            "detail" => $request->detail,
+            "status" => "accept"
+        ]);
+        $stok->inventorys()->attach($idInven);
+        // $pengurangan = $stok->stock - $stockInven[$i];
+        // $stok->update(['stock' => $pengurangan<0?0:$pengurangan]);
+
     }
 
     /**
@@ -103,9 +108,19 @@ class InstallationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Installation $installation)
     {
-        //
+        $technician = preg_replace('/[^0-9]/', '', $request->name);
+        $technician_id = User::where("phone",$technician)->get();
+        if (!count($technician_id)) {
+            return redirect('/admin/installation')->with("error","Gagal teknisi tidak ditemukan silahkan cek kembali!");
+        }
+        $update=[
+            "technician_id"=>$technician_id[0]->id,
+            "status"=>"process"
+        ];
+        $installation->update($update);
+        return redirect('/admin/installation')->with("success","Permintaan berhasil di proses!");
     }
 
     /**
@@ -121,7 +136,7 @@ class InstallationController extends Controller
     public function selectJquery()
     {
         if (isset(request()->search) ? request(['search']) : false) {
-            $user = User::where("role_id", 4);
+            $user = User::where("role_id", request('search'));
             return $user->get();
         }
         if (isset(request()->inventory) ? request(['inventory']) : false) {

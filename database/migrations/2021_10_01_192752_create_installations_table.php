@@ -15,10 +15,26 @@ class CreateInstallationsTable extends Migration
     {
         Schema::create('installations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("package_id");
-            $table->foreignId("user_id");
-            $table->string("detail")->nullable();
+            $table->string("username")->nullable();
+            $table->foreignId("package_id")
+                ->references('id')
+                ->on('packages')
+                ->onDelete('cascade');
+            $table->foreignId("user_id")
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreignId("technician_id")
+                ->nullable()
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict');
+            $table->integer("installation_costs")->nullable();
+            $table->integer("discount")->nullable();
+            $table->integer("number_modem")->nullable();
+            $table->string("port")->nullable();
             $table->string("status");
+            $table->timestamp("expired")->nullable();
             $table->timestamps();
         });
     }

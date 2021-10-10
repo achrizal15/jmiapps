@@ -55,7 +55,6 @@
                                         <li> {{ $i}}</li>
                                         @endforeach
                                     </ol>
-
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
@@ -66,7 +65,7 @@
                                     <div class="justify-between flex items-center">
                                         <div class="has-tooltip inline-block">
                                             <span class="tooltip rounded-sm shadow-lg p-0.5 bg-gray-100 -mt-8 text-xs">
-                                             {{$item->detail}}
+                                             {{$item->note}}
                                             </span>
                                             <i class="fas fa-info-circle"></i>
                                         </div>
@@ -133,9 +132,9 @@
                             @enderror
                         </div>
                         <div class="mb-2">
-                            <label for="detail-package">Detail <span class="text-xs align-top">(Opsional)</span></label>
-                            <textarea name="detail" id="detail-package"
-                                class="w-full rounded-md">{{ old('detail') }}</textarea>
+                            <label for="note-package">Note</label>
+                            <textarea name="note" id="note-package" placeholder="Biaya pemasangan berbeda setiap daerah"
+                                class="w-full rounded-md">{{ old('note') }}</textarea>
                         </div>
                         <div>
                             <button type="submit"

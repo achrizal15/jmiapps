@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -19,7 +20,7 @@
     @yield('style')
 </head>
 
-<body class="text-blueGray-700 antialiased">
+<body class="text-gray-700 antialiased">
     <div class="root">
         <nav
             class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -57,6 +58,20 @@
                         </x-Sidebar.menu>
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />
+                    <x-Sidebar.heading title="Teknisi" />
+                    <x-Sidebar.navigasi>
+                        <x-Sidebar.menu active="{{ (request()->is('admin/technician')) ? true:false }}"
+                            href="/admin/technician">
+                            <i class="fas fa-user-tie mr-2 text-sm opacity-75"></i>
+                            Management Teknisi
+                        </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/admin/salary"
+                            active="{{ (request()->is('admin/salary')) ? true:false }}">
+                            <i class="fas fa-hand-holding-usd mr-2 text-sm opacity-75"></i>
+                            Gaji Teknisi
+                        </x-Sidebar.menu>
+                    </x-Sidebar.navigasi>
+                    <hr class="my-4 md:min-w-full" />
                     <x-Sidebar.heading title="Inventory" />
                     <x-Sidebar.navigasi>
                         <x-Sidebar.menu href="/admin/expenditure"
@@ -69,11 +84,11 @@
                             <i class="fas fa-boxes mr-2 text-sm opacity-75"></i>
                             Barang
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/barangkeluar"
+                        {{-- <x-Sidebar.menu href="/admin/barangkeluar"
                             active="{{ (request()->is('admin/barangkeluar')) ? true:false }}"> <i
-                                class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
-                            barang keluar
-                        </x-Sidebar.menu>
+                            class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
+                        barang keluar
+                        </x-Sidebar.menu> --}}
 
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />
@@ -84,7 +99,7 @@
                             <i class="fas fa-truck-moving mr-2 text-sm opacity-75"></i>
                             detail pelanggan
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/pembayaran"
+                        <x-Sidebar.menu href="{{ route('admin.payment.index') }}"
                             active="{{ (request()->is('admin/pembayaran')) ? true:false }}">
                             <i class="fas fa-boxes mr-2 text-sm opacity-75"></i>
                             pembayaran
@@ -142,10 +157,10 @@
             @yield('content')
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="/js/notus.js"></script>
+    @yield("script")
 </body>
 
 </html>

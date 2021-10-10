@@ -66,7 +66,7 @@
                                     <div class="justify-between flex items-center">
                                         <div class="has-tooltip inline-block">
                                             <span class="tooltip rounded-sm shadow-lg p-0.5 bg-gray-100 -mt-8 text-xs">
-                                             {{$item->detail}}
+                                             {{$item->note}}
                                             </span>
                                             <i class="fas fa-info-circle text-blue-500"></i>
                                         </div>
@@ -134,9 +134,9 @@
                             @enderror
                         </div>
                         <div class="mb-2">
-                            <label for="detail-package">Detail <span class="text-xs align-top">(Opsional)</span></label>
-                            <textarea name="detail" id="detail-package"
-                                class="w-full rounded-md">{{ $package->detail }}</textarea>
+                            <label for="note-package">Note</label>
+                            <textarea name="note" id="note-package" placeholder="Biaya pemasangan berbeda"
+                                class="w-full rounded-md">{{ $package->note }}</textarea>
                         </div>
                         <div class="flex justify-around">
                             <button type="submit"

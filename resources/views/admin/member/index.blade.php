@@ -50,9 +50,8 @@
             <div class="block w-full overflow-x-auto">
                 <!-- Projects table -->
                 <x-tables.table>
-                    <x-tables.thead thItem="Nomor,name,email,phone,alamat,map,action" />
+                    <x-tables.thead thItem="Nomor,name,phone,alamat,map,action" />
                     <tbody>
-
                         @foreach ($member as $item)
                         <tr>
                             <th
@@ -62,10 +61,7 @@
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
                                 <div class="w-20">{{$item->name}}</div>
                             </td>
-                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
-                                {{$item->email}}
-                            </td>
-                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
+                                                       <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
                                 {{$item->phone}}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4">
@@ -157,7 +153,7 @@
                     class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>
             <div class="md:flex-row flex md:space-x-2 flex-col">
-                <label id="show-pwd">RESET PASSWORD</label>
+                <label id="show-pwd" class="px-4 py-1 bg-red-500 text-white">RESET PASSWORD</label>
                 <input type="text" placeholder="Password baru" name="password" id="password"
                     class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
             </div>

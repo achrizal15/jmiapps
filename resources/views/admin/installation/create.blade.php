@@ -52,28 +52,28 @@
                         <div class="md:w-1/2 w-full">
                             <label for="package" class="font-semibold text-gray-500">Package</label>
                             <select name="package_id" id="" class="block rounded-md w-full">
-                                <option disabled hidden selected>Pilih Package</option>
-                                @if (count($packages))
+                                <option hidden disabled selected>Pilih Package</option>
+                                @if (!count($packages))
+                                <option disabled>Kosong</option>
+                                @endif
                                 @foreach ($packages as $p)
                                 <option value="{{ $p->id }}">{{ $p->name }}</option>
                                 @endforeach
                             </select>
-                            @else
-                            <option value="" disabled>Packages Tidak Ada</option>
-                            @endif
                         </div>
                     </div>
                     <div class="flex flex-col md:flex-row md:space-x-2">
-                        <div  class="md:w-1/2 w-full">
+                        <div class="md:w-1/2 w-full">
                             <label for="detail" class="font-semibold text-gray-500">Detail</label>
-                            <textarea id="detail" name="detail" class="rounded-md w-full" placeholder="Jelaskan jika ada"></textarea>
-                            </div>
+                            <textarea id="detail" name="detail" class="rounded-md w-full"
+                                placeholder="Jelaskan jika ada"></textarea>
+                        </div>
                         <div class="md:w-1/2 w-full">
                             <label for="inv-name" class="font-semibold text-gray-500">Inventory Digunakan</label>
                             <div class="flex space-x-2 mb-2">
                                 <input type="text" id="inv-name" placeholder="Nama" class="rounded-md w-full"
                                     autocomplete="on">
-                                <input type="number" id="inv-stc" placeholder="Stock" class="rounded-md w-1/3"
+                                <input type="number" id="inv-stc" min="0" placeholder="Stock" class="rounded-md w-1/3"
                                     autocomplete="on">
                                 <button type="button" id="gunakan"
                                     class="bg-white shadow-md px-4 py-1 hover:bg-gray-200">Gunakan</button>
@@ -81,7 +81,10 @@
                             <ul class="todo-list list-decimal ml-4"> </ul>
                         </div>
                     </div>
-                    <button type="submit" class="bg-green-500 text-white font-semibold px-4 py-1 rounded-sm shadow-md hover:bg-green-700">Ajukan Sekaran</button>
+
+                    <button type="submit"
+                        class="bg-green-500 text-white font-semibold px-4 py-1 rounded-sm shadow-md hover:bg-green-700">Ajukan
+                        Sekaran</button>
                 </form>
             </div>
         </div>
@@ -141,7 +144,7 @@
       $(document).on('click','#del-inv', function(){
         $(this).parents("li:first").toggleClass('strike').fadeOut('slow');
       });
-    })
+     })
 });
 </script>
 @endsection

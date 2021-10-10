@@ -9,4 +9,7 @@ class Package extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    public function installations(){
+        return $this->hasMany(Installation::class);
+    }
 }

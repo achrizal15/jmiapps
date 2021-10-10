@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
             'images' => $this->faker->image(),
-            'phone' => $this->faker->phoneNumber(),
+            'phone' => $this->faker->unique()->nik(),
             'alamat' => $this->faker->address(),
             "role_id" => rand(1,4),
             "is_active" => "1",

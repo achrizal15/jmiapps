@@ -21,8 +21,16 @@ class ExpenditureFactory extends Factory
      */
     public function definition()
     {
+        $type = ['online', "offline"];
         return [
-            //
+            "name_product" => $this->faker->word(5),
+            "name_suplier" => $this->faker->company(),
+            "balance" => $this->faker->numberBetween(1000000, 5000000),
+            "price" => $this->faker->numberBetween(50000, 100000),
+            "stock" => rand(10, 50),
+            "type" => $type[rand(0, 1)],
+            "status" => "pending",
+            "notes" => $this->faker->paragraph(1)
         ];
     }
 }

@@ -20,4 +20,7 @@ class Inventory extends Model
             return $query->where('name', 'like', '%' . $search . '%');
         });
     }
+    public function installations(){
+        return $this->belongsToMany(Installation::class);
+    }
 }

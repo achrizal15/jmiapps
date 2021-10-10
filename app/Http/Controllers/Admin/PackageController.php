@@ -41,7 +41,7 @@ class PackageController extends Controller
             "name" => "required|unique:packages,name",
             "price" => "required",
             "feature" => "required",
-            "detail" => "nullable"
+            "note" => "nullable"
         ]);
         Package::create($validate);
         return redirect('/admin/package')->with('success', $request->name . " berhasil ditambahkan!");

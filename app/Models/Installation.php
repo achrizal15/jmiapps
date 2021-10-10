@@ -11,12 +11,22 @@ class Installation extends Model
     protected $guarded = ['id'];
     public function inventorys()
     {
-        return $this->belongsToMany(Inventory::class);
+        return $this->belongsToMany(Inventory::class)
+            ->withPivot(['stock']);
     }
-    public function users(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function packages(){
+    public function package()
+    {
         return $this->belongsTo(Package::class);
+    }
+    public function technician()
+    {
+        return $this->belongsTo(User::class, "technician_id");
+    }
+    public function payments(){
+        return $this->hasMany(Payment::class,"installation_id");
     }
 }

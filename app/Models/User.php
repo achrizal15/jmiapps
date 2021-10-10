@@ -46,7 +46,7 @@ class User extends Authenticatable
     {
         $query->when($filters['date'] ?? false, function ($query, $date) {
             return $query
-                ->whereYears("created_at", Date('Y', strtotime($date)))
+                ->whereYear("created_at", Date('Y', strtotime($date)))
                 ->whereMonth("created_at", Date("m", strtotime($date)));
         });
         if (isset($filters['search'])) {
@@ -54,5 +54,11 @@ class User extends Authenticatable
                 ->orWhere('email', "like", "%" . $filters['search'] . "%")
                 ->orWhere('phone', "like", "%" . $filters['search'] . "%");
         }
+    }
+    public function installations(){
+     return   $this->hasOne(Installation::class);
+    }
+    public function salarys(){
+        return $this->hasMany(Salary::class);
     }
 }

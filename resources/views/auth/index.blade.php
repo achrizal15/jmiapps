@@ -14,11 +14,11 @@
 
         <!-- Login Section -->
         <div class="w-full md:w-1/2 flex flex-col">
-    
+
             <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">
                 <img class="w-24 lg:w-28 md:w-20 " src="/img/logo-jmi.png" alt="">
             </div>
-    
+
             <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
                 <p class="text-center text-3xl pb-3 md:pb-8">Welcome.</p>
                 @if(session('success'))
@@ -35,13 +35,13 @@
                     @csrf
                     <div class="flex flex-col pt-4">
                         <label for="phone" class="text-lg">Phone</label>
-                        <input type="phone" name="phone" id="phone" value="{{ old('phone') }}" placeholder="085244XXX"
+                        <input type="text" name="phone" id="phone" value="{{ old('phone') }}" placeholder="085244XXX"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
                         @error('phone')
                         <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-    
+
                     <div class="flex flex-col pt-4">
                         <label for="password" class="text-lg">Password</label>
                         <input type="password" name="password" id="password" placeholder="Password"
@@ -58,9 +58,9 @@
                     </p>
                 </div>
             </div>
-    
+
         </div>
-    
+
         <!-- Image Section -->
         <div class="w-1/2 shadow-2xl">
             <img class="object-cover  w-full h-screen hidden md:block" src="/img/login-banner.jpg">

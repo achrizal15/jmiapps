@@ -26,13 +26,7 @@
                 <div class="flex flex-wrap items-center justify-between">
                     <div class="relative w-full  max-w-full flex-grow flex-1 flex">
                         <h3 class="font-semibold text-lg text-gray-700 inline">
-                            Daftar Pengajuan Pembelanjaan
-                            <div class="has-tooltip inline-block">
-                                <span
-                                    class="tooltip rounded-sm shadow-lg p-0.5 bg-gray-100 text-red-500 -mt-8 text-xs">Hanya
-                                    pengajuan dengan status pending yang dapat dirubah!</span>
-                                <i class="fas fa-exclamation text-xs text-blue-600 ml-2"></i>
-                            </div>
+                            Pasang Baru
                         </h3>
                     </div>
                     <a class="font-semibold rounded-sm px-3 py-0.5 shadow-lg bg-blue-600 text-sm text-white"
@@ -72,7 +66,7 @@
             <div class="block w-full overflow-x-auto">
                 <!-- Projects table -->
                 <x-tables.table>
-                    <x-tables.thead thItem="#,Nama barang,Stock,Type pembelian,Suplier,Harga,Anggaran,status" />
+                    <x-tables.thead thItem="#,pelanggan,alamat,phone,paket,teknisi,status" />
                     <tbody>
                         @foreach ($collection as $item)
                         <tr>
@@ -82,45 +76,41 @@
                             </th>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                {{$item->name_product}}
+                                {{ $item->user->name }}
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                {{$item->stock}}
+                                {{ $item->user->alamat }}
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                {{ $item->type }}
+                                {{ $item->user->phone }}
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                {{ $item->name_suplier}}
+                                {{ $item->package->name }}
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                @rupiah($item->price)
+                                @if ($item->technician_id!=null)
+                                {{ $item->technician->name }}
+                                @endif
                             </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                @rupiah($item->balance)
-                            </td>
+
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
                                 <x-tables.status sts="{{ $item->status }}" />
                                 <div class="flex space-x-2">
-                                    @if ($item->status=='pending')
-                                    <form method="POST" action="/admin/expenditure/{{ $item->id }}/edit">
-                                        @csrf
-                                        <button type="button" id="putData" onclick="toggleModal('edit-data')"
-                                            data-id="{{ $item->id }}"> <i
-                                                class="fas fa-edit text-yellow-500"></i></button>
-                                    </form>
+                                    @if ($item->status=="request")
+                                    <button type="button" id="putData" onclick="toggleModal('accept')"
+                                        data-id="{{ $item->id }}"> <i class="fas fa-edit text-yellow-500"></i></button>
                                     @endif
+
                                     <form method="POST" action="/admin/expenditure/{{ $item->id }}">
                                         @method('delete')
                                         @csrf
-                                        <button type="submit" onclick="return confirm('Pilih ok untuk melanjutkan.')"> <i
-                                            class="fas fa-trash text-red-500"></i></button>
+                                        <button type="submit" onclick="return confirm('Pilih ok untuk melanjutkan.')">
+                                            <i class="fas fa-trash text-red-500"></i></button>
                                     </form>
                                 </div>
                             </td>
@@ -134,36 +124,37 @@
     </div>
     @include('templates.footer')
 </section>
-
+{{-- modal --}}
+<x-modals.regular title="Pilih Teknisi" id="accept">
+    <form class="edit-form" method="post">
+        @csrf
+        @method("put")
+        <div class="px-4 py-4">
+            <input id="technician-name" type="text" required name="name" placeholder="Masukkan nohp/nama teknisi"
+                class="w-full rounded-md">
+            <button class="bg-green-500 hover:bg-green-400 text-white rounded-sm px-4 py-1 mt-4">Proses</button>
+        </div>
+    </form>
+</x-modals.regular>
 <script>
     $(document).ready(function() {
         setTimeout(function(){ $('#alert').hide('slow') }, 5000);
-        $(document).on('click', '#putData', function () {
-        let id=$(this).data("id");
-        let radios=$('input:radio[name=type]');
-    $.ajax({
-        url:"/admin/expenditure/"+id+"/edit",
-         type:"get",
-        data:{"_token": $('meta[name="csrf-token"]').attr('content'),
-        "id": id},
+        $(document).on("click","#putData",function(){
+            let id=$(this).data("id");
+            $(".edit-form").attr('action','/admin/installation/'+id)
+        })
+        let nama=[];
+        $.ajax({
+        url:"/admin/installation/selectJquery",
+        type:"get",
+        data:{"_token": $('meta[name="csrf-token"]').attr('content'),"search":3},
         dataType:"json",
-        success:function(data){
-             $(".form-edit").attr('action',"/admin/expenditure/"+data['id']);
-            $("#idx").val(data['id']);
-            $("#productname").val(data['name_product']);
-            $("#supliername").val(data['name_suplier']);
-            $("#pengeluaran").val(data['balance']);
-            $("#stock").val(data['stock']);
-            $("#price").val(data['price']);
-            $("#notes").html(data['notes']);
-            if(data['type']=="Online"){
-               radios.filter('[value=Online]').prop("checked", true);
-            }else{
-                radios.filter('[value=Offline]').prop("checked", true);
-            }
-        }
-     })
-    });
+        success:function(data) {
+           data.forEach(element => {
+               nama.push(`${element.phone}-${element.name}`);
+              })
+           }})
+         $(function(){ $("#technician-name").autocomplete({ source:nama })})
 });
 </script>
 @endsection

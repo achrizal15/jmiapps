@@ -21,8 +21,12 @@ class InventoryFactory extends Factory
      */
     public function definition()
     {
+        $status = ["ready", "broken"];
         return [
-            //
+            "name" => $this->faker->word(),
+            "status" => $status[rand(0, 1)],
+            "stock" => $this->faker->numberBetween(1, 100),
+            "price" => $this->faker->numberBetween(10000, 500000)
         ];
     }
 }

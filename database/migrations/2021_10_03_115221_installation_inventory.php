@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class InventoryInstallation extends Migration
+class InstallationInventory extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class InventoryInstallation extends Migration
      */
     public function up()
     {
-        Schema::create('inventory_installations', function (Blueprint $table) {
-            $table->id();
-            $table->integer("installation_id");
-            $table->integer("inventory_id");
+        Schema::create('installation_inventory', function (Blueprint $table) {
+            $table->foreignId("installation_id")->constrained();
+            $table->foreignId("inventory_id")->constrained();
+            $table->integer("stock");
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class InventoryInstallation extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inventory_installations');
+        Schema::dropIfExists('installation_inventory');
     }
 }
