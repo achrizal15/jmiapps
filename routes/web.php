@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlokController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -59,11 +60,13 @@ Route::middleware(['auth', 'is_role:2'])->group(function () {
         Route::resource('/expenditure', ExpenditureController::class)->except("show");
         Route::resource('/package', PackageController::class)->except("show");
         Route::resource('/member', MemberController::class);
+        Route::post('/installation/{installation}', [InstallationController::class, "pause"]);
         Route::get('/installation/selectJquery', [InstallationController::class, "selectJquery"]);
         Route::resource('/installation', InstallationController::class);
         Route::resource('/technician', TechnicianController::class);
         Route::resource('/salary', SalaryController::class);
         Route::resource('/payment', AdminPaymentController::class)->names("admin.payment");
+        Route::resource('/blok', BlokController::class)->names("admin.blok");
     });
 });
 Route::middleware(['auth', 'is_role:4'])->group(function () {

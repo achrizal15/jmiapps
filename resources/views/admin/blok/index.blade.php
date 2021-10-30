@@ -33,18 +33,18 @@
                 <div class="flex flex-wrap items-center justify-between">
                     <div class="relative w-full  max-w-full flex-grow flex-1 flex">
                         <h3 class="font-semibold text-lg text-gray-700 inline">
-                            Pembayaran Bulanan
+                            Daftar Blok
                         </h3>
                     </div>
                     <button class="font-semibold rounded-sm px-3 py-0.5 shadow-lg bg-blue-600 text-sm text-white"
                         id="btn-add" onclick="toggleModal('add-data')">ADD</button>
                 </div>
-                <div class="flex mt-2 w-full justify-center">
-                    <form action="/admin/payment">
+                <div class="flex mt-2 w-full justify-start">
+                    <form action="/admin/blok">
                         <div class="flex lg:space-x-2 flex-col lg:flex-row">
-                            <div class="flex md:space-x-2 flex-col md:flex-row">
+                            {{-- <div class="hidden flex md:space-x-2 flex-col md:flex-row">
                                 <input type="month" min="2021-01" value="{{ request('date') }}" name="date" id="">
-                            </div>
+                            </div> --}}
                             <div class="shadow flex">
                                 <input name="search"
                                     class="w-full rounded p-2 focus:outline-none border-none focus:ring-0" type="search"
@@ -55,7 +55,7 @@
                                 </button>
                             </div>
                             @if(isset($_GET['search'])||isset($_GET['date']))
-                            <a href="/admin/payment"
+                            <a href="/admin/blok"
                                 class="bg-red-500 text-center px-3 text-white flex items-center rounded-sm">Reset</a>@endif
                         </div>
                     </form>
@@ -64,87 +64,68 @@
             <div class="block w-full overflow-x-auto">
                 <!-- Projects table -->
                 <x-tables.table>
-                    <x-tables.thead thItem="#,tanggal,Nama,paket,tagihan,status,action" />
+                    <x-tables.thead thItem="#,blok,penagih,detail Alamat,action" />
                     <tbody>
-                        @foreach ($payments as $item)
+                        @foreach ($bloks as $item)
                         <tr>
                             <th
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left flex items-center font-bold text-gray-600">
-                                {{ $loop->iteration+$payments->firstItem()-1}}
+                                {{ $loop->iteration+$bloks->firstItem()-1}}
                             </th>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                {{$item->created_at}}
+                                {{$item->name}}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                {{ $item->member->name }}
+                                {{$item->collectors->name}}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                {{ $item->installations->package->name }}
+                                {{ $item->detail_address }}
                             </td>
-                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                @rupiah($item->installations->package->price)
-                            </td>
-                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                <x-tables.status sts="{{ $item->status }}" />
-                            </td>
+
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
-                                @if ($item->status=="pending"||$item->status=="rejected")
                                 <div class="flex space-x-2 ">
-                                    <button type="button" data-pay="{{ $item }}" id="btn-check"
-                                        onclick="toggleModal('check-data')">
-                                        <i class="fas fa-check text-yellow-500"></i>
-                                    </button>
+                                    <button type="button" data-id="{{ $item->id }}" id="btn-edit"
+                                        onclick="toggleModal('edit-data')"> <i
+                                            class="fas fa-edit text-yellow-500"></i></button>
+                                    <form method="POST" action="/admin/blok/{{ $item->id }}">
+                                        @method('delete')
+                                        @csrf
+                                        <x-buttons.delete />
+                                    </form>
                                 </div>
-                                @endif
-                                <button type="button" data-pay="{{ $item }}" id="btn-detail">
-                                    <i class="fas fa-info-circle text-blue-500"></i> 
-                                </button>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </x-tables.table>
             </div>
-            <div class="mx-4 my-4"> {{ $payments->links('components.pagination.default') }}</div>
+            <div class="mx-4 my-4"> {{ $bloks->links('components.pagination.default') }}</div>
         </div>
     </div>
     @include('templates.footer')
 </section>
 {{-- modal Add --}}
-<x-modals.regular title="Ajukan Gaji Teknisi" id="add-data">
-    <form action="/admin/salary" method="post">
+<x-modals.regular title="Tambah Blok" id="add-data">
+    <form action="/admin/blok" method="post">
         @csrf
         <div class="space-x-0 p-4 bg-gray-100 mb-2 md:space-y-2 space-y-0">
             <div>
-                <label class="font-semibold text-gray-500">Nama Lengkap</label>
-                <select name="user_id" id="technician-select" style="width: 100%;padding:5px 5px;">
-                    <option selected disabled hidden>Pilih Teknisi</option>
+                <label class="font-semibold text-gray-500">Penagih</label>
+                <select name="collector_id" id="technician-select" style="width: 100%" required>
+                    <option selected disabled hidden>Pilih Karyawan</option>
                 </select>
             </div>
             <div class="md:flex-row flex md:space-x-2 flex-col">
                 <div class="w-full">
-                    <label class="font-semibold text-gray-500">Potongan Gaji<span
-                            class="text-xs">(opsional)</span></label>
-                    <input type="number" placeholder="500000" name="pay_cut" value="{{ old('pay_cut') }}"
+                    <label class="font-semibold text-gray-500">Nama Blok<span class="text-xs">(unique)</span></label>
+                    <input type="text" required placeholder="Blok X" name="name" value="{{ old('name') }}"
                         class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
                 </div>
+
                 <div class="w-full">
-                    <label class="font-semibold text-gray-500">Gaji</label>
-                    <input type="number" id="balance" placeholder="2500000000" name="balance"
-                        value="{{ old('balance') }}"
-                        class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
-                </div>
-                <div class="w-full">
-                    <label class="font-semibold text-gray-500">Bonus<span class="text-xs">(opsional)</span></label>
-                    <input type="number" placeholder="500000" name="bonus" value="{{ old('bonus') }}"
-                        class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
-                </div>
-            </div>
-            <div class="md:flex-row flex md:space-x-2 flex-col">
-                <div class="w-full">
-                    <label class="font-semibold text-gray-500">Catatan<span class="text-xs">(opsional)</span></label>
-                    <input type="text" placeholder="Jika ada" name="note" value="{{ old('note') }}"
+                    <label class="font-semibold text-gray-500">Detail alamat</label>
+                    <input required type="text" placeholder="Rt/02 RW/01 Desa/Kota" name="detail_address" value="{{ old('note') }}"
                         class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
                 </div>
             </div>
@@ -155,29 +136,77 @@
         </div>
     </form>
 </x-modals.regular>
-<x-modals.regular title="Gaji Teknisi" id="check-data">
-    <form action="" method="post" class="check-form mx-4">
+<x-modals.regular title="Edit Blok" id="edit-data">
+    <form action="" method="post" class="update-form">
         @csrf
         @method('put')
-        <h3>Bukti Transfer :</h3>
-        <div class="flex justify-center items-center h-80">
-            <img src="" alt="" class="max-h-full object-fill"></div>
-        <div class="space-x-4 my-4">
-            <button class="btn btn-success" name="status" value="accept">Terima</button><button class="btn btn-error"
-                value="rejected" name="status">Tolak</button>
+        <div class="space-x-0 p-4 bg-gray-100 mb-2 md:space-y-2 space-y-0">
+            <div>
+                <label class="font-semibold text-gray-500">Penagih</label>
+                <select name="collector_id" id="technician-select-edit" style="width: 100%;padding:5px 5px;">
+                </select>
+            </div>
+            <div class="md:flex-row flex md:space-x-2 flex-col">
+                <div class="w-full">
+                    <label class="font-semibold text-gray-500">Nama Blok<span class="text-xs">(unique)</span></label>
+                    <input type="text" required id="blok-name" placeholder="Blok X" name="name" value="{{ old('name') }}"
+                        class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
+                </div>
+
+                <div class="w-full">
+                    <label class="font-semibold text-gray-500">Detail alamat</label>
+                    <input required type="text" id="detai-alamat" placeholder="Rt/02 RW/01 Desa/Kota" name="detail_address" value="{{ old('note') }}"
+                        class="px-3 py-3 placeholder-gray-300 w-full text-gray-600 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-end mx-4 ">
+            <button type="submit"
+                class="bg-green-400 px-4 py-1 hover:bg-green-600 text-white rounded-sm">Simpan</button>
         </div>
     </form>
 </x-modals.regular>
-@endsection
-@section('script')
 <script>
     $(document).ready(function () {
-        $(document).on("click","#btn-check", function () {
-            let pay= $(this).data("pay");
-            let id=pay['id']
-            let img=pay['transfer_img'];
-            $(".check-form").attr('action', "/admin/payment/"+id);
-            $(".check-form img").attr("src", `{{ asset('storage/${img}') }}`);
+        setTimeout(function(){ $('#alert').hide('slow') }, 5000);
+      
+        $.ajax({
+            type: "get",
+            url: "/admin/installation/selectJquery",
+            data:{"search":3},
+            dataType: "json",
+            success: function (response) {
+             let data= response.map(function(e){
+                  return {"id":e['id'],"text":e['name']+'-'+e['phone']}
+             });
+             $("#technician-select").select2({
+                 data: data,
+             })
+             $(document).on("click","#btn-edit", function () {
+               let id=$(this).data('id');
+                 let token= $('meta[name="csrf-token"]').attr('content');
+              $.ajax({
+                type: "get",
+                url: "/admin/blok/"+id+"/edit",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response)
+                    $("#technician-select-edit").select2({data: data})
+                    $(".update-form").attr('action','/admin/blok/'+id)
+                    let option=`<option selected hidden value="${response['collector_id']}" hidden>${response['collectors']['name']}
+                                 </option>`;
+                    data.forEach(e => {
+                        if(e['id']!=response['collectors']['id']){
+                            option+=`<option value="${e['id']}" hidden>${e['text']}</option>`
+                        }
+                    });
+                    $("#technician-select-edit").html(option);  
+                    $("#blok-name").val(response['name'])      
+                    $("#detai-alamat").val(response['detail_address'])      
+                }
+            });
+        });
+            }
         });
     });
 </script>

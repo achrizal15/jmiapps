@@ -11,6 +11,13 @@
                 </x-alert>
             </div>
             @endif
+            @if (session("error"))
+            <div class="p-4" id="alert">
+                <x-alert type="error">
+                    {{session('error')}}
+                </x-alert>
+            </div>
+            @endif
             @if ($errors->any())
             <div class="p-4" id="alert">
                 <x-alert type="error">
@@ -66,7 +73,7 @@
             <div class="block w-full overflow-x-auto">
                 <!-- Projects table -->
                 <x-tables.table>
-                    <x-tables.thead thItem="#,pelanggan,alamat,phone,paket,teknisi,status" />
+                    <x-tables.thead thItem="#,pelanggan,alamat,expired,paket,teknisi,status,action" />
                     <tbody>
                         @foreach ($collection as $item)
                         <tr>
@@ -74,44 +81,38 @@
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left flex items-center font-bold text-gray-600">
                                 {{ $loop->iteration }}
                             </th>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{ $item->user->name }}
                             </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{ $item->user->alamat }}
                             </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                {{ $item->user->phone }}
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
+                                @if ($item->expired)
+                                {{ date('Y-m-d',strtotime($item->expired)) }}
+                                @endif
                             </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{ $item->package->name }}
                             </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 @if ($item->technician_id!=null)
                                 {{ $item->technician->name }}
                                 @endif
                             </td>
-
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4 ">
                                 <x-tables.status sts="{{ $item->status }}" />
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4 ">
                                 <div class="flex space-x-2">
                                     @if ($item->status=="request")
                                     <button type="button" id="putData" onclick="toggleModal('accept')"
-                                        data-id="{{ $item->id }}"> <i class="fas fa-edit text-yellow-500"></i></button>
+                                        data-id="{{ $item->id }}"> <i class="fas fa-check text-yellow-500"></i></button>
                                     @endif
-
-                                    <form method="POST" action="/admin/expenditure/{{ $item->id }}">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" onclick="return confirm('Pilih ok untuk melanjutkan.')">
-                                            <i class="fas fa-trash text-red-500"></i></button>
-                                    </form>
+                                    <button onclick="toggleModal('details')" type="button" data-pay="{{ $item }}"
+                                        id="btn-detail">
+                                        <i class="fas fa-info-circle text-blue-500"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -132,9 +133,123 @@
         <div class="px-4 py-4">
             <input id="technician-name" type="text" required name="name" placeholder="Masukkan nohp/nama teknisi"
                 class="w-full rounded-md">
+            <select name="blok" class="block mt-2 w-full rounded-md">
+                <option selected disabled hidden>PILIH SALAH SATU</option>
+                @foreach ($blok as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+            </select>
             <button class="bg-green-500 hover:bg-green-400 text-white rounded-sm px-4 py-1 mt-4">Proses</button>
         </div>
     </form>
+</x-modals.regular>
+{{-- INFORMATION --}}
+<x-modals.regular title="Detail Pemasangan" id="details">
+    <div class="px-4 py-4">
+        <div class="grid md:grid-cols-2 grid-cols-1 md:gap-4 table-detail">
+            <div>
+                <table>
+                    <tr>
+                        <td class="w-24">
+                            Pelanggan
+                        </td>
+                        <td class="w-4"> : </td>
+                        <td id="pelanggan">
+                            Nuri
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-24">
+                            Alamat
+                        </td>
+                        <td> : </td>
+                        <td id="alamat">
+                            Kemiren
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Paket
+                        </td>
+                        <td> : </td>
+                        <td id="paket">
+                            Lolosa
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Teknisi
+                        </td>
+                        <td> : </td>
+                        <td id="teknisi">
+                            Ajeng
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr class="w-24">
+                        <td>
+                            Penagih
+                        </td>
+                        <td> : </td>
+                        <td id="penagih">
+                            Ajeng
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Blok
+                        </td>
+                        <td> : </td>
+                        <td id="blok">
+                            Blok Z
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-24">
+                            Created At
+                        </td>
+                        <td class="w-4"> : </td>
+                        <td id="createdat">
+                            2021-10-10
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Expired
+                        </td>
+                        <td> : </td>
+                        <td id="expired">
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Status
+                        </td>
+                        <td> : </td>
+                        <td id="status">
+                            test
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <form  id="delete-form" method="POST">
+            @method("delete")
+            @csrf
+            <button type="submit" onclick="return confirm('Peringatan!, semua data pemasangan akan terhapus permanen!')"
+                class="bg-red-500 hover:bg-red-400 text-white rounded-sm px-4 py-1 mt-4">Berhenti Selamanya</button>
+        </form>
+        <form action="/admin/installation" id="pause-form" method="post">
+            @csrf
+            <button type="submit" name="type"
+                class="bg-yellow-500 hover:bg-yellow-400 text-white rounded-sm px-4 py-1 mt-4">Pause</button>
+        </form>
+    </div>
 </x-modals.regular>
 <script>
     $(document).ready(function() {
@@ -142,6 +257,40 @@
         $(document).on("click","#putData",function(){
             let id=$(this).data("id");
             $(".edit-form").attr('action','/admin/installation/'+id)
+        })
+        $(document).on("click","#btn-detail",function(){
+           $(".table-detail #pelanggan").html($(this).data("pay")['user']['name'])
+           $(".table-detail #alamat").html($(this).data("pay")['user']['alamat'])
+           $(".table-detail #paket").html($(this).data("pay")['package']['name'])
+           $(".table-detail #status").html($(this).data("pay")['status'])
+           $(".table-detail #expired").html($(this).data("pay")['expired']==null?"-":
+           $(this).data("pay")['expired'])
+           $("#pause-form").attr("action","/admin/installation/"+$(this).data("pay")['id'])
+           $(".table-detail #blok").html($(this).data("pay")['blok_id']==null?"-":
+           $(this).data("pay")['bloks']['name']
+           )
+        $("#delete-form").attr("action","/admin/installation/"+$(this).data("pay")['id']);
+           if($(this).data("pay")['status'].toLowerCase()=="paused"){
+            $("#pause-form button").val("continue");
+            $("#pause-form button").html("Continue");
+            $("#delete-form button").html("Berhenti Selamanya");
+            $("#pause-form button").attr("hidden",false);
+           }else if($(this).data("pay")['status'].toLowerCase()=="installed"){
+            $("#delete-form button").html("Berhenti Selamanya");
+            $("#pause-form button").val("pause");
+            $("#pause-form button").html("pause");
+            $("#pause-form button").attr("hidden",false);
+           }else{
+            $("#delete-form button").html("Tolak");
+            $("#pause-form button").attr("hidden",true);
+           }
+           $(".table-detail #penagih").html($(this).data("pay")['blok_id']==null?"-":
+           $(this).data("pay")['bloks']['collectors']['name']
+           )
+           $(".table-detail #teknisi").html($(this).data("pay")['technician']==null?"-":$(this).data("pay")['technician']['name'])
+
+           $(".table-detail #createdat").html($(this).data("pay")['created_at'].slice(0,10))
+
         })
         let nama=[];
         $.ajax({

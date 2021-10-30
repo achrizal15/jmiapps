@@ -19,7 +19,7 @@ class ExpenditureController extends Controller
             'title' => "Pembelanjaan",
             "collection" => Expenditure::latest()
                 ->filter(request(['search','status','date']))
-                ->paginate(10)->withQueryString()
+                ->paginate(25)->withQueryString()
         ]);
     }
 

@@ -29,4 +29,7 @@ class Installation extends Model
     public function payments(){
         return $this->hasMany(Payment::class,"installation_id");
     }
+    public function bloks(){
+        return $this->belongsTo(Blok::class,"blok_id");
+    }
 }

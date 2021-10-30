@@ -72,41 +72,41 @@
             <div class="block w-full overflow-x-auto">
                 <!-- Projects table -->
                 <x-tables.table>
-                    <x-tables.thead thItem="#,Nama barang,Stock,Type pembelian,Suplier,Harga,Anggaran,status" />
+                    <x-tables.thead thItem="#,Nama barang,Stock,Suplier,Harga,Anggaran,status,action" />
                     <tbody>
                         @foreach ($collection as $item)
                         <tr>
                             <th
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left flex items-center font-bold text-gray-600">
-                                {{ $loop->iteration }}
+                                {{ $loop->iteration +$collection->firstitem()-1}}
                             </th>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{$item->name_product}}
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{$item->stock}}
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                {{ $item->type }}
-                            </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{ $item->name_suplier}}
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 @rupiah($item->price)
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 @rupiah($item->balance)
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 <x-tables.status sts="{{ $item->status }}" />
+
+                            </td>
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 <div class="flex space-x-2">
                                     @if ($item->status=='pending')
                                     <form method="POST" action="/admin/expenditure/{{ $item->id }}/edit">
@@ -122,6 +122,7 @@
                                         <x-buttons.delete />
                                     </form>
                                 </div>
+
                             </td>
                         </tr>
                         @endforeach
@@ -177,7 +178,7 @@
     </form>
 </x-Modals.Regular>
 {{-- Modal Edit --}}
-<x-Modals.Regular title="Edit Product" id="edit-data">
+<x-Modals.Regular title="Edit Pembelanjaan" id="edit-data">
     <form class="form-edit" method="post">
         @method("put")
         @csrf
@@ -224,7 +225,7 @@
         setTimeout(function(){ $('#alert').hide('slow') }, 5000);
         $(document).on('click', '#putData', function () {
         let id=$(this).data("id");
-        let radios=$('input:radio[name=type]');    
+        let radios=$('input:radio[name=type]');
     $.ajax({
         url:"/admin/expenditure/"+id+"/edit",
          type:"get",
@@ -245,7 +246,7 @@
             }else{
                 radios.filter('[value=Offline]').prop("checked", true);
             }
-        }    
+        }
      })
     });
 });

@@ -27,7 +27,7 @@ class PaymentController extends Controller
             "tagihan" => 0
         ];
         if ($install->first() != null) {
-            if ($install->first()->expired <= date("Y-m-d")) {
+            if ($install->first()->expired <= date("Y-m-d")&&$install->first()->expired!=null) {
                 $myPackage = [
                     "package_name" => $install->first()->package->name,
                     "tagihan" => $install->first()->package->price

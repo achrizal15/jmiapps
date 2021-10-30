@@ -73,19 +73,19 @@
                                 {{ $loop->iteration+$technician->firstItem()-1}}
                             </th>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{$item->name}}
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{$item->phone}}
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                 {{ $item->alamat }}
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4 flex justify-between">
                                 <div class="flex space-x-2">
                                     <button type="button" data-id="{{ $item->id }}" id="btn-edit"
                                         onclick="toggleModal('edit-data')"> <i

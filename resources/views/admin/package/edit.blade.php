@@ -44,11 +44,11 @@
                                     {{ $loop->iteration }}
                                 </th>
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600  p-4">
                                     {{ $item->name }}
                                 </td>
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 w-60">
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600  p-4 w-60">
                                     <?php $fitur=explode(',',$item->feature); ?>
                                     <ol class="list-decimal">
                                         @foreach ($fitur as $i)
@@ -58,11 +58,11 @@
 
                                 </td>
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600  p-4">
                                     @rupiah($item->price)
                                 </td>
                                 <td
-                                    class="border-t-0 md:px-6 px-2 border-l-0 border-r-0 text-sm text-gray-600 font-semibold">
+                                    class="border-t-0 md:px-6 px-2 border-l-0 border-r-0 text-sm text-gray-600 ">
                                     <div class="justify-between flex items-center">
                                         <div class="has-tooltip inline-block">
                                             <span class="tooltip rounded-sm shadow-lg p-0.5 bg-gray-100 -mt-8 text-xs">

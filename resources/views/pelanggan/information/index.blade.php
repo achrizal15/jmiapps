@@ -17,7 +17,7 @@
     <div class="md:mx-4 my-4">
         <div class="md:w-1/2  space-y-4">
             <div class="flex justify-between items-center space-x-4 box-border">
-                <label for="">Kendala </label>
+                <label for="">Kendala</label>
                 <p>:</p>
                 <div class="w-10/12">
                     <select name="constraint" class="w-full rounded-md @error("constraint") border-red-500 @enderror">
@@ -33,7 +33,7 @@
 
             </div>
             <div class="flex justify-between items-center space-x-4 box-border">
-                <label for="">Kendala </label>
+                <label for="">Detail </label>
                 <p>:</p>
                 <div class="w-10/12">
                     <textarea name="detail" class="w-full rounded-md block @error(" detail") border-red-500 @enderror""

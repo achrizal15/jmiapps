@@ -9,7 +9,9 @@ body{
     position: absolute;
     display: none;
 }
-
+.table-detail table td{
+    vertical-align: top;
+}
 .dropdown-btn {
     padding: 5px 15px;
     margin-bottom: 8px;

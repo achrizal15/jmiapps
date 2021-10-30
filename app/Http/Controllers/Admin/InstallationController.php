@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blok;
 use App\Models\Installation;
 use App\Models\Inventory;
 use App\Models\Package;
@@ -20,9 +21,11 @@ class InstallationController extends Controller
     public function index()
     {
         $psb = Installation::latest();
+        $blok = Blok::latest()->get();
         return view('admin.installation.index', [
             'title' => "Pasang Baru",
-            "collection" => $psb->with(['user', 'package', 'technician'])
+            "blok" => $blok,
+            "collection" => $psb->with(['user', 'package', 'technician', "bloks.collectors"])
                 ->paginate(10)
                 ->withQueryString()
         ]);
@@ -74,9 +77,20 @@ class InstallationController extends Controller
             "status" => "accept"
         ]);
         $stok->inventorys()->attach($idInven);
-        // $pengurangan = $stok->stock - $stockInven[$i];
-        // $stok->update(['stock' => $pengurangan<0?0:$pengurangan]);
-
+    }
+    public function pause(Installation $installation)
+    {
+        $type = request()->type;
+        $status = "paused";
+        $time = null;
+        $message = "Pelanggan telah ditetapkan untuk berhenti sementara tagihan tidak akan masuk!";
+        if ($type == "continue") {
+            $status = "installed";
+            $time = date("Y-m-d", strtotime("+1 month", strtotime("now")));
+            $message = "Langganan telah dilanjutkan tagihan akan muncul bulan berikutnya!";
+        }
+        $installation->update(["expired" => $time, "status" => $status]);
+        return redirect('/admin/installation')->with("success", $message);
     }
 
     /**
@@ -110,17 +124,20 @@ class InstallationController extends Controller
      */
     public function update(Request $request, Installation $installation)
     {
+        $request->validate(["blok" => "required"]);
         $technician = preg_replace('/[^0-9]/', '', $request->name);
-        $technician_id = User::where("phone",$technician)->get();
+        $technician_id = User::where("phone", $technician)->get();
         if (!count($technician_id)) {
-            return redirect('/admin/installation')->with("error","Gagal teknisi tidak ditemukan silahkan cek kembali!");
+            return redirect('/admin/installation')->with("error", "Gagal teknisi tidak ditemukan silahkan cek kembali!");
         }
-        $update=[
-            "technician_id"=>$technician_id[0]->id,
-            "status"=>"process"
+
+        $update = [
+            "technician_id" => $technician_id[0]->id,
+            "status" => "process",
+            "blok_id" => $request->blok
         ];
         $installation->update($update);
-        return redirect('/admin/installation')->with("success","Permintaan berhasil di proses!");
+        return redirect('/admin/installation')->with("success", "Permintaan berhasil di proses!");
     }
 
     /**
@@ -129,9 +146,10 @@ class InstallationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Installation $installation)
     {
-        //
+        $installation->delete();
+       return redirect("/admin/installation")->with("success","Telah terhapus selamanya!");
     }
     public function selectJquery()
     {

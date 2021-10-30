@@ -56,6 +56,11 @@
                             <i class="fas fa-box-open mr-2 text-sm opacity-75"></i>
                             Paket
                         </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/admin/blok"
+                            active="{{ (request()->is('admin/blok')) ? true:false }}">
+                            <i class="fa fa-map-marker mr-2 text-sm opacity-75"></i>
+                            Blok
+                        </x-Sidebar.menu>
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />
                     <x-Sidebar.heading title="Teknisi" />

@@ -23,6 +23,7 @@ class CreatePaymentsTable extends Migration
                 ->onDelete("cascade");
             $table->string("transfer_img");
             $table->string("status")->default("pending");
+            $table->text("message")->nullable();
             $table->timestamps();
         });
     }

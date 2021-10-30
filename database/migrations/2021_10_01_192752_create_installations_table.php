@@ -18,17 +18,18 @@ class CreateInstallationsTable extends Migration
             $table->string("username")->nullable();
             $table->foreignId("package_id")
                 ->references('id')
-                ->on('packages')
-                ->onDelete('cascade');
+                ->on('packages');
             $table->foreignId("user_id")
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
+
             $table->foreignId("technician_id")
                 ->nullable()
                 ->references('id')
-                ->on('users')
-                ->onDelete('restrict');
+                ->on('users');
+                $table->foreignId("blok_id")
+                ->nullable()
+                ->constrained("bloks");
             $table->integer("installation_costs")->nullable();
             $table->integer("discount")->nullable();
             $table->integer("number_modem")->nullable();
