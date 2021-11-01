@@ -16,7 +16,7 @@ class BlokController extends Controller
     public function index()
     {
         $bloks = Blok::latest()
-            ->filter(request(['date', 'search']))
+            ->filter(request(['date', 'search']))   
             ->with("collectors")
             ->paginate(25)->withQueryString();
         return view("admin.blok.index", ["title" => "Blok", "bloks" => $bloks]);

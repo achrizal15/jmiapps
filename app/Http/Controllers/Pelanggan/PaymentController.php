@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pelanggan;
 
 use App\Models\Report;
+use App\Models\Message;
 use App\Models\Payment;
 use App\Models\Installation;
 use Illuminate\Http\Request;
@@ -17,8 +18,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $notif = Report::latest()->where("member_id", '=', auth()->user()->id)->where("message","!=",null)->get();
         $transfer = Payment::latest()->where("member_id", auth()->user()->id);
+        $msg = Message::latest()->where("user_id", auth()->user()->id)->get();
         $install =  Installation::with(['package'])
             ->where("user_id", auth()->user()->id)
             ->where("status", "installed");
@@ -39,8 +40,8 @@ class PaymentController extends Controller
 
         return view("pelanggan.payment.index", [
             'title' => "Payment",
-            "notif"=>$notif,
             "myPackage" => $myPackage,
+            "message"=>$msg,
             "transfer" => $transfer
                 ->with("installations.package")
                 ->paginate(10)

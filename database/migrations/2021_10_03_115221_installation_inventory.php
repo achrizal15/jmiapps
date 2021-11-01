@@ -15,7 +15,8 @@ class InstallationInventory extends Migration
     {
         Schema::create('installation_inventory', function (Blueprint $table) {
             $table->foreignId("installation_id")->constrained();
-            $table->foreignId("inventory_id")->constrained();
+            $table->foreignId("inventory_id")
+                ->constrained("inventories")->cascadeOnDelete();
             $table->integer("stock");
             $table->timestamps();
         });

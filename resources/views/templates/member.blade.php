@@ -96,7 +96,7 @@
                         </a>
                     </li>
 
-                    <li class="mr-6 my-2 md:my-0">
+                    <li class="mr-6 my-2 md:my-0 hidden">
                         <a href="/pelanggan/information" @if (request()->is("pelanggan/information"))
                             class="block py-1 md:py-3 pl-1 align-middle text-purple-500 no-underline hover:text-gray-900
                             border-b-2 border-purple-500"
@@ -121,27 +121,31 @@
                         </a>
                     </li>
                 </ul>
-                <div
-                    class="dropdown relative pull-right pl-4 pr-4 md:pr-0 mr-3 text-gray-500 hover:text-gray-900">
+                <div class="dropdown relative pull-right pl-4 pr-4 md:pr-0 mr-3 text-gray-500 hover:text-gray-900">
                     <div tabindex="0" class="m-1"> <i class="fas fa-bell mr-3"></i></i><button
-                            class="pb-1 md:pb-0 text-sm">Notification</button></div>
+                            class="pb-1 md:pb-0 text-sm">Notification</button>
+                    </div>
                     <ul tabindex="0"
                         class="p-2 lg:right-0  shadow menu dropdown-content relative bg-base-100 rounded-box w-52 max-h-52 ">
-                        @if (!count($notif))
+                        @if (!count($message))
                         Tidak ada notifikasi
                         @else
-                        @foreach ($notif as $item)
-                        <div class="fixed top-0 b-0 text-red-500">
-                            <form action="/pelanggan/information/report/{{ $item->id }}" method="POST">
+                        <div class="fixed top-2 b-0 text-red-500">
+                            <form action="/pelanggan/dashboard/report/{{ auth()->user()->id }}" method="POST">
                                 @csrf
                                 @method("delete")
                                 <button type="submit">Clear All</button>
                             </form>
                         </div>
-                        <div class="max-h-52 overflow-y-auto mt-4">
-                            <li>{{ $item->message }}</li>
+                        <div class="max-h-52 mt-8 overflow-y-auto text-xs">
+                            @foreach ($message as $item)
+                            <li class="mb-2">
+                                <div class="grid grid-cols-5 gap-4">
+                                    <div> <img class="w-5 h-5 rounded-full" src="https://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" alt="Avatar of User"></div>
+                                    <div class="col-span-4">{{ $item->name}}</div>
+                                  </div></li>
+                            @endforeach
                         </div>
-                        @endforeach
                         @endif
                     </ul>
                 </div>

@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.css" integrity="sha512-85w5tjZHguXpvARsBrIg9NWdNy5UBK16rAL8VWgnWXK2vMtcRKCBsHWSUbmMu0qHfXW2FVUDiWr6crA+IFdd1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"
+        integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/selectize.js"
+        integrity="sha512-C0BjK7lFIReZXZeIPdlW5lV1926j4hons+B5UQhSqWee3cCNx/AB0jUC+v3XGMRucvipU4LrO6n7j1SujSQKYQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <title>{{ $title }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
@@ -56,10 +64,14 @@
                             <i class="fas fa-box-open mr-2 text-sm opacity-75"></i>
                             Paket
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/blok"
-                            active="{{ (request()->is('admin/blok')) ? true:false }}">
+                        <x-Sidebar.menu href="/admin/blok" active="{{ (request()->is('admin/blok')) ? true:false }}">
                             <i class="fa fa-map-marker mr-2 text-sm opacity-75"></i>
                             Blok
+                        </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/admin/report"
+                            active="{{ (request()->is('admin/report')) ? true:false }}">
+                            <i class="fas fa-bug mr-2 text-sm opacity-75"></i>
+                            Report
                         </x-Sidebar.menu>
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />
@@ -91,8 +103,8 @@
                         </x-Sidebar.menu>
                         {{-- <x-Sidebar.menu href="/admin/barangkeluar"
                             active="{{ (request()->is('admin/barangkeluar')) ? true:false }}"> <i
-                            class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
-                        barang keluar
+                                class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
+                            barang keluar
                         </x-Sidebar.menu> --}}
 
                     </x-Sidebar.navigasi>
@@ -124,8 +136,8 @@
             <nav
                 class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
                 <div class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
-                    <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
-                        href="#">{{ $title }}</a>
+                    <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold" href="#">{{ $title
+                        }}</a>
 
                     <form class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
                         <div class="relative flex w-full flex-wrap items-stretch">
@@ -152,10 +164,13 @@
             <div class="relative bg-pink-600 md:pt-32 pb-32 pt-12">
                 <div class="px-4 md:px-10 mx-auto w-full">
                     <div class="flex flex-wrap">
-                        <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244,444" />
+                        @if ($title=="Welcome")
+                        <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244" />
                         <x-cards.dasboard />
                         <x-cards.dasboard />
                         <x-cards.dasboard />
+                        @endif
+                       
                     </div>
                 </div>
             </div>
@@ -165,6 +180,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="/js/notus.js"></script>
+    <script src="/js/script.js"></script>
     @yield("script")
 </body>
 

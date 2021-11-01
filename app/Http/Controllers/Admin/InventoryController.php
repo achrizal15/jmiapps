@@ -13,7 +13,7 @@ class InventoryController extends Controller
         $collection = new Inventory;
         return view('admin.inventory.index', [
             'title' => "Inventory",
-            "collection" => $collection->latest()->filter(request(['date', 'search']))->paginate(10)->withQueryString()
+            "collection" => $collection->latest()->filter(request(['date', 'search']))->paginate(25)->withQueryString()
         ]);
     }
     public function store(Request $request)
