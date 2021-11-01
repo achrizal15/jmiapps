@@ -9,8 +9,14 @@
     @apply visible z-50;
 }
 
-.select2-dropdown {
-    @apply absolute block w-auto box-border bg-white border-solid border-2 border-gray-600 z-50 float-left;
+/* SELECT2 */
+
+.selectize-input {
+    @apply p-3  !important;
 }
+.selectize-input.input-active{
+    @apply p-3 ring-2 ring-blue-600 !important;
+}
+
 
 @tailwind utilities;

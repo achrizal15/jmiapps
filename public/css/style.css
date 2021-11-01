@@ -2,6 +2,19 @@
 body{
     font-family: 'Poppins';
 }
+.select2-container--default .select2-selection--single{
+    font-family: 'Poppins' !important;
+    padding: 8px !important;
+    height: 44px !important;
+    border:1px solid #d1d5db !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    font-size: 14px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px !important;
+    right: 10px !important;
+}
 .dropdown-items {
     min-width: 80px;
     background-color: white;

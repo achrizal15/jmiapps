@@ -96,6 +96,7 @@
                     </tbody>
                 </x-tables.table>
             </div>
+            <div class="mx-4 my-4"> {{ $collection->links('components.pagination.default') }}</div>
         </div>
     </div>
     @include('templates.footer')

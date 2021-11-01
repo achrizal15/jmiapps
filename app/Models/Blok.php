@@ -24,7 +24,7 @@ class Blok extends Model
             $search = $filters['search'];
             $query->whereHas('collectors', function ($query) use ($search) {
                 $query->where("name", "like", "%" . $search . "%");
-            })->orWhere("name", "like", "%" . $search . "%");;
+            })->orWhere("name", "like", "%" . $search . "%");
         }
     }
     public function installations()

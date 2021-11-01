@@ -22,7 +22,6 @@ class CreateInstallationsTable extends Migration
             $table->foreignId("user_id")
                 ->references('id')
                 ->on('users');
-
             $table->foreignId("technician_id")
                 ->nullable()
                 ->references('id')

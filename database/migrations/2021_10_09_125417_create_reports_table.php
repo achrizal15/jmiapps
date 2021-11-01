@@ -18,7 +18,7 @@ class CreateReportsTable extends Migration
             $table->foreignId("member_id")->constrained("users", "id")->cascadeOnDelete();
             $table->string("constraint");
             $table->string("detail");
-            $table->string("message")->nullable();
+            $table->string("status")->default("pending");
             $table->foreignId("technician_id")->nullable()->constrained("users", "id")->cascadeOnDelete();
             $table->timestamps();
         });
