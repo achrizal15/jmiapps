@@ -11,6 +11,7 @@
         {{session('error')}}
     </x-alert>
 @endif
+<p class="hidden">test</p>
 <h1 class="block text-center text-gray-600 font-bold text-lg">DAFTAR PAKET</h1>
 <hr class="border-b-2 border-gray-400 mb-8 mt-1">
 <div class="carousel carousel-center rounded-box space-x-2 px-4 py-4 shadow-inner">
