@@ -1,6 +1,6 @@
 <li class="items-center">
     @if ($active)
-    <a href="{{ $href }}" class="text-xs uppercase py-3 font-bold block text-pink-500 hover:text-pink-600">
+    <a href="{{ $href }}" class="text-xs uppercase py-3 font-bold block text-blue-800 hover:text-blue-800">
         {{ $slot }}
     </a>
     @else

@@ -43,7 +43,7 @@
                     <form action="/admin/payment">
                         <div class="flex lg:space-x-2 flex-col lg:flex-row">
                             <div class="flex md:space-x-2 flex-col md:flex-row">
-                                <input type="month" min="2021-01" value="{{ request('date') }}" name="date" id="">
+                                <input type="month" min="2015-01" value="{{ request('date') }}" name="date" id="">
                             </div>
                             <div class="shadow flex">
                                 <input name="search"
@@ -98,7 +98,7 @@
                                 </div>
                                 @endif
                                 <button type="button" data-pay="{{ $item }}" id="btn-detail">
-                                    <i class="fas fa-info-circle text-blue-500"></i> 
+                                    <i class="fas fa-info-circle text-blue-500"></i>
                                 </button>
                             </td>
                         </tr>
@@ -161,18 +161,20 @@
         @method('put')
         <h3>Bukti Transfer :</h3>
         <div class="flex justify-center items-center h-80">
-            <img src="" alt="" class="max-h-full object-fill"></div>
+            <img src="" alt="" class="max-h-full object-fill">
+        </div>
         <div class="space-x-4 my-4">
             <button class="btn btn-success" name="status" value="accept">Terima</button><button class="btn btn-error"
                 value="rejected" name="status">Tolak</button>
         </div>
     </form>
 </x-modals.regular>
+
 @endsection
 @section('script')
 <script>
     $(document).ready(function () {
-        $(document).on("click","#btn-check", function () {
+     $(document).on("click","#btn-check", function () {
             let pay= $(this).data("pay");
             let id=pay['id']
             let img=pay['transfer_img'];

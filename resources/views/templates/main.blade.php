@@ -18,5 +18,4 @@
     @yield('style')
 </head>
 @yield('content')
-
 </html>

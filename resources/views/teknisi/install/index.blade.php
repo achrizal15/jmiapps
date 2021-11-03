@@ -1,4 +1,4 @@
-@extends('templates.main')
+@extends('templates.teknisi')
 @section('content')
 
 <body class="bg-gray-50">

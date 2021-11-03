@@ -43,7 +43,7 @@
                     <form action="/admin/salary">
                         <div class="flex lg:space-x-2 flex-col lg:flex-row">
                             <div class="flex md:space-x-2 flex-col md:flex-row">
-                                <input type="month" min="2021-01" value="{{ request('date') }}" name="date" id="">
+                                <input type="month" min="2015-01" max="<?=date("Y-m")?>" value="{{ request('date') }}" name="date" id="">
                             </div>
                             <div class="shadow flex">
                                 <input name="search"

@@ -1,4 +1,4 @@
-@extends('templates.main')
+@extends('templates.teknisi')
 @section('content')
 <div class="px-20 py-20">
     <h1 class="font-bold">Nama Teknisi:{{ $teknisi }}</h1>

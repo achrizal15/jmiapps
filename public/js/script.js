@@ -20,7 +20,5 @@ let initSelect2 = async function () {
 }
 
 $(document).ready(function () {
-    setTimeout(function(){ $('#alert').hide('slow') }, 10000);
     initSelect2()
-
 });
