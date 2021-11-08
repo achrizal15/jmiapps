@@ -42,9 +42,7 @@
                 <div class="flex mt-2 w-full justify-start">
                     <form action="/admin/blok">
                         <div class="flex lg:space-x-2 flex-col lg:flex-row">
-                            {{-- <div class="hidden flex md:space-x-2 flex-col md:flex-row">
-                                <input type="month" min="2021-01" value="{{ request('date') }}" name="date" id="">
-                            </div> --}}
+
                             <div class="shadow flex">
                                 <input name="search"
                                     class="w-full rounded p-2 focus:outline-none border-none focus:ring-0" type="search"

@@ -19,6 +19,6 @@
     },
     "dependencies": {
         "@tailwindcss/forms": "^0.3.3",
-        "daisyui": "^1.14.2"
+        "daisyui": "^1.16.1"
     }
 }

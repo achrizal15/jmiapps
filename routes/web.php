@@ -20,6 +20,8 @@ use App\Http\Controllers\Pelanggan\DashboardController;
 use App\Http\Controllers\Pelanggan\PaymentController;
 use App\Http\Controllers\Pemilik\DashboardController as PemilikDashboardController;
 use App\Http\Controllers\Teknisi\DashboardController as TeknisiDashboardController;
+use App\Http\Controllers\Teknisi\InstallationController as TeknisiInstallationController;
+use App\Http\Controllers\Teknisi\PenagihanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,5 +82,8 @@ Route::middleware(['auth', 'is_role:4'])->group(function () {
 });
 Route::middleware(['auth', "is_role:3"])->group(function () {
     Route::get('/teknisi/selectjquery', [TeknisiDashboardController::class, "selectquery"]);
-    Route::resource('/teknisi', TeknisiDashboardController::class);
+    Route::resource('/teknisi/installation', TeknisiInstallationController::class)
+        ->names("teknisiInstallation");
+    Route::resource('/teknisi/penagihan', PenagihanController::class);
+    Route::get('/teknisi', [TeknisiDashboardController::class, "index"]);
 });

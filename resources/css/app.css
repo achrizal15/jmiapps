@@ -9,14 +9,26 @@
     @apply visible z-50;
 }
 
-/* SELECT2 */
-
-.selectize-input {
-    @apply p-3  !important;
-}
-.selectize-input.input-active{
-    @apply p-3 ring-2 ring-blue-600 !important;
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    @apply rounded-full text-black h-8 w-8 bg-gradient-to-b from-gray-50 to-gray-100 !important;
 }
 
+.dataTables_wrapper .dataTables_paginate span .paginate_button,
+.dataTables_wrapper .dataTables_paginate span .paginate_button:hover {
+    @apply inline-flex flex-wrap justify-center text-center items-center rounded-full text-white h-8 w-8 bg-gradient-to-b from-blue-400 to-blue-800 border-none shadow-lg !important;
+}
 
+.dataTables_wrapper .dataTables_paginate .previous:hover,
+.dataTables_wrapper .dataTables_paginate .next:hover {
+    @apply bg-gradient-to-b from-blue-400 to-blue-800 border-none shadow-lg !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    @apply ml-2 rounded-md focus:outline-none !important;
+}
+
+.my-btn-sm {
+    @apply transition duration-300 px-3 text-white rounded-md py-1 transform hover:scale-105 shadow-md cursor-pointer;
+}
 @tailwind utilities;

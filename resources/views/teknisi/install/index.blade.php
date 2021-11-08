@@ -1,120 +1,125 @@
 @extends('templates.teknisi')
 @section('content')
-
-<body class="bg-gray-50">
-    <div class="w-full flex justify-center ">
-        <div class="shadow-md rounded-md w-1/2 mt-10 bg-white px-5 py-5">
-            <div class="flex justify-between border-b">
-                <h1 class="font-semibold text-gray-600">FORM INSTALLED</h1>
-                <div class="flex space-x-2">
-                    <button class="bg-red-500 px-4 py-0.5 text-white rounded-sm">Back</button>
-                </div>
+<section class="px-4 md:px-10 mx-auto w-full -m-24">
+    <div class="w-full mb-12 px-4 mt-4">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+            @if (session("success"))
+            <div class="p-4" id="alert">
+                <x-alert type="success">
+                    {{session('success')}}
+                </x-alert>
             </div>
-            <div class="mt-4">
-                <form action="/teknisi/{{ $installation->id }}" method="post">
-                    @method("put")
-                    @csrf
-                    <div class="md:flex block w-full md:space-x-2">
-                        <div class="w-1/2">
-                            <label>Username</label>
-                            <input type="text" name="username" class="block w-full" value="pelanggan231">
-                        </div>
-                        <div class="w-1/2">
-                            <label>Nama Pelanggan</label>
-                            <input type="text" class="block w-full opacity-50 focus:ring-white"
-                                value="{{ $installation->user->name }}" readonly disabled>
-                        </div>
-                    </div>
-                    <div class="md:flex block w-full md:space-x-2">
-                        <div class="w-1/2">
-                            <label>Package</label>
-                            <input disabled type="text" class="block w-full opacity-50 focus:ring-white"
-                                value="{{ $installation->package->name }}">
-                        </div>
-                        <div class="w-1/2">
-                            <label>Biaya Pemasangan</label>
-                            <input type="number" min="0" name="installation_costs" placeholder="100000"
-                                class="block w-full">
-                        </div>
-                    </div>
-                    <div class="md:flex block w-full md:space-x-2">
-                        <div class="w-1/2">
-                            <label>Discount</label>
-                            <input type="text" class="block w-full" name="discount" placeholder="50000"
-                                value="{{ $installation->package->discount }}">
-                        </div>
-                        <div class="w-1/3">
-                            <label>Number Modem</label>
-                            <input type="number" min="0" name="number_modem" placeholder="321" class="block w-full">
-                        </div>
-                        <div class="w-1/3">
-                            <label>Port</label>
-                            <input type="number" min="0" name="port" placeholder="25" class="block w-full">
-                        </div>
-                    </div>
-                    <div class="md:flex block w-full md:space-x-2 md:items-end">
-                        <div class="w-1/2">
-                            <label>Inventory</label>
-                            <input type="text" id="inv-name" placeholder="Cari nama inventory" class="block w-full">
-                        </div>
-                        <div class="w-1/3">
-                            <label>Stock</label>
-                            <input type="number" id="inv-stc" min="0" placeholder="12" class="block w-full">
-                        </div>
-                        <div class="w-1/5">
-                            <button type="button" id="gunakan"
-                                class="py-2.5 px-4 bg-gray-400 w-full font-semibold text-white">Gunakan</button>
-                        </div>
-                    </div>
-                    <div class="md:flex block w-full md:space-x-2 border-t mt-3">
-                        <ol class="list-decimal todo-list ml-4 inline-block w-full">
+            @endif
+            @if (session("error"))
+            <div class="p-4" id="alert">
+                <x-alert type="error">
+                    {{session('error')}}
+                </x-alert>
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="p-4" id="alert">
+                <x-alert type="error">
+                    Gagal! silahkan coba lagi.
+                    @foreach ($errors->all() as $error)
+                    {{ $error }}
+                    @endforeach
+                </x-alert>
+            </div>
+            @endif
 
-                        </ol>
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                <div class="flex flex-wrap items-center justify-between">
+                    <div class="relative w-full  max-w-full flex-grow flex-1 flex">
+                        <h3 class="font-semibold text-lg text-gray-700 inline">
+                            Daftar {{ $title }}
+                        </h3>
                     </div>
-                    <button class="bg-green-500 px-4 py-0.5 text-white rounded-sm mt-5">Install</button>
-                </form>
+                    {{-- <button class="font-semibold rounded-sm px-3 py-0.5 shadow-lg bg-blue-600 text-sm text-white"
+                        id="btn-add" onclick="toggleModal('add-data')">ADD</button> --}}
+                </div>
+
+            </div>
+            <div class="block w-full">
+                <!-- Projects table -->
+
+                <table class="table table-datatable" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Pelanggan</th>
+                            <th>Blok</th>
+                            <th>Paket</th>
+                            <th>Create At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($psb as $p )
+                        <tr>
+                            <td class="">{{ $loop->iteration }}</td>
+                            <td>
+                                {{ $p->user->name }}
+                            </td>
+                            <td>{{ $p->bloks->name }}</td>
+                            <td>{{ $p->package->name }}</td>
+                            <td>{{ $p->created_at }}</td>
+                            <td>
+                                <button onclick="modal_toggler('show-modal')" data-user="{{ $p->user }}" id="btn-show"
+                                    class="my-btn-sm bg-blue-500 hover:bg-blue-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a class="my-btn-sm bg-green-500 inline-block hover:bg-green-600"
+                                    href="/teknisi/installation/<?=$p->id?>/edit">INSTALL NOW</a>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
             </div>
         </div>
-        <script>
-            $(document).ready(function() {
-            setTimeout(function(){ $('#alert').hide('slow') }, 5000);
-            let barang=[];
-             $.ajax({
-            url:"/teknisi/selectjquery",
-            type:"get",
-            data:{"_token": $('meta[name="csrf-token"]').attr('content'),"_method":"get"},
-            dataType:"json",
-            success:function(data) {
-                data.forEach(e => {
-                barang.push(e['id']+"-"+e['name']);
-              });
-             }})
-         $(function(){ $("#inv-name").autocomplete({ source:barang })})
-         $(function(){
-        $('#gunakan').click(
-            function(){
-                var name = $('#inv-name').val();
-                var stock = $('#inv-stc').val();
-                if(name !=="" && stock !== "" && name!=$(`#${name}`).val() ){
-                    $('.todo-list').append(`   <li>
-                                <div class="flex justify-between  w-full items-center">
-                                    <input type="text" id=${name}  name="inventory[${name}][name]" readonly value="${name}"
-                                        class="border-none focus:ring-transparent">
-                                    <div class="flex space-x-2">
-                                        <input type="text" name="inventory[${name}][stock]" readonly value="${stock}"
-                                            class="border-none focus:ring-transparent">
-                                            <button type="button" id="delete"> <i class="fas fa-trash text-red-500"></i></button>
-                                    </div>
-                                </div>
-                            </li>`);
-                }
-            });
-      $(document).on('click','#delete', function(){
-        $(this).parents("li:first").toggleClass('strike').fadeOut('slow');
-      });
-     })
+    </div>
+    @include('templates.footer')
+    <div id="show-modal" class="modal">
+        <div class="modal-box">
+            <img src="https://picsum.photos/id/1005/100/100" class="mask mask-hexagon">
+            <div class="grid md:grid-cols-2 md:gap-4">
+                <table class="table-show-member">
+                    <tr>
+                        <td class="w-12">Nama</td>
+                        <td>:</td>
+                        <td id="name">Windah Basudara</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>:</td>
+                        <td id="phone">082123412</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>:</td>
+                        <td id="email">windah@gmail.com</td>
+                    </tr>
+                </table>
+                <table class="table-show-member">
+                    <tr>
+                        <td class="w-12">Alamat</td>
+                        <td >:</td>
+                        <td id="address">Jakarta</td>
+                    </tr>
+                    <tr>
+                        <td >Maps</td>
+                        <td >:</td>
+                        <td id="maps">CUI281929 CUi288 CIUWIU*@*UUWU</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-action">
+                <button class="btn" onclick="modal_toggler('show-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+</section>
 
-    });
-        </script>
-</body>
 @endsection

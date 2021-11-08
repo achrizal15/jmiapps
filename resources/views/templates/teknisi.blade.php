@@ -8,7 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="/js/templates/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/templates/select2.min.css" />
-    <script src="/js/templates/select2.min.js"></script>    
+    <script src="/js/templates/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css" />
+    <script type="text/javascript" src="/DataTables/datatables.min.js"></script>
     <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
@@ -42,25 +44,25 @@
                     <hr class="my-4 md:min-w-full hidden md:block" />
                     <x-Sidebar.heading title="Dashboard" />
                     <x-Sidebar.navigasi>
-                        <x-Sidebar.menu active="{{ (request()->is('admin')) ? true:false }}" href="/teknisi">
+                        <x-Sidebar.menu active="{{ (request()->is('teknisi')) ? true:false }}" href="/teknisi">
                             <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                             Home
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/package"
-                            active="{{ (request()->is('admin/package')) ? true:false }}">
+                        <x-Sidebar.menu href="/teknisi/installation"
+                            active="{{ (request()->is('teknisi/installation')) ? true:false }}">
                             <i class="fas fa-box-open mr-2 text-sm opacity-75"></i>
-                           Pemasangan Baru
+                            Pemasangan Baru
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/blok" active="{{ (request()->is('admin/blok')) ? true:false }}">
+                        <x-Sidebar.menu href="/teknisi/penagihan" active="{{ (request()->is('teknisi/penagihan')) ? true:false }}">
                             <i class="fa fa-map-marker mr-2 text-sm opacity-75"></i>
-                         Penagihan bulanan
+                            Penagihan bulanan
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/report"
                             active="{{ (request()->is('admin/report')) ? true:false }}">
                             <i class="fas fa-bug mr-2 text-sm opacity-75"></i>
                             Report
                         </x-Sidebar.menu>
-                    </x-Sidebar.navigasi>                    
+                    </x-Sidebar.navigasi>
                 </div>
             </div>
         </nav>
@@ -93,13 +95,13 @@
             <div class="relative bg-blue-800 md:pt-32 pb-32 pt-12">
                 <div class="px-4 md:px-10 mx-auto w-full">
                     <div class="flex flex-wrap">
-                        @if ($title=="Welcome")
+                        @if ($title=="Dashboard")
                         <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244" />
                         <x-cards.dasboard />
                         <x-cards.dasboard />
                         <x-cards.dasboard />
                         @endif
-                   
+
                     </div>
                 </div>
             </div>

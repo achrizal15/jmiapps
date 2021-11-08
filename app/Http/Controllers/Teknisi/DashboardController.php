@@ -20,11 +20,9 @@ class DashboardController extends Controller
     public function index()
     {
         $technician_id = auth()->user()->id;
-        $psb = Installation::where("technician_id", $technician_id)->where("status", "process")->with(['technician', 'user', 'package'])->get();
         return view("teknisi.index", [
             "title" => "Dashboard",
             "teknisi" => auth()->user()->name,
-            "psb" => $psb
         ]);
     }
 
@@ -68,10 +66,7 @@ class DashboardController extends Controller
      */
     public function edit(Installation $teknisi)
     {
-        return view("teknisi.install.index", [
-            'title' => "Pasang",
-            "installation" => $teknisi->load(['user', 'package'])
-        ]);
+        
     }
 
     /**
