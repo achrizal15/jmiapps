@@ -43,7 +43,7 @@
                     <form action="/admin/payment">
                         <div class="flex lg:space-x-2 flex-col lg:flex-row">
                             <div class="flex md:space-x-2 flex-col md:flex-row">
-                                <input type="month" min="2015-01" value="{{ request('date') }}" name="date" id="">
+                                <input type="month" class="form-input " min="2015-01" value="{{ request('date') }}" name="date" id="">
                             </div>
                             <div class="shadow flex">
                                 <input name="search"
@@ -155,7 +155,7 @@
         </div>
     </form>
 </x-modals.regular>
-<x-modals.regular title="Gaji Teknisi" id="check-data">
+<x-modals.regular title="Pembayaran Bulanan" id="check-data">
     <form action="" method="post" class="check-form mx-4">
         @csrf
         @method('put')

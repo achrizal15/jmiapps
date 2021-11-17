@@ -66,7 +66,6 @@ class DashboardController extends Controller
      */
     public function edit(Installation $teknisi)
     {
-        
     }
 
     /**
@@ -78,48 +77,6 @@ class DashboardController extends Controller
      */
     public function update(Request $request, Installation $teknisi)
     {
-
-        $validate = $request->validate([
-            "username" => "required",
-            "installation_costs" => "required",
-            "discount" => "nullable",
-            "number_modem" => "required",
-            "port" => "required",
-        ]);
-        $validate['status'] = "installed";
-        $validate['expired'] = date("Y-m-d",strtotime("+1 month"));
-        if (isset($request->inventory)) {
-            $nameInven = [];
-            $inventory = [];
-            foreach ($request->inventory as $i) {
-                $nameInven[] = preg_replace(['/[0-9]+/', '/[^A-Za-z0-9]/'], "", $i['name']);
-                $inventory[preg_replace('/[^0-9]/', '', $i['name'])] = preg_replace('/[^0-9]/', '', $i['stock']);
-            }
-            $stock = collect($inventory)->map(function ($stock) {
-                return ['stock' => $stock];
-            });
-            $idInventory = (array_keys($inventory));
-            $checkAvaible = Inventory::whereIn("name", $nameInven)->whereIn('id', $idInventory)->where("stock", ">", 0);
-            if (!count($checkAvaible->get()) || count(array_keys($inventory)) != count($checkAvaible->get())) {
-                return redirect('/teknisi')->with("error", "Product tidak ditemukan atau salah satu product habis, cek inventory anda!");
-            }
-            $ix = 0;
-            foreach ($stock as $key) {
-                $produck = Inventory::find($idInventory[$ix]);
-                $newStock = $produck->stock - $key['stock'];
-                if ($newStock < 0) {
-                    return "Stok ada yang kosong";
-                } else {
-                    $produck->update(["stock" => $newStock]);
-                }
-                $ix++;
-            }
-            $teknisi->update($validate);
-            $teknisi->inventorys()->sync($stock);
-            return redirect('/teknisi')->with("success", "Berhasil dipasang dengan memakai inventory, cek inventory anda!");
-        }
-        $teknisi->update($validate);
-        return redirect('/teknisi')->with("success", "Berhasil dipasang!");
     }
 
     /**
@@ -132,8 +89,5 @@ class DashboardController extends Controller
     {
         //
     }
-    public function selectquery()
-    {
-        return Inventory::get();
-    }
+
 }

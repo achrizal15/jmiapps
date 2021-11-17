@@ -1,5 +1,5 @@
 @if ($type=="error")
-<div class="bg-red-100 p-5 ">
+<div class="bg-red-100 p-5 " id="error">
     <div class="flex space-x-3">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="flex-none fill-current text-red-500 h-4 w-4">
             <path

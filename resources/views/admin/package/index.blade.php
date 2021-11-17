@@ -101,7 +101,7 @@
                         @csrf
                         <div class="mb-2">
                             <label for="name-package">Nama Paket</label>
-                            <input type="text" value="{{ old('name') }}" id="name-package" class="w-full rounded-md"
+                            <input type="text" value="{{ old('name') }}" id="name-package" class="form-input w-full rounded-md"
                                 placeholder="Premium example" name="name">
                             @error('name')
                             <span class="text-sm text-red-500">{{ $message }}</span>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="mb-2">
                             <label for="price-package">Price</label>
-                            <input type="number" value="{{ old('price') }}" id="price-package" class="w-full rounded-md"
+                            <input type="number" value="{{ old('price') }}" id="price-package" class="form-input w-full rounded-md"
                                 placeholder="150000" name="price">
                             @error('price')
                             <span class="text-sm text-red-500">{{ $message }}</span>
@@ -124,7 +124,7 @@
                                     <i class="fas align-top fa-exclamation text-xs"></i>
                                 </div>
                             </label>
-                            <textarea type="text" id="feature-package" class="w-full rounded-md"
+                            <textarea type="text" id="feature-package" class="form-input w-full rounded-md"
                                 placeholder="Kecepatan 100/mbps,&#10;Kuota 3GB"
                                 name="feature">{{ old('feature') }}</textarea>
                             @error('feature')
@@ -134,7 +134,7 @@
                         <div class="mb-2">
                             <label for="note-package">Note</label>
                             <textarea name="note" id="note-package" placeholder="Biaya pemasangan berbeda setiap daerah"
-                                class="w-full rounded-md">{{ old('note') }}</textarea>
+                                class=" form-input w-full rounded-md">{{ old('note') }}</textarea>
                         </div>
                         <div>
                             <button type="submit"

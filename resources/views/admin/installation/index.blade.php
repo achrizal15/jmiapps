@@ -36,14 +36,13 @@
                             Pasang Baru
                         </h3>
                     </div>
-                    <a class="font-semibold rounded-sm px-3 py-0.5 shadow-lg bg-blue-600 text-sm text-white"
-                        href="/admin/installation/create">ADD</a>
+             
                 </div>
                 <div class="flex mt-2 w-full justify-center">
                     <form action="/admin/expenditure">
                         <div class="flex lg:space-x-2 flex-col lg:flex-row">
                             <div class="flex md:space-x-2 flex-col md:flex-row">
-                                <input type="month" min="2021-01" value="{{ request('date') }}" name="date" id="">
+                                <input type="month" class="form-input " min="2021-01" value="{{ request('date') }}" name="date" id="">
                                 <select name="status" id="" class="form-select rounded-sm">
                                     <option selected hidden value="">Filters</option>
                                     <option value="pending" @if(request('status')=='pending' ) selected @endif>Pending

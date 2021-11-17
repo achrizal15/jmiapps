@@ -49,7 +49,7 @@
                             <th>Blok</th>
                             <th>Paket</th>
                             <th>Expired</th>
-                            <th>Action</th>
+                            <th width="100">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,8 +67,11 @@
                                     class="my-btn-sm bg-blue-500 hover:bg-blue-600">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <a class="my-btn-sm bg-green-500 inline-block hover:bg-green-600"
-                                    href="/teknisi/installation/<?=$p->id?>/edit"><i class="fas fa-money-bill-wave"></i></a>
+                                <a href="/teknisi/penagihan#tagihan-modal" data-user="{{ $p->user }}"
+                                    data-paket="{{ $p->package }}" data-installation="{{ $p->id }}" id="btn-tagihan"
+                                    class="my-btn-sm bg-green-500 inline-block hover:bg-green-600">Tagih</a>
+                                <a href="#" class="my-btn-sm bg-green-500 inline-block hover:bg-green-600"><i
+                                        class="fas fa-qrcode"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -79,8 +82,88 @@
         </div>
     </div>
     @include('templates.footer')
+    <div id="tagihan-modal" class="modal">
+        <div class="modal-box">
+            <div class="mb-4 ">
+                {{-- heading --}}
+                <h3><b>PERPANJANG LANGGANAN </b> </h3>
+            </div>
+            <form action="/teknisi/penagihan" method="post" id="form-tagihan" enctype="multipart/form-data">
+                @csrf
+                {{-- HIDDEN --}}
+                <input type="text" hidden name="installation_id" readonly>
+                <input type="text" hidden name="member_id" readonly>
+                <div class="grid md:grid-cols-2 md:gap-4">
+                    <div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text">Nama Pelanggan</span>
+                            </label>
+                            <input type="text" readonly id="member-name" class="input input-bordered">
+                            <label id="redaman-error" class="error text-xs text-red-500 hidden" for="redaman"></label>
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text">Paket</span>
+                            </label>
+                            <input type="text" id="paket-name" readonly value="Premium" class="input input-bordered">
+                            <label id="redaman-error" class="error text-xs text-red-500 hidden" for="redaman"></label>
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text">Harga Paket</span>
+                            </label>
+                            <label class="input-group rounded-md">
+                                <span>Rp</span>
+                                <input type="text" id="paket-price" readonly value="50000"
+                                    class="input input-bordered w-full rounded-md">
+                            </label>
+                            <label id="installation_costs-error" class="error text-xs text-red-500 hidden"
+                                for="installation_costs"></label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text">Tagihan</span>
+                            </label>
+                            <label class="input-group rounded-md">
+                                <span>Rp</span>
+                                <input id="tagihan" type="text" readonly value="50000"
+                                    class="input input-bordered w-full rounded-md">
+                            </label>
+                            <label id="installation_costs-error" class="error text-xs text-red-500 hidden"
+                                for="installation_costs"></label>
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text">Upload Bukti</span>
+                            </label>
+                            <input type="file" name="transfer_img" required class="input pt-1.5 input-bordered">
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Detail <small>(optional)</small></span>
+                            </label>
+                            <textarea name="message" name="message" class="textarea h-24 textarea-bordered"
+                                placeholder="Jika ada"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-action">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <a href="/teknisi/penagihan#close" class="btn btn-error">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
     <div id="show-modal" class="modal">
         <div class="modal-box">
+            <div class="mb-4 ">
+                {{-- heading --}}
+                <h3><b>DETAIL PELANGGAN </b> </h3>
+            </div>
             <img src="https://picsum.photos/id/1005/100/100" class="mask mask-hexagon">
             <div class="grid md:grid-cols-2 md:gap-4">
                 <table class="table-show-member">
@@ -99,19 +182,18 @@
                         <td>:</td>
                         <td id="email">windah@gmail.com</td>
                     </tr>
-                </table>
-                <table class="table-show-member">
                     <tr>
                         <td class="w-12">Alamat</td>
-                        <td >:</td>
+                        <td>:</td>
                         <td id="address">Jakarta</td>
                     </tr>
                     <tr>
-                        <td >Maps</td>
-                        <td >:</td>
+                        <td>Maps</td>
+                        <td>:</td>
                         <td id="maps">CUI281929 CUi288 CIUWIU*@*UUWU</td>
                     </tr>
                 </table>
+
             </div>
             <div class="modal-action">
                 <button class="btn" onclick="modal_toggler('show-modal')">Close</button>

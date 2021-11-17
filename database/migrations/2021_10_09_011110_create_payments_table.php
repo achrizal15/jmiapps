@@ -22,6 +22,7 @@ class CreatePaymentsTable extends Migration
                 ->constrained("installations", "id")
                 ->onDelete("cascade");
             $table->string("transfer_img");
+            $table->string("type_payment")->default("online");
             $table->string("status")->default("pending");
             $table->text("message")->nullable();
             $table->timestamps();

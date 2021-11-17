@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teknisi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Installation;
+use App\Models\Payment;
 use App\Models\Salary;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PenagihanController extends Controller
             ->whereHas("bloks", function ($query) {
                 $query->where("collector_id", auth()->user()->id);
             })
-            ->where("status", "process")->get();
+            ->where("status", "installed")->get();
         return view("teknisi.penagihan.index", ["title" => "Penagihan", "tagihan" => $tagihan]);
     }
 
@@ -42,7 +43,16 @@ class PenagihanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            "transfer_img" => "required|image|file|max:1024",
+            "message"=>"nullable"
+        ]);
+        $validate['member_id'] =  $request->member_id;
+        $validate['installation_id'] = $request->installation_id;
+        $validate['transfer_img'] = $request->file("transfer_img")->store("transfer-images");
+        Payment::create($validate);
+     return   redirect("/teknisi/penagihan")->with("success", "Penagihan berhasil dilakukan segera stor ke admin!");
+ 
     }
 
     /**

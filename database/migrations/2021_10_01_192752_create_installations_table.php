@@ -32,7 +32,9 @@ class CreateInstallationsTable extends Migration
             $table->integer("installation_costs")->nullable();
             $table->integer("discount")->nullable();
             $table->integer("number_modem")->nullable();
-            $table->string("port")->nullable();
+            $table->string("redaman")->nullable();
+            $table->string("spliter")->nullable();
+            $table->integer("port")->nullable();
             $table->string("status");
             $table->timestamp("expired")->nullable();
             $table->timestamps();
