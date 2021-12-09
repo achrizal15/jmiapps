@@ -9,6 +9,11 @@ class Report extends Model
 {
     use HasFactory;
     protected $guarded=['id'];
+    public function inventories()
+    {
+        return $this->belongsToMany(Inventory::class)
+            ->withPivot(['stock']);
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['date'] ?? false, function ($query, $date) {

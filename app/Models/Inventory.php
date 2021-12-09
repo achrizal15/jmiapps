@@ -23,4 +23,7 @@ class Inventory extends Model
     public function installations(){
         return $this->belongsToMany(Installation::class);
     }
+    public function reports(){
+        return $this->belongsToMany(Report::class);
+    }
 }

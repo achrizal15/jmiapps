@@ -18,7 +18,9 @@
 .dataTables_wrapper .dataTables_paginate span .paginate_button:hover {
     @apply inline-flex flex-wrap justify-center text-center items-center rounded-full text-white h-8 w-8 bg-gradient-to-b from-blue-400 to-blue-800 border-none shadow-lg !important;
 }
-
+.select2-container--default .select2-search--dropdown .select2-search__field{
+    @apply focus:outline-none !important;
+}
 .dataTables_wrapper .dataTables_paginate .previous:hover,
 .dataTables_wrapper .dataTables_paginate .next:hover {
     @apply bg-gradient-to-b from-blue-400 to-blue-800 border-none shadow-lg !important;
@@ -30,5 +32,8 @@
 
 .my-btn-sm {
     @apply transition duration-300 px-3 text-white rounded-md py-1 transform hover:scale-105 shadow-md cursor-pointer;
+}
+.my-input {
+    @apply border-gray-300 rounded-md focus:border-gray-300 focus:ring-transparent;
 }
 @tailwind utilities;

@@ -23,6 +23,7 @@ use App\Http\Controllers\Teknisi\DashboardController as TeknisiDashboardControll
 use App\Http\Controllers\Teknisi\InstallationController as TeknisiInstallationController;
 use App\Http\Controllers\Teknisi\JqueryController;
 use App\Http\Controllers\Teknisi\PenagihanController;
+use App\Http\Controllers\Teknisi\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,7 @@ Route::middleware(['auth', "is_role:3"])->group(function () {
     Route::get('/teknisi/jquery', [JqueryController::class, "index"]);
     Route::resource('/teknisi/installation', TeknisiInstallationController::class)
         ->names("teknisiInstallation");
+    Route::resource('/teknisi/report', ReportController::class)->names("teknisiController")->except("show");
     Route::resource('/teknisi/penagihan', PenagihanController::class);
     Route::get('/teknisi', [TeknisiDashboardController::class, "index"]);
 });

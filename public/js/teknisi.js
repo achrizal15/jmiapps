@@ -1,4 +1,6 @@
 let _token = $('meta[name="csrf-token"]').attr('content');
+const BASE_URL = window.location.origin;
+
 function modal_toggler(id) {
     let modalID = $(`#${id}`)
     if ($(modalID).hasClass("modal-open")) {
@@ -25,6 +27,7 @@ let installerManagement = function () {
     // TAMBAH INVENTORY
     if ($("#form-add-inventory").length > 0) {
         $(".form-select").select2();
+
         $("#form-add-inventory").validate()
         let stock = $("#form-add-inventory input[name=stock]")
         let curentvalue = ''
@@ -68,16 +71,10 @@ let installerManagement = function () {
                 $('#form-add-inventory .form-select option').first().attr('selected', true).trigger('change');
             }
         });
+
     }
     // DELETE INVENTORY
-    $(document).on("click", "#btn-delete", function () {
-        $stock = $(this).parents("tr").find("input").last().val()
-        $id = $(this).parents("tr").find("input").first().val()
-        $text = $(this).parents("tr").find("td:nth-child(2)").text()
-        $option = new Option($text.trim(), `${$id}|${$stock}|${$text}`, false, false);
-        $(".form-select").append($option).change()
-        $(this).parents("tr").remove()
-    })
+
     // SUBMIT
     let installationForm = $(".form-installation")
     if (installationForm.length > 0) {
@@ -106,6 +103,14 @@ let installerManagement = function () {
 
 
         })
+        $(document).on("click", "#btn-delete", function () {
+            $stock = $(this).parents("tr").find("input").last().val()
+            $id = $(this).parents("tr").find("input").first().val()
+            $text = $(this).parents("tr").find("td:nth-child(2)").text()
+            $option = new Option($text.trim(), `${$id}|${$stock}|${$text}`, false, false);
+            $(".form-select").append($option).change()
+            $(this).parents("tr").remove()
+        })
     }
 }
 let penagihanManagement = function () {
@@ -124,7 +129,148 @@ let penagihanManagement = function () {
         form_tagihan.find("input#tagihan").val(paket['price'])
     });
 }
+let reportManagement = function () {
+    $(document).on("click", "#btn-teknisi-report-repair", function (e) {
+        e.preventDefault()
+        let href = $(this).attr("href")
+        Swal.fire({
+            title: 'Butuh inventory?',
+            text: "Jika anda membutuhkan maka akan dipindahkan ke halaman inventory!",
+            icon: 'warning',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#10B981',
+            cancelButtonColor: '#d33',
+            denyButtonColor: '#3085d6',
+            cancelButtonText: `Batalkan Repair`,
+            confirmButtonText: 'Ya',
+            denyButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = href + "/edit"
+            } else if (result.isDenied) {
+                $.ajax({
+                    type: "post",
+                    url: href,
+                    data: { "_token": _token, "_method": "put", "type": "no_inventory" },
+                    success: function (response) {
+                        window.location = BASE_URL + response;
+                    }
+                });
+            }
+        })
+    })
+    const form = $(".form-add-inventory-report");
+    if (form.length > 0) {
+        form.find(".form-select2").select2();
+        $(document).on("change", "#select-inventory", function () {
+            if ($("#select-inventory").val() != null) {
+                let value = $("#select-inventory").val().split(",")
+                form.find("input#stock").attr("max", value[1].trim())
+            }
+        });
+        $(document).on("click", "#btn-add-inventory", function (e) {
+            if (form.valid()) {
+                e.preventDefault();
+                let tbody = $(".table-inventory tbody");
+                let inventory = $("#select-inventory").val().split(",");
+                let stock = form.find("input#stock").val();
+                let tr = `<tr>
+                <th>
+                ${tbody.find('tr').length + 1}
+                <input type="text" hidden  readonly value="${inventory[0].trim()}" 
+                name="inventory[${tbody.find('tr').length}][]">
+                <input type="text" hidden  readonly value="${stock}" 
+                name="inventory[${tbody.find('tr').length}][]">
+                <input hidden disabled value="${inventory[1].trim()}"/>
+                </th>
+                <td> ${inventory[2].trim()}  </td>
+                <td>  ${stock}  </td>
+                <td>
+                <button id="btn-delete" type="button"
+                class="my-btn-sm bg-red-500 hover:bg-red-600">
+                <i class="fas fa-trash"></i>
+                </button>
+                </td>
+                </tr>`
+                tbody.append(tr);
+                $("#select-inventory option").each(function (index) {
+                    if ($(this).text().trim() == inventory[2].trim()) {
+                        $(this).remove();
+                    }
+                });
+            }
+        })
+        $(document).on("click", "#btn-submit-inventory", function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Akan menggunakan inventory!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, lanjutkan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if ($(".table-inventory tbody tr").length > 0) {
+                        loaderHandling();
+                        $.ajax({
+                            type: "post",
+                            url: form.attr("action"),
+                            data: new FormData(form[0]),
+                            processData: false,
+                            cache: false,
+                            contentType: false,
+                            success: function (response) {
+                                Swal.fire(
+                                    'Berhasil!',
+                                    'Anda telah menggunakan inventory.',
+                                    'success'
+                                ).then((result) => {
+                                    window.location = BASE_URL + "/teknisi/report"
+                                })
+                                loaderHandling("stop")
+                            }
+                        });
+                    } else {
+                        alertMessage("Inventori yang digunakan masih kosong!");
+                    }
+                }
+            })
+        })
+        $(document).on("click", "#btn-delete", function () {
+            $stock = $(this).parents("tr").find("input").last().val()
+            $id = $(this).parents("tr").find("input").first().val()
+            $text = $(this).parents("tr").find("td:nth-child(2)").text()
+            $option = new Option($text.trim(), `${$id},${$stock},${$text}`, false, false);
+            $(".form-select2").append($option).change()
+            $(this).parents("tr").remove()
+        })
+    }
+}
+function loaderHandling(type = "") {
+    switch (type) {
+        case "stop":
+            setTimeout(() => {
+                $("#loading-loader").addClass("hidden");
+            }, 1000);
+            break;
+        default:
+            $("#loading-loader").removeClass("hidden");
+            break;
+    }
+}
+function alertMessage(message) {
+    $(".alert #error-message").text(message)
+    $(".alert").removeClass("hidden");
+    setTimeout(() => {
+        $(".alert").addClass("hidden");
+    }, 10000);
+}
 $(document).ready(function () {
+    reportManagement()
     penagihanManagement()
     initValidate()
     installerManagement()

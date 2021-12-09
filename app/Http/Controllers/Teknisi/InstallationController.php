@@ -18,7 +18,7 @@ class InstallationController extends Controller
     {
         $technician_id = auth()->user()->id;
         $psb = Installation::where("technician_id", $technician_id)
-            ->where("status", "process")->with(['technician', 'user', 'package', "bloks"])->get();
+            ->with(['technician', 'user', 'package', "bloks"])->get();
         return view("teknisi.install.index", ["title" => "installation", "psb" => $psb]);
     }
 
@@ -98,7 +98,7 @@ class InstallationController extends Controller
             if ($stock_inventory) {
                 $stock_ = $stock_inventory->stock - $inv[$index][1];
                 if ($stock_ < 0) {
-                    $error .= "Stock ".$stock_inventory->name." sudah habis!";
+                    $error .= "Stock " . $stock_inventory->name . " sudah habis!";
                 }
             }
         }
@@ -107,7 +107,7 @@ class InstallationController extends Controller
                 ->mapWithKeys(function ($i) {
                     $stock_inventory = Inventory::find($i[0]);
                     $stock = $stock_inventory->stock - $i[1];
-                    $stock_inventory->update(["stock" => $stock]);
+                    $stock_inventory->update(["stock" => $stock, "status" => $stock >= 0 ? "sold" : "ready"]);
                     return [$i[0] => ["stock" => $i[1]]];
                 });
             $installation->user->update(["location" => $request->location]);
