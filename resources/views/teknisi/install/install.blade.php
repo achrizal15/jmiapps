@@ -109,7 +109,7 @@
                             </div>
                             <div class="form-control w-full">
                                 <label class="label">
-                                    <span class="label-text">Biaya pemasangan</span>
+                                    <span class="label-text">Biaya tambahan</span>
                                 </label>
                                 <label class="input-group rounded-md">
                                     <span>Rp</span>

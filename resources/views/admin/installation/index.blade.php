@@ -132,7 +132,7 @@
         <div class="px-4 py-4">
             <input id="technician-name" type="text" required name="name" placeholder="Masukkan nohp/nama teknisi"
                 class="w-full rounded-md">
-            <select name="blok" class="block mt-2 w-full rounded-md">
+            <select name="blok" class="block mt-2 w-full form-select rounded-md">
                 <option selected disabled hidden>PILIH SALAH SATU</option>
                 @foreach ($blok as $item)
                 <option value="{{ $item->id }}">{{ $item->name }}</option>

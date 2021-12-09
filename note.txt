@@ -5,4 +5,5 @@ Pembelanjaan membeli barang oleh admin acc ke pemilik untuk mendapat uang keluar
 Alat yang rusak akan masuk ke barang dengan status rusak
 TODO
 PEMBAYARAN LEWAT ADMIIN BELUM
-
+//
+DISKON FIX DARI ADMIN
