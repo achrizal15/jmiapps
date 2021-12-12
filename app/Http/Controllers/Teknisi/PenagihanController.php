@@ -21,7 +21,7 @@ class PenagihanController extends Controller
             ->whereHas("bloks", function ($query) {
                 $query->where("collector_id", auth()->user()->id);
             })
-            ->where("status", "installed")->get();
+            ->where([["expired", "!=", null]])->get();
         return view("teknisi.penagihan.index", ["title" => "Penagihan", "tagihan" => $tagihan]);
     }
 
@@ -45,14 +45,16 @@ class PenagihanController extends Controller
     {
         $validate = $request->validate([
             "transfer_img" => "required|image|file|max:1024",
-            "message"=>"nullable"
+            "message" => "nullable"
         ]);
+        $installation = Installation::find($request->installation_id);
         $validate['member_id'] =  $request->member_id;
+        $validate["status"] = "Telah di tagih teknisi";
         $validate['installation_id'] = $request->installation_id;
         $validate['transfer_img'] = $request->file("transfer_img")->store("transfer-images");
         Payment::create($validate);
-     return   redirect("/teknisi/penagihan")->with("success", "Penagihan berhasil dilakukan segera stor ke admin!");
- 
+        $installation->update(["status"=>"waiting"]);
+        return   redirect("/teknisi/penagihan")->with("success", "Penagihan berhasil dilakukan segera stor ke admin!");
     }
 
     /**

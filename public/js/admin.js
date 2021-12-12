@@ -69,13 +69,24 @@ let installationManagement = () => {
             $(this).data("pay")['bloks']['collectors']['name']
         )
         $(".table-detail #teknisi").html($(this).data("pay")['technician'] == null ? "-" : $(this).data("pay")['technician']['name'])
-    
+
         $(".table-detail #createdat").html($(this).data("pay")['created_at'].slice(0, 10))
-    
+
     })
 
 }
+let paymentManagement = () => {
+    if (pageName != "payment") return false;
+    $(document).on("click", "#btn-check", function () {
+        let pay = $(this).data("pay");
+        let id = pay['id']
+        let img = pay['transfer_img'];
+        $(".check-form").attr('action', "/admin/payment/" + id);
+        $(".check-form img").attr("src", "/storage/"+img);
+    });
+}
 $(document).ready(function () {
+    paymentManagement();
     installationManagement();
     initValidate();
     initFormSelect2();

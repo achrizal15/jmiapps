@@ -68,11 +68,14 @@
                                             class="my-btn-sm bg-blue-500 hover:bg-blue-600">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <a href="/teknisi/penagihan#tagihan-modal" data-user="{{ $p->user }}"
-                                            data-paket="{{ $p->package }}" data-installation="{{ $p->id }}"
-                                            id="btn-tagihan"
-                                            class="my-btn-sm bg-green-500 inline-block hover:bg-green-600">Tagih</a>
-
+                                        @if ($p->expired <= date('Y-m-d') && $p->status!="waiting")
+                                            <button onclick="modal_toggler('tagihan-modal')"
+                                                data-user="{{ $p->user }}"
+                                                data-paket="{{ $p->package }}" data-installation="{{ $p->id }}"
+                                                id="btn-tagihan"
+                                                class="my-btn-sm bg-green-500 inline-block hover:bg-green-600">
+                                                <i class="fas fa-hand-holding-usd"></i></button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -154,7 +157,7 @@
                     </div>
                     <div class="modal-action">
                         <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="/teknisi/penagihan#close" class="btn btn-error">Close</a>
+                        <button type="button" onclick="modal_toggler('tagihan-modal')" class="btn btn-error">Close</button>
                     </div>
                 </form>
             </div>

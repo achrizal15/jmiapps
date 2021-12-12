@@ -28,7 +28,7 @@ class PaymentController extends Controller
             "tagihan" => 0
         ];
         if ($install->first() != null) {
-            if ($install->first()->expired <= date("Y-m-d")&&$install->first()->expired!=null) {
+            if ($install->first()->expired <= date("Y-m-d") && $install->first()->expired != null) {
                 $myPackage = [
                     "package_name" => $install->first()->package->name,
                     "tagihan" => $install->first()->package->price
@@ -41,7 +41,7 @@ class PaymentController extends Controller
         return view("pelanggan.payment.index", [
             'title' => "Payment",
             "myPackage" => $myPackage,
-            "message"=>$msg,
+            "message" => $msg,
             "transfer" => $transfer
                 ->with("installations.package")
                 ->paginate(10)

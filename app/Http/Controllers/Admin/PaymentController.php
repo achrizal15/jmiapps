@@ -26,8 +26,9 @@ class PaymentController extends Controller
         if ($status == "rejected") {
             return redirect()->back()->with("error", "Pembayaran telah " . $status . " silahkan kirim pesan ke member untuk memberi informasi!");
         }
-        $ins = Installation::where("user_id", "=", $member_id);
-        $ins->first()->update(["expired" => date("Y-m-d", strtotime("+1 month", strtotime($ins->first()->expired)))]);
+        $ins = Installation::where("user_id", "=", $member_id)->first();
+        $ins->update(["expired" => date("Y-m-d", strtotime("+1 month now")),"status"=>"installed"]);
+
         return redirect()->back()->with("success", "Pembayaran telah " . $status . " silahkan cek kembali!");
     }
 }
