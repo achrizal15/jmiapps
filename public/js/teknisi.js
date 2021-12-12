@@ -100,8 +100,6 @@ let installerManagement = function () {
                     }
                 });
             }
-
-
         })
         $(document).on("click", "#btn-delete", function () {
             $stock = $(this).parents("tr").find("input").last().val()

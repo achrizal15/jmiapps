@@ -42,7 +42,7 @@
                                 <label class="label">
                                     <span class="label-text">Username</span>
                                 </label>
-                                <input type="text" placeholder="username" name="username" class="input input-bordered"
+                                <input type="text" placeholder="username" name="username" class="form-input my-input"
                                     required>
                                     <label id="username-error" class="error text-xs text-red-500 hidden" for="username"></label>
                             </div>
@@ -52,7 +52,7 @@
                                 </label>
                                 <input type="text" name="location"
                                     placeholder="Q9C7+8H9, Taman Baru, Kec. Banyuwangi, Kabupaten Banyuwangi, Jawa Timur 68416"
-                                    class="input input-bordered" required>
+                                    class="form-input my-input" required>
                                     <label id="location-error" class="error text-xs text-red-500 hidden" for="location"></label>
                             </div>
                             <div class="form-control w-full">
@@ -60,7 +60,7 @@
                                     <span class="label-text">Nama paket</span>
                                 </label>
                                 <input type="text" value="{{ $installation->package->name }}"
-                                    class="input input-bordered input-disabled" disabled>
+                                    class="form-input my-input bg-gray-300" disabled>
                             </div>
                             <div class="form-control w-full">
                                 <label class="label">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blok;
 use App\Models\Installation;
 use App\Models\Inventory;
+use App\Models\Message;
 use App\Models\Package;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,9 +23,12 @@ class InstallationController extends Controller
     {
         $psb = Installation::latest();
         $blok = Blok::latest()->get();
+        $teknisi = User::where("role_id", "3")->orderBy("name", "asc")->get();
+
         return view('admin.installation.index', [
             'title' => "Pasang Baru",
             "blok" => $blok,
+            "teknisi" => $teknisi,
             "collection" => $psb->with(['user', 'package', 'technician', "bloks.collectors"])
                 ->paginate(10)
                 ->withQueryString()
@@ -124,19 +128,20 @@ class InstallationController extends Controller
      */
     public function update(Request $request, Installation $installation)
     {
-        $request->validate(["blok" => "required"]);
-        $technician = preg_replace('/[^0-9]/', '', $request->name);
-        $technician_id = User::where("phone", $technician)->get();
-        if (!count($technician_id)) {
-            return redirect('/admin/installation')->with("error", "Gagal teknisi tidak ditemukan silahkan cek kembali!");
-        }
-
+        $request->validate(["blok" => "required", "teknisi" => "required", "price" => "min:0"]);
+        $technician = User::find($request->teknisi);
         $update = [
-            "technician_id" => $technician_id[0]->id,
+            "technician_id" => $technician->id,
             "status" => "process",
-            "blok_id" => $request->blok
+            "blok_id" => $request->blok,
+            "installation_costs" => $request->price,
+            "discount"=>$request->discount
         ];
         $installation->update($update);
+        Message::create([
+            "name"=>"Paket anda sedang di proses tunggu teknisi kami.",
+            "user_id"=>$installation->user_id,
+        ]);
         return redirect('/admin/installation')->with("success", "Permintaan berhasil di proses!");
     }
 
@@ -149,7 +154,7 @@ class InstallationController extends Controller
     public function destroy(Installation $installation)
     {
         $installation->delete();
-       return redirect("/admin/installation")->with("success","Telah terhapus selamanya!");
+        return redirect("/admin/installation")->with("success", "Telah terhapus selamanya!");
     }
     public function selectJquery()
     {

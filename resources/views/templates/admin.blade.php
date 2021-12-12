@@ -5,17 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="/js/templates/jquery.min.js"></script>
+    <script src="/js/templates/validate-form.js"></script>
+    <link rel="stylesheet" href="/css/templates/select2.min.css" />
+    <script src="/js/templates/select2.min.js"></script>
+    <script src="/js/templates/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css" />
+    <script type="text/javascript" src="/DataTables/datatables.min.js"></script>
     <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <title>{{ $title }}</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{-- @yield('style') --}}
 </head>
 <body class="text-gray-700 antialiased">
     <div class="root">
@@ -162,11 +163,8 @@
             @yield('content')
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="/js/notus.js"></script>
-    <script src="/js/script.js"></script>
-    @yield("script")
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>
