@@ -36,8 +36,11 @@
                                 Pembayaran Bulanan
                             </h3>
                         </div>
-                        <button class="font-semibold rounded-sm px-3 py-0.5 shadow-lg bg-blue-600 text-sm text-white"
-                            id="btn-add" onclick="toggleModal('add-data')">ADD</button>
+                        <div class="space-x-2">
+                            <button class="bg-blue-600 my-btn-sm"
+                                id="btn-add" onclick="toggleModal('add-data')"><i class="fas fa-plus"></i></button>
+                            <button class="my-btn-sm bg-green-600"><i class="fas fa-file-excel"></i></button>
+                        </div>
                     </div>
                     <div class="flex mt-2 w-full justify-center">
                         <form action="/admin/payment">
@@ -96,7 +99,7 @@
                                     </td>
                                     <td
                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
-                               
+
                                         @if ($item->status == 'pending' || $item->status == 'rejected' || $item->status == 'Telah di tagih teknisi')
                                             <div class="flex space-x-2 ">
                                                 <button type="button" data-pay="{{ $item }}" id="btn-check"

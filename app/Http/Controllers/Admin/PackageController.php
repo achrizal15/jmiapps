@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Package;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 
 class PackageController extends Controller
 {
@@ -80,12 +82,15 @@ class PackageController extends Controller
      */
     public function update(Request $request, Package $package)
     {
-        $validate = $request->validate([
-            "name" => "required|unique:packages,name",
+        $rule = [
             "price" => "required",
             "feature" => "required",
-            "detail" => "nullable"
-        ]);
+            "note" => "nullable"
+        ];
+        if ($request->name != $package->name) {
+            $rule["name"] = "required|unique:packages,name";
+        }
+        $validate =   $request->validate($rule);
         $package->update($validate);
         return redirect('/admin/package')->with('success', 'Berhasil update data package ' . $package->name);
     }

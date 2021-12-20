@@ -5,6 +5,13 @@ let initValidate = () => {
         $(".init-validatation").validate()
     }
 }
+function initShowDropdown(e) {
+    // if (e.open) {
+    //     $(e).find("summary").removeClass("text-blue-800")
+    // } else {
+    //     $(e).find("summary").addClass("text-blue-800")
+    // }
+}
 function modal_toggler(id) {
     let modalID = $(`#${id}`)
     $(".modal").on('click', function (e) {
@@ -73,6 +80,19 @@ let installationManagement = () => {
         $(".table-detail #createdat").html($(this).data("pay")['created_at'].slice(0, 10))
 
     })
+    $(document).on("click", "#btn-print", function () {
+        let item = $(this).data("item")
+        // console.log(item)
+        let paper = $("#print-paper-installation");
+        paper.find("td#username_pdf").text(item.username ? item.username : "-")
+        paper.find("td#nama_pdf").text(item.user ? item.user.name : "-")
+        paper.find("td#date_pdf").text(item.created_at ? new Date(item.created_at) : "-")
+        paper.find("td#teknisi_pdf").text(item.technician ? item.technician.name : "-")
+        let original = document.body.innerHTML;
+        document.body.innerHTML = paper.html();
+        window.print()
+        document.body.innerHTML = original;
+    })
 
 }
 let paymentManagement = () => {
@@ -82,10 +102,22 @@ let paymentManagement = () => {
         let id = pay['id']
         let img = pay['transfer_img'];
         $(".check-form").attr('action', "/admin/payment/" + id);
-        $(".check-form img").attr("src", "/storage/"+img);
+        $(".check-form img").attr("src", "/storage/" + img);
     });
 }
+function printDiv(divName) {
+    console.log($("#" + divName).data("item"))
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
 $(document).ready(function () {
+
     paymentManagement();
     installationManagement();
     initValidate();

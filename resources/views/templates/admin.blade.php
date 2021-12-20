@@ -13,11 +13,12 @@
     <script src="/js/templates/sweet-alert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css" />
     <script type="text/javascript" src="/DataTables/datatables.min.js"></script>
-    <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+    <script src="/fontawesome/js/all.min.js" crossorigin="anonymous"></script>
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <title>{{ $title }}</title>
 </head>
+
 <body class="text-gray-700 antialiased">
     <div class="root">
         <nav
@@ -45,21 +46,21 @@
                     <hr class="my-4 md:min-w-full hidden md:block" />
                     <x-Sidebar.heading title="Dashboard" />
                     <x-Sidebar.navigasi>
-                        <x-Sidebar.menu active="{{ (request()->is('admin')) ? true:false }}" href="/admin">
+                        <x-Sidebar.menu active="{{ request()->is('admin') ? true : false }}" href="/admin">
                             <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                             Home
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/package"
-                            active="{{ (request()->is('admin/package')) ? true:false }}">
+                            active="{{ request()->is('admin/package') ? true : false }}">
                             <i class="fas fa-box-open mr-2 text-sm opacity-75"></i>
                             Paket
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/blok" active="{{ (request()->is('admin/blok')) ? true:false }}">
+                        <x-Sidebar.menu href="/admin/blok" active="{{ request()->is('admin/blok') ? true : false }}">
                             <i class="fa fa-map-marker mr-2 text-sm opacity-75"></i>
                             Blok
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/report"
-                            active="{{ (request()->is('admin/report')) ? true:false }}">
+                            active="{{ request()->is('admin/report') ? true : false }}">
                             <i class="fas fa-bug mr-2 text-sm opacity-75"></i>
                             Report
                         </x-Sidebar.menu>
@@ -67,13 +68,13 @@
                     <hr class="my-4 md:min-w-full" />
                     <x-Sidebar.heading title="Teknisi" />
                     <x-Sidebar.navigasi>
-                        <x-Sidebar.menu active="{{ (request()->is('admin/technician')) ? true:false }}"
+                        <x-Sidebar.menu active="{{ request()->is('admin/technician') ? true : false }}"
                             href="/admin/technician">
                             <i class="fas fa-user-tie mr-2 text-sm opacity-75"></i>
                             Management Teknisi
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/salary"
-                            active="{{ (request()->is('admin/salary')) ? true:false }}">
+                            active="{{ request()->is('admin/salary') ? true : false }}">
                             <i class="fas fa-hand-holding-usd mr-2 text-sm opacity-75"></i>
                             Gaji Teknisi
                         </x-Sidebar.menu>
@@ -82,12 +83,12 @@
                     <x-Sidebar.heading title="Inventory" />
                     <x-Sidebar.navigasi>
                         <x-Sidebar.menu href="/admin/expenditure"
-                            active="{{ (request()->is('admin/expenditure')) ? true:false }}">
+                            active="{{ request()->is('admin/expenditure') ? true : false }}">
                             <i class="fas fa-truck mr-2 text-sm opacity-75"></i>
                             Pembelanjaan
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/admin/product"
-                            active="{{ (request()->is('admin/product')) ? true:false }}">
+                            active="{{ request()->is('admin/product') ? true : false }}">
                             <i class="fas fa-boxes mr-2 text-sm opacity-75"></i>
                             Barang
                         </x-Sidebar.menu>
@@ -102,20 +103,36 @@
                     <x-Sidebar.heading title="pelanggan" />
                     <x-Sidebar.navigasi>
                         <x-Sidebar.menu href="/admin/member"
-                            active="{{ (request()->is('admin/member')) ? true:false }}">
+                            active="{{ request()->is('admin/member') ? true : false }}">
                             <i class="fas fa-truck-moving mr-2 text-sm opacity-75"></i>
                             detail pelanggan
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="{{ route('admin.payment.index') }}"
-                            active="{{ (request()->is('admin/pembayaran')) ? true:false }}">
-                            <i class="fas fa-boxes mr-2 text-sm opacity-75"></i>
+                            active="{{ request()->is('admin/payment') ? true : false }}">
+                            <i class="fas fa-file-invoice mr-2 text-sm opacity-75"></i>
                             pembayaran
                         </x-Sidebar.menu>
-                        <x-Sidebar.menu href="/admin/installation"
-                            active="{{ (request()->is('admin/installation')) ? true:false }}"> <i
-                                class="fas fa-truck-loading mr-2 text-sm opacity-75"></i>
-                            pasang baru
-                        </x-Sidebar.menu>
+
+                        <li class="items-center">
+                            <details onclick="initShowDropdown(this)" class="open:bg-blue-200 p-3 rounded-md"
+                                {{ request()->is('admin/installation') || request()->is('admin/installation-report') ? 'open' : '' }}>
+                                <summary
+                                    class="text-xs uppercase cursor-pointer font-bold justify-between flex text-gray-500 hover:text-blue-800 w-full   {{ request()->is('admin/installation') || request()->is('admin/installation-report') ? 'text-blue-800' : '' }}">
+                                    <span>
+                                        <i class="fa-solid fa-code-pull-request mr-2 text-sm opacity-75"></i>
+                                        pasang baru
+                                    </span>
+                                    <i class="fa-solid fa-plus mr-2 text-sm opacity-75"></i>
+                                </summary>
+                                <div class="space-y-3 ml-6 text-xs uppercase text-gray-500 mt-2">
+                                    <a class="block hover:text-blue-800 {{ request()->is('admin/installation') ? 'text-blue-800' : '' }}"
+                                        href="/admin/installation">Permintaan</a>
+                                    <a class="block hover:text-blue-800 {{ request()->is('admin/installation-report') ? 'text-blue-800' : '' }}"
+                                        href="">Laporan</a>
+                                </div>
+                            </details>
+                        </li>
+
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />
                 </div>
@@ -126,8 +143,8 @@
             <nav
                 class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
                 <div class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
-                    <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold" href="#">{{
-                        $title}}</a>
+                    <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+                        href="#">{{ $title }}</a>
 
                     <div class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
                         <div class="relative flex w-full text-white flex-wrap items-stretch">
@@ -150,11 +167,11 @@
             <div class="relative bg-blue-800 md:pt-32 pb-32 pt-12">
                 <div class="px-4 md:px-10 mx-auto w-full">
                     <div class="flex flex-wrap">
-                        @if ($title=="Welcome")
-                        <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244" />
-                        <x-cards.dasboard />
-                        <x-cards.dasboard />
-                        <x-cards.dasboard />
+                        @if ($title == 'Welcome')
+                            <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244" />
+                            <x-cards.dasboard />
+                            <x-cards.dasboard />
+                            <x-cards.dasboard />
                         @endif
 
                     </div>
@@ -164,7 +181,7 @@
         </div>
     </div>
     <script src="/js/notus.js"></script>
-    <script src="/js/admin.js"></script>
+    <script src="/js/admin.js?v=20211212"></script>
 </body>
 
 </html>

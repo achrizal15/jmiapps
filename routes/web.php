@@ -24,6 +24,7 @@ use App\Http\Controllers\Teknisi\InstallationController as TeknisiInstallationCo
 use App\Http\Controllers\Teknisi\JqueryController;
 use App\Http\Controllers\Teknisi\PenagihanController;
 use App\Http\Controllers\Teknisi\ReportController;
+use App\Http\Controllers\Welcome;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +38,8 @@ use App\Http\Controllers\Teknisi\ReportController;
 */
 
 Route::get('/logout', [LoginController::class, "logout"]);
+Route::get('/', [Welcome::class, "index"])->name("landingpage");
 Route::middleware(['guest'])->group(function () {
-    Route::get('/', function () {
-        return view("welcome", ['title' => "Landing Page"]);
-    });
     Route::get('/login', [LoginController::class, "index"])->name("login");
     Route::post('/login', [LoginController::class, "authenticate"]);
     Route::get('/register', [RegisterController::class, "index"]);
@@ -65,7 +64,7 @@ Route::middleware(['auth', 'is_role:2'])->group(function () {
         Route::resource('/member', MemberController::class);
         Route::post('/installation/{installation}', [InstallationController::class, "pause"]);
         Route::get('/installation/selectJquery', [InstallationController::class, "selectJquery"]);
-        Route::resource('/installation', InstallationController::class);
+        Route::resource('/installation', InstallationController::class)->except("show");
         Route::resource('/technician', TechnicianController::class);
         Route::resource('/salary', SalaryController::class);
         Route::resource('/payment', AdminPaymentController::class)->names("admin.payment");

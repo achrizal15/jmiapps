@@ -14,9 +14,15 @@ class PaymentController extends Controller
         $payment =  Payment::latest();
         return view("admin.payment.index", [
             "title" => "Payment",
-            "payments" => $payment->with(['member', "installations.package"])->filters(request(['date','search']))
+            "payments" => $payment->with(['member', "installations.package"])->filters(request(['date', 'search']))
                 ->paginate(25)->withQueryString()
         ]);
+    }
+    public function print_pdf()
+    {
+        $token = request()->session()->token();
+        $token = csrf_token();
+        echo json_encode(request()->all());
     }
     public function update(Request $request, Payment $payment)
     {
@@ -27,7 +33,7 @@ class PaymentController extends Controller
             return redirect()->back()->with("error", "Pembayaran telah " . $status . " silahkan kirim pesan ke member untuk memberi informasi!");
         }
         $ins = Installation::where("user_id", "=", $member_id)->first();
-        $ins->update(["expired" => date("Y-m-d", strtotime("+1 month now")),"status"=>"installed"]);
+        $ins->update(["expired" => date("Y-m-d", strtotime("+1 month now")), "status" => "installed"]);
 
         return redirect()->back()->with("success", "Pembayaran telah " . $status . " silahkan cek kembali!");
     }

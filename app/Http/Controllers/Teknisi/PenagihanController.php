@@ -22,6 +22,7 @@ class PenagihanController extends Controller
                 $query->where("collector_id", auth()->user()->id);
             })
             ->where([["expired", "!=", null]])->get();
+     
         return view("teknisi.penagihan.index", ["title" => "Penagihan", "tagihan" => $tagihan]);
     }
 

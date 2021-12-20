@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Blok;
-use App\Models\Installation;
-use App\Models\Inventory;
+use App\Models\User;
 use App\Models\Message;
 use App\Models\Package;
-use App\Models\User;
+use Barryvdh\DomPDF\PDF;
+use App\Models\Inventory;
+use App\Models\Installation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 
 class InstallationController extends Controller
 {
@@ -135,12 +137,12 @@ class InstallationController extends Controller
             "status" => "process",
             "blok_id" => $request->blok,
             "installation_costs" => $request->price,
-            "discount"=>$request->discount
+            "discount" => $request->discount
         ];
         $installation->update($update);
         Message::create([
-            "name"=>"Paket anda sedang di proses tunggu teknisi kami.",
-            "user_id"=>$installation->user_id,
+            "name" => "Paket anda sedang di proses tunggu teknisi kami.",
+            "user_id" => $installation->user_id,
         ]);
         return redirect('/admin/installation')->with("success", "Permintaan berhasil di proses!");
     }
@@ -166,5 +168,9 @@ class InstallationController extends Controller
             $inv = Inventory::latest();
             return $inv->get();
         }
+    }
+    public function print_pdf()
+    {
+       
     }
 }

@@ -114,15 +114,19 @@
                                         <div class="flex space-x-2">
                                             @if ($item->status == 'request')
                                                 <button type="button" id="btn-accept"
+                                                class="my-btn-sm bg-yellow-500"
                                                     onclick="modal_toggler('accept-modal')"
                                                     data-id="{{ $item->id }}"> <i
-                                                        class="fas fa-check text-yellow-500"></i></button>
+                                                        class="fas fa-check"></i></button>
                                             @endif
-                                            <button onclick="toggleModal('details')" type="button"
+                                            <button class="my-btn-sm bg-blue-600" onclick="toggleModal('details')"
+                                                type="button"
                                                 data-pay="{{ $item }}"
                                                 id="btn-detail">
-                                                <i class="fas fa-info-circle text-blue-500"></i>
+                                                <i class="fas fa-info-circle"></i>
                                             </button>
+                                                <button data-item="{{ $item }}" id="btn-print"  class="my-btn-sm bg-red-600"><i
+                                                        class="fas fa-file-pdf"></i></button>                                            
                                         </div>
                                     </td>
                                 </tr>
@@ -134,8 +138,45 @@
             </div>
 
         </div>
+
         @include('templates.footer')
     </section>
+    <div class="print:block hidden justify-center items-center pt-24" id="print-paper-installation">
+        <div class="print:w-full w-1/2 rounded-md border-2 shadow-md p-4">
+            <div class="grid grid-cols-6 pt-4 overflow-hidden">
+                <div class="flex items-center col-span-2 justify-center h-52 border-r-2">
+                    <img src="/img/mascot.jpeg" class="object-cover" width="100%" alt="">
+                </div>
+                <div class="flex items-center col-span-3 justify-center  mx-4">
+                    <table class="w-full">
+                        <tr >
+                            <td class="font-bold w-8 align-top">USERNAME</td>
+                            <td class="align-top w-8 text-center">:</td>
+                            <td id="username_pdf" class="align-top">CI2132</td>
+                        </tr>
+                        <tr >
+                            <td class="font-bold w-8 align-top">NAMA</td>
+                            <td class="align-top w-8 text-center">:</td>
+                            <td id="nama_pdf" class="align-top">ACH RIZAL</td>
+                        </tr>
+                        <tr >
+                            <td class="font-bold w-8 align-top">TANGGAL</td>
+                            <td class="align-top w-8 text-center">:</td>
+                            <td id="date_pdf" class="align-top">2021-12-12</td>
+                        </tr>
+                        <tr >
+                            <td class="font-bold w-8 align-top">TEKNISI</td>
+                            <td class="align-top w-8 text-center">:</td>
+                            <td id="teknisi_pdf" class="align-top">ALDO ANTARA</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="text-center flex items-center border-l-2">
+                    <h4 class="rotate-90 font-bold antialiased ">BUKTI PEMASANGAN</h4>
+                </div>
+            </div>
+        </div>
+    </div>
     {{-- modal --}}
     <div class="modal" id="accept-modal">
         <div class="modal-box">
@@ -209,7 +250,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">SUBMIT</button>
-                    <button type="submit" class="btn btn-error">CANCEL</button>
+                    <button type="button" class="btn btn-error">CANCEL</button>
                 </div>
             </form>
         </div>
