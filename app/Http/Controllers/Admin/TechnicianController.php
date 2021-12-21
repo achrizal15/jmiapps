@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Exception;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\User;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +17,7 @@ class TechnicianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+ 
     public function index()
     {
         $technician = User::latest();
@@ -123,12 +126,14 @@ class TechnicianController extends Controller
      */
     public function destroy(User $technician)
     {
-
         try {
             $technician->delete();
             return redirect("/admin/technician")->with("success", $technician->name . " berhasil dihapus!");
         } catch (\Throwable $th) {
             return redirect("/admin/technician")->with("error", $technician->name . " gagal dihapus karena masih ada data yang terhubung dengan teknisi ini!");
         }
+    }
+    public function export(){
+        return Excel::download(new UsersExport("3"),"teknisi.xlsx");
     }
 }

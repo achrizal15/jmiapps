@@ -112,8 +112,13 @@
                             <i class="fas fa-file-invoice mr-2 text-sm opacity-75"></i>
                             pembayaran
                         </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/admin/installation"
+                            active="{{ request()->is('admin/installation') ? true : false }}">
+                            <i class="fa-solid fa-code-pull-request mr-2 text-sm opacity-75"></i>
+                           Pasang Baru
+                        </x-Sidebar.menu>
 
-                        <li class="items-center">
+                        {{-- <li class="items-center">
                             <details onclick="initShowDropdown(this)" class="open:bg-blue-200 p-3 rounded-md"
                                 {{ request()->is('admin/installation') || request()->is('admin/installation-report') ? 'open' : '' }}>
                                 <summary
@@ -126,12 +131,12 @@
                                 </summary>
                                 <div class="space-y-3 ml-6 text-xs uppercase text-gray-500 mt-2">
                                     <a class="block hover:text-blue-800 {{ request()->is('admin/installation') ? 'text-blue-800' : '' }}"
-                                        href="/admin/installation">Permintaan</a>
+                                        href="/admin/installation">Panel INSTALASI</a>
                                     <a class="block hover:text-blue-800 {{ request()->is('admin/installation-report') ? 'text-blue-800' : '' }}"
                                         href="">Laporan</a>
                                 </div>
                             </details>
-                        </li>
+                        </li> --}}
 
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />

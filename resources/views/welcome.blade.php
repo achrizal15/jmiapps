@@ -543,7 +543,7 @@
                             <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
                                 <div class="w-full p-8 text-3xl font-bold text-center">{{ $p->name }}</div>
                                 <div class="h-1 w-full gradient my-0 py-0 rounded-t"></div>
-                                <ul class="w-full text-center text-base font-bold">
+                                <ul class="w-full text-base font-bold">
                                     @foreach (explode(',',$p->feature) as $f)
                                     <li class="border-b p-4"><i class="fas fa-check mr-6"></i>{{ $f }}</li>
                                     @endforeach

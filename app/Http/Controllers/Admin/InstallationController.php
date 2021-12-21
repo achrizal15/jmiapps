@@ -6,12 +6,12 @@ use App\Models\Blok;
 use App\Models\User;
 use App\Models\Message;
 use App\Models\Package;
-use Barryvdh\DomPDF\PDF;
 use App\Models\Inventory;
+use App\Export\UserExport;
 use App\Models\Installation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\App;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InstallationController extends Controller
 {
@@ -169,8 +169,5 @@ class InstallationController extends Controller
             return $inv->get();
         }
     }
-    public function print_pdf()
-    {
-       
-    }
+ 
 }

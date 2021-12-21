@@ -39,7 +39,7 @@
                         <div class="space-x-2">
                             <button class="bg-blue-600 my-btn-sm"
                                 id="btn-add" onclick="toggleModal('add-data')"><i class="fas fa-plus"></i></button>
-                            <button class="my-btn-sm bg-green-600"><i class="fas fa-file-excel"></i></button>
+                            <a class="my-btn-sm bg-green-600"><i class="fas fa-file-excel"></i></a>
                         </div>
                     </div>
                     <div class="flex mt-2 w-full justify-center">

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Installation;
 use App\Models\Payment;
+
+use App\Models\Installation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
@@ -18,12 +19,7 @@ class PaymentController extends Controller
                 ->paginate(25)->withQueryString()
         ]);
     }
-    public function print_pdf()
-    {
-        $token = request()->session()->token();
-        $token = csrf_token();
-        echo json_encode(request()->all());
-    }
+  
     public function update(Request $request, Payment $payment)
     {
         $status = $request->status;

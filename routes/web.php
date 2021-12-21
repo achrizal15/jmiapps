@@ -65,9 +65,10 @@ Route::middleware(['auth', 'is_role:2'])->group(function () {
         Route::post('/installation/{installation}', [InstallationController::class, "pause"]);
         Route::get('/installation/selectJquery', [InstallationController::class, "selectJquery"]);
         Route::resource('/installation', InstallationController::class)->except("show");
+        Route::get("/technician/export/",[TechnicianController::class,"export"]);
         Route::resource('/technician', TechnicianController::class);
         Route::resource('/salary', SalaryController::class);
-        Route::resource('/payment', AdminPaymentController::class)->names("admin.payment");
+        Route::resource('/payment', AdminPaymentController::class)->names("admin.payment")->except("show");
         Route::resource('/blok', BlokController::class)->names("admin.blok");
         Route::resource('/report', AdminReportController::class)->names("admin.report");
     });
