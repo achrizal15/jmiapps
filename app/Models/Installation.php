@@ -9,6 +9,19 @@ class Installation extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    public function scopeFilters($query, $filters)
+    {
+        if (isset($filters['date']) ? $filters['date'] : false) {
+            return $query->whereYear("created_at", date("Y", strtotime($filters['date'])))
+                ->whereMonth("created_at", date("m", strtotime($filters['date'])));
+        }
+        if (isset($filters['search']) ? $filters['search'] : false) {
+            $search = $filters['search'];
+            return $query->whereHas("user", function ($query) use ($search) {
+                return $query->where("name", "like", "%" . $search . "%");
+            })->orWhere("port","=",$search);
+        }
+    }
     public function inventorys()
     {
         return $this->belongsToMany(Inventory::class)

@@ -32,6 +32,7 @@ class InstallationController extends Controller
             "blok" => $blok,
             "teknisi" => $teknisi,
             "collection" => $psb->with(['user', 'package', 'technician', "bloks.collectors"])
+                ->filters(request(['date', 'search']))
                 ->paginate(10)
                 ->withQueryString()
         ]);
@@ -169,5 +170,4 @@ class InstallationController extends Controller
             return $inv->get();
         }
     }
- 
 }

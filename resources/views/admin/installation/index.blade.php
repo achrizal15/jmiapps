@@ -37,34 +37,26 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="flex mt-2 w-full justify-center">
-                        <form action="/admin/expenditure">
-                            <div class="flex lg:space-x-2 flex-col lg:flex-row">
+                    <div class="flex mt-2  w-full justify-center">
+                        <form action="">
+                            <div class="flex lg:space-x-2 lg:space-y-0 space-y-4  flex-col lg:flex-row">
                                 <div class="flex md:space-x-2 flex-col md:flex-row">
-                                    <input type="month" class="form-input " min="2021-01" value="{{ request('date') }}"
+                                    <input type="month" class="form-input my-input" min="2015-01"
+                                        value="{{ request('date') }}"
                                         name="date" id="">
-                                    <select name="status" id="" class="form-select rounded-sm">
-                                        <option selected hidden value="">Filters</option>
-                                        <option value="pending" @if (request('status') == 'pending') selected @endif>Pending
-                                        </option>
-                                        <option value="reject" @if (request('status') == 'reject') selected @endif>Reject
-                                        </option>
-                                        <option value="accept" @if (request('status') == 'accept') selected @endif>Accept
-                                        </option>
-                                    </select>
                                 </div>
-                                <div class="shadow flex">
-                                    <input name="search"
-                                        class="w-full rounded p-2 focus:outline-none border-none focus:ring-0" type="search"
-                                        value="{{ request('search') }}" placeholder="Search...">
-                                    <button type="submit"
-                                        class="bg-white w-auto  flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
+                                <input name="search"
+                                    class="my-input form-input" type="search"
+                                    value="{{ request('search') }}" placeholder="Search...">
+
+                                <button type="submit"
+                                    class="btn bg-blue-800 btn-info">
+                                    <i class="fas fa-search"></i>
+                                </button>
                                 @if (count(request()->all()))
-                                    <a href="/admin/expenditure"
-                                        class="bg-red-500 text-center px-3 text-white flex items-center rounded-sm">Reset</a>
+                                    <a href=""
+                                        class="btn bg-red-500 btn-error"><i class="fa fa-refresh"
+                                            aria-hidden="true"></i></a>
                                 @endif
                             </div>
                         </form>
@@ -73,28 +65,30 @@
                 <div class="block w-full overflow-x-auto">
                     <!-- Projects table -->
                     <x-tables.table>
-                        <x-tables.thead thItem="#,pelanggan,alamat,expired,paket,teknisi,status,action" />
+                        <x-tables.thead thItem="#,pelanggan,alamat,port,expired,paket,teknisi,status,action" />
                         <tbody>
                             @foreach ($collection as $item)
                                 <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left flex items-center font-bold text-gray-600">
-                                        {{ $loop->iteration }}
-                                    </th>
                                     <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
+                                        class="text-center align-middle">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td
+                                        class="border-t-0 align-middle px-6  border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                         {{ $item->user->name }}
                                     </td>
                                     <td
                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                         {{ $item->user->alamat }}
                                     </td>
+                                    <td class="text-center ">{{ $item->port ? $item->port : '-' }}</td>
                                     <td
                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                         @if ($item->expired)
                                             {{ date('Y-m-d', strtotime($item->expired)) }}
                                         @endif
                                     </td>
+
                                     <td
                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                         {{ $item->package->name }}
@@ -110,11 +104,11 @@
                                         <x-tables.status sts="{{ $item->status }}" />
                                     </td>
                                     <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4 ">
+                                        class="border-t-0 px-6 text-center align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4 ">
                                         <div class="flex space-x-2">
                                             @if ($item->status == 'request')
                                                 <button type="button" id="btn-accept"
-                                                class="my-btn-sm bg-yellow-500"
+                                                    class="my-btn-sm bg-yellow-500"
                                                     onclick="modal_toggler('accept-modal')"
                                                     data-id="{{ $item->id }}"> <i
                                                         class="fas fa-check"></i></button>
@@ -125,8 +119,9 @@
                                                 id="btn-detail">
                                                 <i class="fas fa-info-circle"></i>
                                             </button>
-                                                <button data-item="{{ $item }}" id="btn-print"  class="my-btn-sm bg-red-600"><i
-                                                        class="fas fa-file-pdf"></i></button>                                            
+                                            <button data-item="{{ $item }}" id="btn-print"
+                                                class="my-btn-sm bg-red-600"><i
+                                                    class="fas fa-file-pdf"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -149,22 +144,22 @@
                 </div>
                 <div class="flex items-center col-span-3 justify-center  mx-4">
                     <table class="w-full">
-                        <tr >
+                        <tr>
                             <td class="font-bold w-8 align-top">USERNAME</td>
                             <td class="align-top w-8 text-center">:</td>
                             <td id="username_pdf" class="align-top">CI2132</td>
                         </tr>
-                        <tr >
+                        <tr>
                             <td class="font-bold w-8 align-top">NAMA</td>
                             <td class="align-top w-8 text-center">:</td>
                             <td id="nama_pdf" class="align-top">ACH RIZAL</td>
                         </tr>
-                        <tr >
+                        <tr>
                             <td class="font-bold w-8 align-top">TANGGAL</td>
                             <td class="align-top w-8 text-center">:</td>
                             <td id="date_pdf" class="align-top">2021-12-12</td>
                         </tr>
-                        <tr >
+                        <tr>
                             <td class="font-bold w-8 align-top">TEKNISI</td>
                             <td class="align-top w-8 text-center">:</td>
                             <td id="teknisi_pdf" class="align-top">ALDO ANTARA</td>
