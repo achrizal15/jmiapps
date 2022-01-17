@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([RoleSeeder::class]);
 
-        User::factory(10)->create();
+        User::factory(2)->create();
         Package::factory(3)->create();
         Inventory::factory(50)->create();
         Expenditure::factory(50)->create();     
