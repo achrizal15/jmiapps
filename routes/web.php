@@ -62,7 +62,7 @@ Route::middleware(['auth', 'is_role:1'])->group(function () {
         Route::get("/pembayaran/export",[PembayaranController::class,"export"]);
         Route::get("/installation/export",[PemilikInstallationController::class,"export"]);
         Route::get("/installation",[PemilikInstallationController::class,"index"]);
-        Route::get("/salary/export",[PemilikSalaryController::class,"index/export"]);
+        Route::get("/salary/export",[PemilikSalaryController::class,"export"]);
         Route::put("/salary/{salary}",[PemilikSalaryController::class,"update"]);
         Route::get("/salary",[PemilikSalaryController::class,"index"]);
     });

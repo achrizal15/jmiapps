@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Pemilik;
 
+use App\Exports\SalaryExport;
 use App\Models\Salary;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Installation;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SalaryController extends Controller
 {
@@ -29,5 +31,8 @@ class SalaryController extends Controller
 $salary->delete();
             return redirect("pemilik/salary")->with("error","Pengajuan gaji ditolak.");
         }
+    }
+    public function export(){
+        return Excel::download(new SalaryExport(request("date")),"GAJITEKNISI.xlsx");
     }
 }

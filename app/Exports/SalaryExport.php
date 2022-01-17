@@ -18,7 +18,7 @@ class SalaryExport implements FromQuery, WithHeadings, WithMapping
     }
     public function query()
     {
-        $salary = Salary::query();
+        $salary = Salary::query()->with("user");
         if ($this->date != null) {
             $salary = $salary->whereYear("created_at", intval(date("Y", strtotime($this->date))));
         }
@@ -26,6 +26,10 @@ class SalaryExport implements FromQuery, WithHeadings, WithMapping
     }
     public function headings(): array
     {
-        return ["TANGGAL","NAMA","GAJI","POTONGAN","BONUS"];
+        return ["TANGGAL", "NAMA", "GAJI", "POTONGAN", "BONUS"];
+    }
+    public function map($row): array
+    {
+        return [date("d-m-Y", strtotime($row->created_at)), $row->user->name, "Rp." . $row->balance, "Rp." . $row->pay_cut, "Rp." . $row->bonus];
     }
 }
