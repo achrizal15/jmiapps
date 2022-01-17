@@ -58,6 +58,7 @@ class User extends Authenticatable
     public function installations(){
      return   $this->hasOne(Installation::class);
     }
+
     public function salarys(){
         return $this->hasMany(Salary::class);
     }

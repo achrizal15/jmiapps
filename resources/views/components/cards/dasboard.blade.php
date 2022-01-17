@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-sm text-gray-400 mt-4">
+            {{-- <p class="text-sm text-gray-400 mt-4">
                 @if ($upper)
                 <span class="text-green-400 mr-2">
                     <i class="fas fa-arrow-up"></i> {{ $percentase }}
@@ -30,7 +30,7 @@
                 <span class="whitespace-nowrap">
                   {{ $footer }}
                 </span>
-            </p>
+            </p> --}}
         </div>
     </div>
 </div>

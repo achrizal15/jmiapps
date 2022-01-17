@@ -54,7 +54,7 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 @if (count(request()->all()))
-                                    <a href=""
+                                    <a href="/admin/installation"
                                         class="btn bg-red-500 btn-error"><i class="fa fa-refresh"
                                             aria-hidden="true"></i></a>
                                 @endif

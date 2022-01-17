@@ -57,6 +57,7 @@ Route::middleware(['auth', 'is_role:1'])->group(function () {
 });
 Route::middleware(['auth', 'is_role:2'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, "index"]);
+    Route::get("/admin/profile",[AdminDashboardController::class,"profile"]);
     Route::prefix('/admin')->group(function () {
         Route::resource('/product', InventoryController::class);
         Route::resource('/expenditure', ExpenditureController::class)->except("show");

@@ -25,7 +25,7 @@
                 <div class="rounded-t mb-0 px-4 py-3 border-0">
                     <div class="flex flex-wrap items-center justify-between">
                         <div class="relative w-full  max-w-full flex-grow flex-1 flex">
-                            <h3 class="font-semibold text-lg text-gray-700 inline">
+                            <h3 class="font-semibold text-lg text-gray-700 inline uppercase">
                                 Paket
                             </h3>
                         </div>

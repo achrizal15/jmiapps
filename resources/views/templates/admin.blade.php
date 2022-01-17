@@ -158,11 +158,13 @@
                     </div>
                     <div class="dropdown hidden md:block">
                         <button class="relative w-10 h-10">
-                            <div class="rounded-full bg-white h-full w-full"></div>
+                            <div class="rounded-full bg-white h-full w-full overflow-hidden">
+                                <img src="/img/default-user.png" alt="">
+                            </div>
                         </button>
                         <div class="dropdown-items">
                             <ul>
-                                <li><a href="#">Profile</a></li>
+                                <li><a href="/admin/profile">Profile</a></li>
                                 <li><a href="/logout">logout</a></li>
                             </ul>
                         </div>
@@ -173,10 +175,9 @@
                 <div class="px-4 md:px-10 mx-auto w-full">
                     <div class="flex flex-wrap">
                         @if ($title == 'Welcome')
-                            <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244" />
-                            <x-cards.dasboard />
-                            <x-cards.dasboard />
-                            <x-cards.dasboard />
+                            <x-cards.dasboard upper title="INSTALASI" subtitle="{{ $total_psb }} PSB" icon="fas fa-money-bill-alt"/>
+                            <x-cards.dasboard title="Member" upper subtitle="{{ $total_member }} MEMBER" icon="fas fa-user-friends" />
+                            <x-cards.dasboard title="TEKNISI" upper subtitle="{{ $total_teknisi }} TEKNISI" icon="fas fa-users-cog" />
                         @endif
 
                     </div>

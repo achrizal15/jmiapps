@@ -16,7 +16,8 @@
         <div class="w-full md:w-1/2 flex flex-col">
 
             <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">
-                <img class="w-24 lg:w-28 md:w-20 " src="/img/logo-jmi.png" alt="">
+                <a href="/">
+                <img class="w-24 lg:w-28 md:w-20 " src="/img/logo-jmi.png" alt=""></a>
             </div>
 
             <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
