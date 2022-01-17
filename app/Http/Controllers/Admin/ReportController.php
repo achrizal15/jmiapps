@@ -20,7 +20,8 @@ class ReportController extends Controller
     {
         $reports = Report::latest()->with(['member', "technician"])
             ->filter(request(["date", "search"]))->paginate(25)->withQueryString();
-        return  view("admin.report.index", ["title" => "Report", "reports" => $reports]);
+        $teknisi=User::latest()->where("role_id",3)->get();
+        return  view("admin.report.index", ["title" => "Report", "reports" => $reports,"teknisi"=>$teknisi]);
     }
 
     /**

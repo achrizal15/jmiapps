@@ -25,8 +25,13 @@
                             <h3 class="font-semibold text-lg text-gray-700">
                                 DAFTAR PELANGGAN
                             </h3>
-                        </div> <button class="bg-blue-600 my-btn-sm"
-                            onclick="toggleModal('add-product')"><i class="fas fa-plus"></i></button>
+                        </div> 
+                            <div class="space-x-2"> <a href="/admin/technician/export?role=4" class="my-btn-sm bg-green-600"><i
+                                class="fas fa-file-excel"></i></a>
+                        <button class="bg-blue-600 my-btn-sm"
+                            onclick="toggleModal('add-data')"><i class="fas fa-plus"></i></button>
+                    </div>
+
                     </div>
                     <div class="flex mt-2 w-full justify-center">
                         <form action="">

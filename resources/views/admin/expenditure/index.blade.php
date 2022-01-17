@@ -35,19 +35,22 @@
                                 </div>
                             </h3>
                         </div>
-                        <button class="bg-blue-600 my-btn-sm"
-                            onclick="toggleModal('add-data')"><i class="fas fa-plus"></i></button>
+                        <div class="space-x-2"> <a href="/admin/expenditure/export?year={{ request()->date."&status=".request()->status }}" class="my-btn-sm bg-green-600"><i
+                                    class="fas fa-file-excel"></i></a>
+                            <button class="bg-blue-600 my-btn-sm"
+                                onclick="toggleModal('add-data')"><i class="fas fa-plus"></i></button>
+                        </div>
                     </div>
                     <div class="flex mt-2 w-full justify-center">
                         <form action="/admin/expenditure">
                             <div class="flex lg:space-x-2 lg:space-y-0 space-y-4  flex-col lg:flex-row">
                                 <select name="status" id="" class="form-select my-input">
                                     <option selected hidden value="">Filters</option>
-                                    <option value="pending" @if(request('status')=='pending' ) selected @endif>Pending
+                                    <option value="pending" @if (request('status') == 'pending') selected @endif>Pending
                                     </option>
-                                    <option value="reject" @if(request('status')=='reject' ) selected @endif>Reject
+                                    <option value="reject" @if (request('status') == 'reject') selected @endif>Reject
                                     </option>
-                                    <option value="accept" @if(request('status')=='accept' ) selected @endif>Accept
+                                    <option value="accept" @if (request('status') == 'accept') selected @endif>Accept
                                     </option>
                                 </select>
                                 <div class="flex md:space-x-2 flex-col md:flex-row">

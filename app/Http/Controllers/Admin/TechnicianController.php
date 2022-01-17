@@ -17,7 +17,7 @@ class TechnicianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
- 
+
     public function index()
     {
         $technician = User::latest();
@@ -133,7 +133,10 @@ class TechnicianController extends Controller
             return redirect("/admin/technician")->with("error", $technician->name . " gagal dihapus karena masih ada data yang terhubung dengan teknisi ini!");
         }
     }
-    public function export(){
-        return Excel::download(new UsersExport("3"),"teknisi.xlsx");
+    public function export()
+    {
+        $role = request()->role;
+        $name = $role == "3" ? "DAFTARTEKNISI" : "DAFTARMEMBER";
+        return Excel::download(new UsersExport(request("role")), $name . ".xlsx");
     }
 }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <script src="/fontawesome/js/all.min.js" crossorigin="anonymous"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -45,19 +46,34 @@
                     <hr class="my-4 md:min-w-full hidden md:block" />
                     <x-Sidebar.heading title="Dashboard" />
                     <x-Sidebar.navigasi>
-                        <x-Sidebar.menu active="{{ (request()->is('admin')) ? true:false }}" href="/admin">
+                        <x-Sidebar.menu active="{{ request()->is('admin') ? true : false }}" href="/admin">
                             <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                             Home
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/pemilik/agreement"
-                            active="{{ (request()->is('pemilik/agreement')) ? true:false }}">
+                            active="{{ request()->is('pemilik/agreement') ? true : false }}">
                             <i class="fas fa-truck mr-2 text-sm opacity-75"></i>
                             Pembelanjaan
                         </x-Sidebar.menu>
                         <x-Sidebar.menu href="/pemilik/finance"
-                            active="{{ (request()->is('pemilik/finance')) ? true:false }}">
+                            active="{{ request()->is('pemilik/finance') ? true : false }}">
                             <i class="fas fa-money-bill-alt mr-2 text-sm opacity-75"></i>
-                                                      Keuangan
+                            Keuangan
+                        </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/pemilik/installation"
+                            active="{{ request()->is('pemilik/installation') ? true : false }}">
+                            <i class="fa-solid fa-code-pull-request mr-2 text-sm opacity-75"></i>
+                       Installation
+                        </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/pemilik/pembayaran"
+                            active="{{ request()->is('pemilik/pembayaran') ? true : false }}">
+                            <i class="fas fa-file-invoice mr-2 text-sm opacity-75"></i>
+                       pembayaran
+                        </x-Sidebar.menu>
+                        <x-Sidebar.menu href="/pemilik/salary"
+                            active="{{ request()->is('pemilik/salary') ? true : false }}">
+                            <i class="fas fa-hand-holding-usd mr-2 text-sm opacity-75"></i>
+                       gaji
                         </x-Sidebar.menu>
                     </x-Sidebar.navigasi>
                     <hr class="my-4 md:min-w-full" />
@@ -73,22 +89,17 @@
                     <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
                         href="#">{{ $title }}</a>
 
-                    <form class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
-                        <div class="relative flex w-full flex-wrap items-stretch">
-                            <span
-                                class="z-10 h-full leading-snug font-normal text-center text-gray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"><i
-                                    class="fas fa-search"></i></span>
-                            <input type="text" placeholder="Search here..."
-                                class="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 relative  bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10" />
+                    <div class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
+                        <div class="relative flex w-full text-white flex-wrap items-stretch">
+                            {{ auth()->user()->name }}
                         </div>
-                    </form>
+                    </div>
                     <div class="dropdown hidden md:block">
                         <button class="relative w-10 h-10">
                             <div class="rounded-full bg-white h-full w-full"></div>
                         </button>
                         <div class="dropdown-items">
                             <ul>
-                                <li><a href="#">Profile</a></li>
                                 <li><a href="/logout">logout</a></li>
                             </ul>
                         </div>
@@ -98,10 +109,14 @@
             <div class="relative bg-pink-600 md:pt-32 pb-32 pt-12">
                 <div class="px-4 md:px-10 mx-auto w-full">
                     <div class="flex flex-wrap">
-                        <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244,444" />
-                        <x-cards.dasboard />
-                        <x-cards.dasboard />
-                        <x-cards.dasboard />
+                        @if ($title == 'Welcome')
+                            <x-cards.dasboard upper title="INSTALASI" subtitle="{{ $total_psb }} PSB"
+                                icon="fas fa-money-bill-alt" />
+                            <x-cards.dasboard title="Member" upper subtitle="{{ $total_member }} MEMBER"
+                                icon="fas fa-user-friends" />
+                            <x-cards.dasboard title="TEKNISI" upper subtitle="{{ $total_teknisi }} TEKNISI"
+                                icon="fas fa-users-cog" />
+                        @endif
                     </div>
                 </div>
             </div>
@@ -112,6 +127,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="/js/notus.js"></script>
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>

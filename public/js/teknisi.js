@@ -197,6 +197,7 @@ let reportManagement = function () {
                         $(this).remove();
                     }
                 });
+                $("#select-inventory").val("").attr("selected",true)
             }
         })
         $(document).on("click", "#btn-submit-inventory", function (e) {

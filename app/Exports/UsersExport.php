@@ -34,12 +34,12 @@ class UsersExport implements FromQuery, WithMapping, WithHeadings, WithColumnWid
     }
     public function query()
     {
-
-        return User::query()->where("role_id", $this->role);
+        $user = User::query()->where("role_id", $this->role);
+        return $user;
     }
     public function map($user): array
     {
-        return [
+        $data = [
             $user->name,
             $user->email,
             $user->phone,
@@ -47,6 +47,8 @@ class UsersExport implements FromQuery, WithMapping, WithHeadings, WithColumnWid
             $user->location,
             date("Y-m-d", strtotime($user->created_at)),
         ];
+    
+        return $data;
     }
     public function headings(): array
     {

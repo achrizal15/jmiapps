@@ -100,8 +100,8 @@
                             </button>
                             <div class="dropdown-items">
                                 <ul>
-                                    <li><a href="#">Profile</a></li>
-                                    <li><a href="/logout">logout</a></li>
+                                    <li><a href="/teknisi/profile">Profile</a></li>
+                                    <li><a href="/logout">Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -111,10 +111,7 @@
                     <div class="px-4 md:px-10 mx-auto w-full">
                         <div class="flex flex-wrap">
                             @if ($title == 'Dashboard')
-                                <x-cards.dasboard upper title="Pemasukan" subtitle="Rp.244" />
-                                <x-cards.dasboard />
-                                <x-cards.dasboard />
-                                <x-cards.dasboard />
+                                <x-cards.dasboard icon="fas fa-satellite-dish" title="installasi" subtitle="{{ $total_install }} PSB" />
                             @endif
 
                         </div>

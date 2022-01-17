@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\TechnicianController;
 use App\Http\Controllers\Pelanggan\DashboardController;
 use App\Http\Controllers\Pelanggan\PaymentController;
 use App\Http\Controllers\Pemilik\DashboardController as PemilikDashboardController;
+use App\Http\Controllers\Pemilik\InstallationController as PemilikInstallationController;
+use App\Http\Controllers\Pemilik\PembayaranController;
+use App\Http\Controllers\Pemilik\SalaryController as PemilikSalaryController;
 use App\Http\Controllers\Teknisi\DashboardController as TeknisiDashboardController;
 use App\Http\Controllers\Teknisi\InstallationController as TeknisiInstallationController;
 use App\Http\Controllers\Teknisi\JqueryController;
@@ -49,26 +52,38 @@ Route::middleware(['auth', 'is_role:1'])->group(function () {
     Route::get('/pemilik', [PemilikDashboardController::class, 'index']);
     Route::prefix('/pemilik/agreement')->group(function () {
         Route::get('/', [FinancingController::class, "index"]);
+        Route::get('/export', [FinancingController::class, "Export"]);
         Route::put('/financing/{expenditure}', [FinancingController::class, "update"]);
     });
     Route::prefix('/pemilik')->group(function () {
-        Route::resource('/finance', FinanceController::class)->except("show");
+        Route::get('/finance', [FinanceController::class, "index"]);
+        Route::get('/finance/export', [FinanceController::class, "export"]);
+        Route::get("/pembayaran",[PembayaranController::class,"index"]);
+        Route::get("/pembayaran/export",[PembayaranController::class,"export"]);
+        Route::get("/installation/export",[PemilikInstallationController::class,"export"]);
+        Route::get("/installation",[PemilikInstallationController::class,"index"]);
+        Route::get("/salary/export",[PemilikSalaryController::class,"index/export"]);
+        Route::put("/salary/{salary}",[PemilikSalaryController::class,"update"]);
+        Route::get("/salary",[PemilikSalaryController::class,"index"]);
     });
 });
 Route::middleware(['auth', 'is_role:2'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, "index"]);
-    Route::get("/admin/profile",[AdminDashboardController::class,"profile"]);
+    Route::get("/admin/profile", [AdminDashboardController::class, "profile"]);
     Route::prefix('/admin')->group(function () {
         Route::resource('/product', InventoryController::class);
+        Route::get("/expenditure/export", [ExpenditureController::class, "export"]);
         Route::resource('/expenditure', ExpenditureController::class)->except("show");
         Route::resource('/package', PackageController::class)->except("show");
         Route::resource('/member', MemberController::class);
+        Route::get('/installation/export', [InstallationController::class, "export"]);
         Route::post('/installation/{installation}', [InstallationController::class, "pause"]);
         Route::get('/installation/selectJquery', [InstallationController::class, "selectJquery"]);
         Route::resource('/installation', InstallationController::class)->except("show");
-        Route::get("/technician/export/",[TechnicianController::class,"export"]);
+        Route::get("/technician/export/", [TechnicianController::class, "export"]);
         Route::resource('/technician', TechnicianController::class);
         Route::resource('/salary', SalaryController::class);
+        Route::get("/payment/export", [AdminPaymentController::class, "export"]);
         Route::resource('/payment', AdminPaymentController::class)->names("admin.payment")->except("show");
         Route::resource('/blok', BlokController::class)->names("admin.blok");
         Route::resource('/report', AdminReportController::class)->names("admin.report");
@@ -85,6 +100,7 @@ Route::middleware(['auth', 'is_role:4'])->group(function () {
 });
 Route::middleware(['auth', "is_role:3"])->group(function () {
     Route::get('/teknisi/jquery', [JqueryController::class, "index"]);
+    Route::get("/teknisi/profile", [TeknisiDashboardController::class, "profile"]);
     Route::resource('/teknisi/installation', TeknisiInstallationController::class)
         ->names("teknisiInstallation");
     Route::resource('/teknisi/report', ReportController::class)->names("teknisiController")->except("show");

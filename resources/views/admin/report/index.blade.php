@@ -95,22 +95,21 @@
                                 {{$item->detail}}
                             </td>
                             <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
-                                <div class="flex space-x-2 ">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between space-x-4">
                                     {{-- <button class="btn btn-info"><i class="far fa-comment-dots"></i></button> --}}
-                                    <button type="button" class="btn 
-                                    @if ($item->status== 'pending') btn-success @else btn-disabled @endif btn-sm"
+                                  
+                                    @if ($item->status== 'pending')  <button type="button" class="my-btn-sm bg-yellow-500"
                                         data-items="{{ json_encode($item) }}" id="btn-edit"
-                                        onclick="toggleModal('edit-data')"> <i class="fas fa-check"></i></button>
+                                        onclick="modal_toggler('accept-modal')"> <i class="fas fa-check"></i></button>@endif
                                     <form method="POST" action="/admin/report/{{ $item->id }}">
                                         @method('delete')
                                         @csrf
                                         <button
                                         onclick="return confirm('Apakah anda yakin?')"
-                                            class="btn btn-sm bg-red-500 border-transparent hover:border-transparent hover:bg-red-500 "><i
+                                            class="my-btn-sm bg-red-600"><i
                                                 class="fas fa-trash-alt"></i></button>
                                     </form>
-                                </div>
+                        
                             </td>
                         </tr>
                         @endforeach
@@ -166,38 +165,49 @@
         </div>
     </form>
 </x-modals.regular>
-<x-modals.regular title="Terima Report" id="edit-data">
-    <form method="post" class="update-form">
-        @csrf
-        @method('put')
-        <div class="space-x-0 p-4 bg-gray-100 mb-2 md:space-y-2 space-y-0">
-            <div>
-                <label class="font-semibold text-gray-500">Teknisi<span class="text-xs">(jika dibutuhkan)</span>
+<div class="modal" id="accept-modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 class="font-bold">LANJUTKAN REPORT</h2>
+        </div>
+        <form class="update-form" method="post">
+            @csrf
+            @method("put")
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">TEKNISI<small>(Jika dibutuhkan)</small></span>
                 </label>
-                <select name="technician_id" id="init-select2" data-type="technician" style="width:100%">
+                <select name="technician_id" class="form-select2-basic"
+                    data-dropdownParent=".modal">
+                    <option></option>
+               @foreach ($teknisi as $t)
+                   <option value="{{ $t->id }}">{{ $t->name." : ".$t->phone}}</option>
+               @endforeach
                 </select>
+                <label id="teknisi-error" class="error text-sm text-red-500 hidden" for="teknisi"></label>
             </div>
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">TEKNISI<small>(Jika dibutuhkan)</small></span>
+                </label>
+                <textarea name="message" class="form-textarea my-input" placeholder="Notifikasi akan muncul di member"></textarea>
+                <label id="teknisi-error" class="error text-sm text-red-500 hidden" for="teknisi"></label>
+            </div>
+         
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">SUBMIT</button>
+                <button type="button" class="btn btn-error">CANCEL</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-            <div class="md:flex-row flex md:space-x-2 flex-col">
-                <div class="w-full">
-                    <label class="font-semibold text-gray-500">Pesan<span class="text-xs">(opsional)</span></label>
-                    <input type="text" placeholder="Jika ada" name="message" value="{{ old('note') }}"
-                        class="px-3 py-3 placeholder-gray-300 w-full text-gray-800 relative bg-white rounded text-sm border border-gray-300 outline-none focus:outline-none focus:shadow-outline" />
-                </div>
-            </div>
-        </div>
-        <div class="flex items-center justify-end mx-4 ">
-            <button type="submit" class="btn btn-wide btn-success">Proses Laporan</button>
-        </div>
-    </form>
-</x-modals.regular>
 <script>
     $(document).ready(function () {
      $(document).on("click","#btn-edit",function(){
          let data =$(this).data("items");
          $("form.update-form").attr("action","/admin/report/"+data['id'])
-     })
-    
+     })    
     });
 </script>
 @endsection

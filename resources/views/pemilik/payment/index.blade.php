@@ -1,4 +1,4 @@
-@extends('templates.admin')
+@extends('templates.pemilik')
 @section('content')
     <input type="hidden" readonly id="page-name" value="payment">
     <section class="px-4 md:px-10 mx-auto w-full -m-24">
@@ -32,16 +32,16 @@
                 <div class="rounded-t mb-0 px-4 py-3 border-0">
                     <div class="flex flex-wrap items-center justify-between">
                         <div class="relative w-full  max-w-full flex-grow flex-1 flex">
-                            <h3 class="font-semibold text-lg text-gray-700 inline">
+                            <h3 class="font-semibold text-lg text-gray-700 inline uppercase">
                                 Pembayaran Bulanan
                             </h3>
                         </div>
                         <div class="space-x-2">
-                            <a class="my-btn-sm bg-green-600" href="/admin/payment/export?date={{ request("date") }}"><i class="fas fa-file-excel"></i></a>
+                            <a class="my-btn-sm bg-green-600" href="/pemilik/pembayaran/export?date={{ request("date") }}"><i class="fas fa-file-excel"></i></a>
                         </div>
                     </div>
                     <div class="flex mt-2 w-full justify-center">
-                        <form action="/admin/payment">
+                        <form action="">
                             <div class="flex lg:space-x-2 lg:space-y-0 space-y-4  flex-col lg:flex-row">
                                 <div class="flex md:space-x-2 flex-col md:flex-row">
                                     <input type="month" class="form-input my-input" min="2015-01"
@@ -57,7 +57,7 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                                 @if (count(request()->all()))
-                                    <a href="/admin/payment"
+                                    <a href="/pemilik/payment"
                                         class="btn bg-red-500 btn-error"><i class="fa fa-refresh"
                                             aria-hidden="true"></i></a>
                                 @endif
@@ -68,7 +68,7 @@
                 <div class="block w-full overflow-x-auto">
                     <!-- Projects table -->
                     <x-tables.table>
-                        <x-tables.thead thItem="#,tanggal,Nama,paket,tagihan,status,action" />
+                        <x-tables.thead thItem="#,tanggal,Nama,paket,tagihan,status" />
                         <tbody>
                             @foreach ($payments as $item)
                                 <tr>
@@ -96,25 +96,7 @@
                                         class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
                                         <x-tables.status sts="{{ $item->status }}" />
                                     </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4 flex justify-between">
-
-                                        @if ($item->status == 'pending' || $item->status == 'rejected' || $item->status == 'Telah di tagih teknisi')
-                                            <div class="flex space-x-2 ">
-                                                <button type="button" data-pay="{{ $item }}" id="btn-check"
-                                                    onclick="toggleModal('check-data')" class="my-btn-sm bg-yellow-500">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            </div>
-                                        @endif
-                                        <form action="/admin/payment/{{ $item->id }}" id="delete-payment" method="post">
-                                            @csrf
-                                            @method("delete")
-                                        <button type="submit" class="my-btn-sm bg-red-500" >
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                    </td>
+                              
                                 </tr>
                             @endforeach
                         </tbody>
@@ -125,20 +107,4 @@
         </div>
         @include('templates.footer')
     </section>
-
-    <x-modals.regular title="Pembayaran Bulanan" id="check-data">
-        <form action="" method="post" class="check-form mx-4">
-            @csrf
-            @method('put')
-            <h3>Bukti Transfer :</h3>
-            <div class="flex justify-center items-center h-80">
-                <img src="" alt="" class="max-h-full object-fill">
-            </div>
-            <div class="space-x-4 my-4">
-                <button class="btn btn-success" name="status" value="accept">Terima</button><button class="btn btn-error"
-                    value="rejected" name="status">Tolak</button>
-            </div>
-        </form>
-    </x-modals.regular>
-
 @endsection

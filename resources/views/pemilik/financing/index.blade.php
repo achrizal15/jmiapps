@@ -24,29 +24,36 @@
             <div class="rounded-t mb-0 px-4 py-3 border-0">
                 <div class="flex flex-wrap items-center justify-between">
                     <div class="relative w-full  max-w-full flex-grow flex-1 flex">
-                        <h3 class="font-semibold text-lg text-gray-700 inline">
+                        <h3 class="font-semibold text-lg text-gray-700 inline uppercase">
                             Daftar Pengajuan Pembelanjaan
                         </h3>
                     </div>
+                    <div class="space-x-2">
+                        <a class="my-btn-sm bg-green-600" href="/pemilik/agreement/export?date={{ request("date") }}"><i class="fas fa-file-excel"></i></a>
+                    </div>
                 </div>
                 <div class="flex mt-2 w-full justify-center">
+
                     <form action="/pemilik/agreement">
-                        <div class="flex lg:space-x-2 flex-col lg:flex-row">
+                        <div class="flex lg:space-x-2 lg:space-y-0 space-y-4  flex-col lg:flex-row">
                             <div class="flex md:space-x-2 flex-col md:flex-row">
-                                <input type="month" min="2021-01" value="{{ request('date') }}" name="date" id="">
+                                <input type="month" class="form-input my-input" min="2015-01"
+                                    value="{{ request('date') }}"
+                                    name="date" id="">
                             </div>
-                            <div class="shadow flex">
-                                <input name="search"
-                                    class="w-full rounded p-2 focus:outline-none border-none focus:ring-0" type="search"
-                                    value="{{ request('search') }}" placeholder="Search...">
-                                <button type="submit"
-                                    class="bg-white w-auto  flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                            @if(count(request()->all()))
-                            <a href="/pemilik/agreement"
-                                class="bg-red-500 text-center px-3 text-white flex items-center rounded-sm">Reset</a>@endif
+                            <input name="search"
+                                class="my-input form-input" type="search"
+                                value="{{ request('search') }}" placeholder="Search...">
+
+                            <button type="submit"
+                                class="btn bg-blue-800 btn-info">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            @if (count(request()->all()))
+                                <a href="/pemilik/agreement"
+                                    class="btn bg-red-500 btn-error"><i class="fa fa-refresh"
+                                        aria-hidden="true"></i></a>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -59,7 +66,7 @@
                         @foreach ($items as $item)
                         <tr>
                             <th
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left flex items-center font-bold text-gray-600">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm p-4 text-left  font-bold text-gray-600">
                                 {{ $loop->iteration }}
                             </th>
                             <td
@@ -80,38 +87,36 @@
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                @rupiah($item->price)
+                            Rp.@rupiah($item->price)
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                @rupiah($item->balance)
+                              Rp.@rupiah($item->balance)
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 font-semibold p-4">
-                                <form class="flex justify-evenly items-center"
-                                    action="/pemilik/agreement/financing/{{ $item->id }}" method="post">
-                                    <div class="has-tooltip inline-block">
-                                        <span
-                                            class="tooltip rounded-sm shadow-lg p-0.5 bg-gray-100 text-red-500 -mt-8 text-xs">
-                                            @if ($item->notes!=null){{ $item->notes }}@else Catatan Kosong @endif</span>
-                                        <i class="fas fa-exclamation text-xs text-blue-600 ml-2"></i>
-                                    </div>
-                                    @method('put')
-                                    @csrf
-                                    <button name="status" value="accept" type="submit"
-                                        onclick="return confirm('Apakah anda yakin?')"> <i
-                                            class="fas fa-check-square text-green-500"></i></button>
-                                    <button name="status" value="reject" type="submit"
-                                        onclick="return confirm('Apakah anda yakin?')"> <i
-                                            class="fas fa-window-close text-red-500"></i></button>
-                                </form>
+                             @if ($item->status!="pending")
+                                 <span class="text-gray-300 text-center">{{ $item->status }}</span>
+                                 @else
+                                 <form class="flex space-x-2"
+                                 action="/pemilik/agreement/financing/{{ $item->id }}" method="post">
+                                 @method('put')
+                                 @csrf
+                                 <button name="status" value="accept" type="submit"
+                                     onclick="return confirm('Apakah anda yakin?')" class="my-btn-sm bg-yellow-500"><i class="fas fa-check"></i></button>
+                                 <button name="status" value="reject" type="submit"
+                                     onclick="return confirm('Apakah anda yakin menolak?')" class="my-btn-sm bg-red-500"> <i
+                                         class="fas fa-window-close"></i></button>
+                             </form>
+                             @endif
+                            
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </x-tables.table>
             </div>
-            <div class="mx-4 my-4"> {{ $items->links() }}</div>
+            <div class="mx-4 my-4"> {{ $items->links('components.pagination.default') }}</div>
         </div>
     </div>
     @include('templates.footer')

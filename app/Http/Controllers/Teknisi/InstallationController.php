@@ -107,7 +107,7 @@ class InstallationController extends Controller
                 ->mapWithKeys(function ($i) {
                     $stock_inventory = Inventory::find($i[0]);
                     $stock = $stock_inventory->stock - $i[1];
-                    $stock_inventory->update(["stock" => $stock, "status" => $stock >= 0 ? "sold" : "ready"]);
+                    $stock_inventory->update(["stock" => $stock, "status" => $stock <= 0 ? "sold" : "ready"]);
                     return [$i[0] => ["stock" => $i[1]]];
                 });
             $installation->user->update(["location" => $request->location]);

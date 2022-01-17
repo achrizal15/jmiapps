@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ExpenditureExport;
 use App\Models\Expenditure;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenditureController extends Controller
 {
@@ -18,7 +20,7 @@ class ExpenditureController extends Controller
         return view('admin.expenditure.index', [
             'title' => "Pembelanjaan",
             "collection" => Expenditure::latest()
-                ->filter(request(['search','status','date']))
+                ->filter(request(['search', 'status', 'date']))
                 ->paginate(25)->withQueryString()
         ]);
     }
@@ -110,5 +112,9 @@ class ExpenditureController extends Controller
     {
         Expenditure::find($expenditure->id)->delete();
         return redirect('/admin/expenditure')->with("success", "Data berhasil dihapus");
+    }
+    public function export()
+    {
+        return Excel::download(new ExpenditureExport(request("year"),request("status")), "PEMBELANJAAN.xlsx");
     }
 }

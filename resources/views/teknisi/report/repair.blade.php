@@ -72,6 +72,7 @@
                                         <option
                                             disabled
                                             hidden
+                                            value=""
                                             selected>Pilih Inventory</option>
                                         @foreach ($inventories as $i)
                                             <option value="{{ $i->id . ',' . $i->stock . ',' . $i->name }}">{{ $i->name }}

@@ -20,7 +20,7 @@ class DashboardController extends Controller
     public function index()
     {
         $users = auth()->user();
-        $package = Package::latest()->get();
+        $package = Package::latest()->orderBy("price","ASC")->get();
         $msg = Message::latest()->where("user_id", $users->id)->get();
         $pelanggan = implode(array_slice(explode(" ", $users->name), 0, 1));
         $hasPackage = false;

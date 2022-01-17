@@ -1,4 +1,4 @@
-@extends('templates.admin')
+@extends('templates.teknisi')
 @section('content')
     <div class="relativ px-4">
         <div class="w-full bg-white shadow-lg rounded-md">

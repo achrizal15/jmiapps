@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Teknisi;
 
-use App\Http\Controllers\Controller;
-use App\Models\Installation;
-use App\Models\Inventory;
 use DateTime;
+use App\Models\User;
+use App\Models\Inventory;
+use App\Models\Installation;
 use Illuminate\Http\Request;
 
 use function PHPSTORM_META\map;
+use App\Http\Controllers\Controller;
+use App\Models\Report;
 
 class DashboardController extends Controller
 {
@@ -19,10 +21,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $technician_id = auth()->user()->id;
+        $installation = Installation::where("technician_id", auth()->user()->id)->count();
+        $report = Report::where("technician_id", auth()->user()->id)->count();
+
         return view("teknisi.index", [
             "title" => "Dashboard",
             "teknisi" => auth()->user()->name,
+            "total_install" => $installation,
+            "total_report" => $report
         ]);
     }
 
@@ -89,5 +95,9 @@ class DashboardController extends Controller
     {
         //
     }
-
+    public function profile()
+    {
+        $this_user = User::with("role")->find(auth()->user()->id);
+        return view("teknisi.profile", ["title" => "Profile", "user" => $this_user]);
+    }
 }

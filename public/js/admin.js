@@ -1,16 +1,18 @@
 const pageName = $("#page-name").val();
 const base_url = window.location.origin;
-let initValidate = () => {
-    if ($(".init-validatation").length > 0) {
-        $(".init-validatation").validate()
-    }
-}
+let _token = $('meta[name="csrf-token"]').attr('content');
+
 function initShowDropdown(e) {
     // if (e.open) {
     //     $(e).find("summary").removeClass("text-blue-800")
     // } else {
     //     $(e).find("summary").addClass("text-blue-800")
     // }
+}
+let initValidate = () => {
+    if ($(".init-validatation").length > 0) {
+        $(".init-validatation").validate();
+    }
 }
 function modal_toggler(id) {
     let modalID = $(`#${id}`)
@@ -97,16 +99,42 @@ let installationManagement = () => {
 }
 let paymentManagement = () => {
     if (pageName != "payment") return false;
+
+    $(document).on("submit", "form#delete-payment", function (e) {
+        e.preventDefault()
+        let action = $(this).attr("action")
+        Swal.fire({
+            title: 'Lanjutkan hapus?',
+            text: "Jika dihapus data akan hilang permanen",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#10B981',
+            cancelButtonColor: '#d33',
+            cancelButtonText: `Batal`,
+            confirmButtonText: 'HAPUS',
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "post",
+                        url: base_url + action,
+                        data: { "_token": _token, "_method": "delete" },
+                        success: function (response) {
+                            window.location = base_url + "/admin/payment"
+                        }
+                    });
+                }
+            })
+    });
     $(document).on("click", "#btn-check", function () {
         let pay = $(this).data("pay");
         let id = pay['id']
         let img = pay['transfer_img'];
         $(".check-form").attr('action', "/admin/payment/" + id);
         $(".check-form img").attr("src", "/storage/" + img);
-    });
+    })
 }
 function printDiv(divName) {
-    console.log($("#" + divName).data("item"))
     var printContents = document.getElementById(divName).innerHTML;
     var originalContents = document.body.innerHTML;
 
@@ -117,9 +145,7 @@ function printDiv(divName) {
     document.body.innerHTML = originalContents;
 }
 $(document).ready(function () {
-
     paymentManagement();
     installationManagement();
-    initValidate();
     initFormSelect2();
 });

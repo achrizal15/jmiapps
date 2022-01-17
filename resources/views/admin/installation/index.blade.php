@@ -36,6 +36,9 @@
                                 Pasang Baru
                             </h3>
                         </div>
+                        <div class="space-x-2">
+                            <a class="my-btn-sm bg-green-600" href="/admin/installation/export?date={{ request("date") }}"><i class="fas fa-file-excel"></i></a>
+                        </div>
                     </div>
                     <div class="flex mt-2  w-full justify-center">
                         <form action="">
@@ -211,7 +214,7 @@
                 </div>
                 <div class="form-control w-full">
                     <label class="label">
-                        <span class="label-text">Biaya Tambahan</span>
+                        <span class="label-text">Biaya Tambahan<small>(Opsional)</small></span>
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

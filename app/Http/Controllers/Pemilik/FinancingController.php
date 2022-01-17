@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Pemilik;
 
+use App\Exports\ExpenditureExport;
 use App\Models\Finance;
 use App\Models\Inventory;
 use App\Models\Expenditure;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FinancingController extends Controller
 {
@@ -16,9 +18,8 @@ class FinancingController extends Controller
             'pemilik.financing.index',
             [
                 'title' => "Financing",
-                'items' => Expenditure::latest()
+                'items' => Expenditure::orderBy('status', 'desc')
                     ->filter(request(['search', 'date']))
-                    ->where('status', 'pending')
                     ->paginate(10)
                     ->withQueryString()
             ]
@@ -42,7 +43,9 @@ class FinancingController extends Controller
             ]);
         }
         // $expendit->update($status);
-        return $request->status;
+        return redirect("pemilik/agreement")->with("success","Permintaan diterima!");
+    }
+    public function export(){
+        return Excel::download(new ExpenditureExport(request("date")),"PEMBELIAN-".request("date").".xlsx");
     }
 }
-

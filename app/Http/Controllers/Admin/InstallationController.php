@@ -8,9 +8,11 @@ use App\Models\Message;
 use App\Models\Package;
 use App\Models\Inventory;
 use App\Export\UserExport;
+use App\Exports\InstallationExport;
 use App\Models\Installation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Finance;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InstallationController extends Controller
@@ -133,6 +135,7 @@ class InstallationController extends Controller
     {
         $request->validate(["blok" => "required", "teknisi" => "required", "price" => "min:0"]);
         $technician = User::find($request->teknisi);
+        $installation = $installation->load(["user", "package"]);
         $update = [
             "technician_id" => $technician->id,
             "status" => "process",
@@ -144,6 +147,12 @@ class InstallationController extends Controller
         Message::create([
             "name" => "Paket anda sedang di proses tunggu teknisi kami.",
             "user_id" => $installation->user_id,
+        ]);
+        Finance::create([
+            "type" => "pemasukan",
+            "category" => "Pemasangan baru",
+            "detail" => "Pemasangan baru oleh " . $installation->user->name . " , paket yang dibeli " . $installation->package->name . " dengan harga per bulan Rp." . $installation->package->price,
+            "balance" => intval($installation->package->price) + intval($installation->installation_costs)
         ]);
         return redirect('/admin/installation')->with("success", "Permintaan berhasil di proses!");
     }
@@ -169,5 +178,9 @@ class InstallationController extends Controller
             $inv = Inventory::latest();
             return $inv->get();
         }
+    }
+    public function export()
+    {
+        return Excel::download(new InstallationExport(request("date")), "PSB-" . request("date") . ".xlsx");
     }
 }
