@@ -85,15 +85,15 @@
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                @rupiah($item->bonus)
+                                Rp.@rupiah($item->bonus)
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                @rupiah($item->pay_cut)
+                                Rp.@rupiah($item->pay_cut)
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
-                                @rupiah($item->balance)
+                                Rp.@rupiah($item->balance)
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-gray-600 p-4">
