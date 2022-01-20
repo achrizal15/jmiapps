@@ -17,16 +17,16 @@
         @foreach ($packages as $key => $item)
             <?php
             $gradient = 'from-gray-700 to-gray-500';
-            $warna = 'gray';
-            if (intval($item->price) > 200000 && intval($item->price) < 700000) {
+            $warna = 'bg-gray-500';
+            if (intval($item->price) > 200000 && intval($item->price) < 300000) {
                 $gradient = 'from-rose-700 to-rose-500';
-                $warna = 'rose';
-            } elseif (intval($item->price) > 700000 && intval($item->price) < 800000) {
+                $warna = 'bg-rose-500';
+            } elseif (intval($item->price) > 300000 && intval($item->price) < 500000) {
                 $gradient = 'from-violet-700 to-violet-500';
-                $warna = 'violet';
-            } elseif (intval($item->price) > 800000) {
+                $warna = 'bg-violet-500';
+            } elseif (intval($item->price) > 600000) {
                 $gradient = 'from-yellow-700 to-yellow-500';
-                $warna = 'yellow';
+                $warna = 'bg-yellow-500';
             }
             ?>
             <div
@@ -35,7 +35,7 @@
                 <div class="bg-gradient-to-bl {{ $gradient }} p-5 text-center text-white uppercase font-bold">
                     {{ $item->name }}
                 </div>
-                <div class="text-center font-bold bg-{{ $warna }}-500 text-white p-5">
+                <div class="text-center font-bold {{$warna}} text-white p-5">
                     <h3 class="pb-5 uppercase">{{ $item->note }}</h3>
                     <div class="pb-5">
                         <span class="align-top inline-block ">Rp.</span>
@@ -59,7 +59,7 @@
                         @csrf
                         <input type="text" hidden name="package_id" value="{{ $item->id }}">
                     <button @if ($hasPackage) disabled @endif type="submit"
-                        class="p-2 bg-{{ $warna }}-600 @if ($hasPackage) cursor-not-allowed @endif text-white font-bold hover:shadow-gray-500 shadow-md rounded-sm">@if ($hasPackage) SUDAH MEMILIH PAKET @else ORDER @endif </button>
+                        class="p-2 {{ $warna }} @if ($hasPackage) cursor-not-allowed @endif text-white font-bold hover:shadow-gray-500 shadow-md rounded-sm">@if ($hasPackage) SUDAH MEMILIH PAKET @else ORDER @endif </button>
                     </form>
                 </div>
             </div>

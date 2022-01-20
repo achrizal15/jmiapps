@@ -32,7 +32,7 @@
                 <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
                     href="#">
                     <!--Icon from: http://www.potlabicons.com/ -->
-                    <img src="/img/svg/logo-jmi.svg" width="100" height="100" alt="">
+                    <img src="/img/logo.png" width="100" height="100" alt="">
               
                 </a>
             </div>

@@ -42,7 +42,7 @@
                         type="button" onclick="toggleNavbar('example-collapse-sidebar')">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <img src="/img/logo-jmi.png" class="lg:w-24 w-16 md-20" alt="">
+                    <img src="/img/logo.png" class="md:-mb-5 w-16 md:w-32" alt="">
                     <a href="/logout" class="md:hidden">Logout</a>
                     <div class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded hidden"
                         id="example-collapse-sidebar">

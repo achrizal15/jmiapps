@@ -60,6 +60,7 @@ class TechnicianController extends Controller
             'password_confirmation' => 'required'
         ]);
         $validate['role_id'] = 3;
+        $validate["password"]=Hash::make($validate["password"]);
         User::create($validate);
         return redirect('/admin/technician')->with('success', "Teknisi baru berhasil ditambahkan!");
     }

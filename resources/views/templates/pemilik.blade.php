@@ -8,7 +8,6 @@
     <link href="/css/style.css" rel="stylesheet">
     <script src="/fontawesome/js/all.min.js" crossorigin="anonymous"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -30,7 +29,7 @@
                     type="button" onclick="toggleNavbar('example-collapse-sidebar')">
                     <i class="fas fa-bars"></i>
                 </button>
-                <img src="/img/logo-jmi.png" class="lg:w-24 w-16 md-20" alt="">
+                <img src="/img/logo.png" class="md:-mb-5 w-16 md:w-32" alt="">
                 <a href="/logout" class="md:hidden">Logout</a>
                 <div class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded hidden"
                     id="example-collapse-sidebar">
