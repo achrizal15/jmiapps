@@ -32,8 +32,8 @@
                 <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
                     href="#">
                     <!--Icon from: http://www.potlabicons.com/ -->
-                    <img src="/img/logo.png" width="100" height="100" alt="">
-              
+                    {{-- <img src="/img/thulik.png" width="200" alt=""> --}}
+        Thulik Net
                 </a>
             </div>
             <div class="block lg:hidden pr-4">
@@ -637,7 +637,7 @@
                 navaction.classList.add("text-white");
                 //Use to switch toggleColour colours
                 for (var i = 0; i < toToggle.length; i++) {
-                    toToggle[i].classList.add("text-gray-800");
+                    toToggle[i].classList.add("text-red-800");
                     toToggle[i].classList.remove("text-white");
                 }
                 header.classList.add("shadow");
@@ -652,7 +652,7 @@
                 //Use to switch toggleColour colours
                 for (var i = 0; i < toToggle.length; i++) {
                     toToggle[i].classList.add("text-white");
-                    toToggle[i].classList.remove("text-gray-800");
+                    toToggle[i].classList.remove("text-red-800");
                 }
 
                 header.classList.remove("shadow");
